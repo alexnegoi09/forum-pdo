@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (isset($_SESSION['username'])) { ?> 
+if (isset($_SESSION['username']) && isset($_SESSION['groups'])) { ?> 
 
     <header>
         <div>
-            <?php echo 'Welcome, <a href=/forum-pdo/pages/profile.php>' . $_SESSION['username'] . '</a>!';?>
+            <?php echo 'Welcome, <a href=/forum-pdo/pages/profile.php>' . $_SESSION['username'] . '</a>! (' . $_SESSION['groups'] . ')'; ?>
         </div>
         <div>
             <a href="/forum-pdo/index.php">Homepage</a>

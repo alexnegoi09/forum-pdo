@@ -1,6 +1,36 @@
 <?php
 
 class Thread {
+    public $title;
+
+
+    public function __construct($title) {
+        $this->title = $title;
+    }
+
+
+    public function create() {
+        require('../includes/database.php');
+
+        try {
+            $stmt = $pdo->prepare('INSERT INTO threads(category_id, title, author) VALUES (:category_id, :title, :author)');
+            $stmt->bindParam(':category_id', $category_id);
+            $stmt->bindParam(':title', $thread_title);
+            $stmt->bindParam(':author', $thread_author);
+
+            $category_id = $_GET['id'];
+            $thread_title = $this->title;
+            $thread_author = $_SESSION['username'];
+
+            $stmt->execute();
+            echo '<p>Thread has been successfully created!</p>';
+            $pdo = null;
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
 
     public static function categoryCheck() {
         require('../includes/database.php');
@@ -13,12 +43,18 @@ class Thread {
             if (count($result) === 0) {
                 header('Location: /forum-pdo/index.php');
                 exit();
+
+                $pdo = null;
             }
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+    }
 
-        echo 'id exists!';
+    public static function titleCheck() {
+        if (empty($_POST['thread-title'])) {
+            exit('Please enter a thread title!');
+        }
     }
 
 
@@ -57,12 +93,13 @@ class Thread {
                 }
                 echo '</table>';
             }
+
+            $pdo = null;
+
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
     }
-
-    
 }
 
 ?>

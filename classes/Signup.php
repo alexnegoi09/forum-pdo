@@ -55,7 +55,7 @@ class Signup {
         $username = $this->username;
         $password = $this->password;
         $email = $this->email;
-        $groups = 'users';
+        $groups = 'Registered User';
         $postcount = 0;
 
         $stmt->execute();

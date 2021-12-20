@@ -10,5 +10,16 @@ Thread::categoryCheck();
 // retrieve and display threads from db
 Thread::read();
 
+// check if signed in
+require('../includes/new-thread.php');
 
+if (isset($_POST['btn'])) {
+
+    // check for empty form
+    Thread::titleCheck();
+
+    //create new thread
+    $thread = new Thread($_POST['thread-title']);
+    $thread->create();
+} 
  ?>
