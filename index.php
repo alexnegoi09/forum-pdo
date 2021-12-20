@@ -2,7 +2,6 @@
 require('includes/header.php');
 require('includes/logout.php');
 require('includes/database.php');
-
 ?>
 
 <!DOCTYPE html>
