@@ -90,7 +90,7 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                exit('<p>There are no threads in this category!</p>');
+                echo'<p>There are no threads to show!</p>';
             } else {
 
                 // display threads

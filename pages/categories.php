@@ -22,8 +22,7 @@ if (isset($_POST['btn'])) {
     Thread::duplicateCheck();
 
     //create new thread
-    $thread = new Thread($_POST['thread-title']);
+    $thread = new Thread($_POST['thread-title']);  
     $thread->create();
-    
 } 
  ?>
