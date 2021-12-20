@@ -24,7 +24,7 @@ class Category {
             foreach($result as $res) {
                 echo '<tr>
                         <td>
-                            <a href=/dev-php/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . $res['name'] . 
+                            <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . $res['name'] . 
                             '</a>
                              <p>' . $res['description'] . '</p>
                         </td>

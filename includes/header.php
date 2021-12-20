@@ -5,7 +5,7 @@ if (isset($_SESSION['username'])) { ?>
 
     <header>
         <div>
-            <?php echo 'Welcome, <a href=/dev-php/forum-pdo/pages/profile.php>' . $_SESSION['username'] . '</a>!';?>
+            <?php echo 'Welcome, <a href=/forum-pdo/pages/profile.php>' . $_SESSION['username'] . '</a>!';?>
         </div>
         <div>
             <a href="/forum-pdo/index.php">Homepage</a>
