@@ -18,8 +18,12 @@ if (isset($_POST['btn'])) {
     // check for empty form
     Thread::titleCheck();
 
+    // check for duplicate thread
+    Thread::duplicateCheck();
+
     //create new thread
     $thread = new Thread($_POST['thread-title']);
     $thread->create();
+    
 } 
  ?>

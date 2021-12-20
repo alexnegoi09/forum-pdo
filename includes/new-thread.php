@@ -9,7 +9,9 @@
     </p>
 </form>
 
+
 <?php } else {
-    echo 'To create a thread, you must login or create an account!'; 
+
+    echo 'To create a thread, you must log in or create an account!'; 
 }   
 ?>

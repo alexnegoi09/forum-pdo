@@ -37,7 +37,7 @@ class Thread {
 
         // check category id
         try {
-            $stmt = $pdo->prepare('SELECT COUNT(*) FROM  categories WHERE id = ?');
+            $stmt = $pdo->prepare('SELECT COUNT(*) FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
             if (count($result) === 0) {
@@ -51,9 +51,29 @@ class Thread {
         }
     }
 
+
     public static function titleCheck() {
         if (empty($_POST['thread-title'])) {
             exit('Please enter a thread title!');
+        }
+    }
+
+
+    public static function duplicateCheck() {
+        require('../includes/database.php');
+
+        // check for duplicate threads
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM threads WHERE title = ?');
+            $stmt->execute(array($_POST['thread-title']));
+            $result = $stmt->fetchAll();
+            if ($result) {
+                exit('There is already a thread with the same name!');
+            }
+            
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -70,7 +90,7 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                exit('<p>This thread is empty!</p>');
+                exit('<p>There are no threads in this category!</p>');
             } else {
 
                 // display threads
