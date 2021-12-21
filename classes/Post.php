@@ -29,6 +29,8 @@ class Post {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+
+        
     }
 
 
@@ -54,9 +56,6 @@ class Post {
 
                 foreach($result as $res) {
                     echo '<tr>
-                            <td>#</td>
-                          </tr>
-                          <tr>
                             <td>
                                 <p>Written by: <a href="/forum-pdo/pages/profile.php">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                 <p>Posted on ' . $res['created_at'] . '</p>
@@ -80,6 +79,7 @@ class Post {
             echo $e->getMessage();
         }
     }
+
 }
 
 ?>
