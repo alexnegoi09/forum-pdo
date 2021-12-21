@@ -63,11 +63,13 @@ class Post {
                             </td>
                             <td>' .  $res['body'] .  '</td>
                           </tr>';
-                          if ($_SESSION['username'] === $res['author']) {
-                            echo '<tr>
-                                    <td><input type="submit" value="Delete Post"></td>
-                                  </tr>';
+                          if (isset($_SESSION['username'])) {
+                            if ($_SESSION['username'] === $res['author']) {
+                                echo '<tr>
+                                        <td><input type="submit" value="Delete Post"></td>
+                                    </tr>';
                           }
+                        }
                 }
                     echo '</table>';
             }
