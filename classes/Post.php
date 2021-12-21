@@ -58,13 +58,18 @@ class Post {
                           </tr>
                           <tr>
                             <td>
-                                <p>Written by: ' . $res['author'] . ' (' . $res['groups'] . ')</p>
+                                <p>Written by: <a href="/forum-pdo/pages/profile.php">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                 <p>Posted on ' . $res['created_at'] . '</p>
                             </td>
-                            <td>' . $res['body'] .  '</td>
+                            <td>' .  $res['body'] .  '</td>
                           </tr>';
+                          if ($_SESSION['username'] === $res['author']) {
+                            echo '<tr>
+                                    <td><input type="submit" value="Delete Post"></td>
+                                  </tr>';
+                          }
                 }
-                echo '</table>';
+                    echo '</table>';
             }
 
             $pdo = null;

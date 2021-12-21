@@ -4,9 +4,7 @@ session_start();
 if (isset($_SESSION['username']) && isset($_SESSION['groups'])) { ?> 
 
     <header>
-        <div>
-            <?php echo 'Welcome, <a href=/forum-pdo/pages/profile.php>' . $_SESSION['username'] . '</a>! (' . $_SESSION['groups'] . ')'; ?>
-        </div>
+        <?php echo '<div>Welcome, <a href="/forum-pdo/pages/profile.php">' . $_SESSION['username'] . '</a>! (' . $_SESSION['groups'] . ')</div>'; ?>
         <div>
             <a href="/forum-pdo/index.php">Homepage</a>
             <a href="/forum-pdo/pages/cpanel.php">My Account</a>
