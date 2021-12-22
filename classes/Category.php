@@ -58,6 +58,7 @@ class Category {
             echo $e->getMessage();
         }
     }
+
 }
 
 ?>

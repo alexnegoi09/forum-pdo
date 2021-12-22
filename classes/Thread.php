@@ -37,10 +37,10 @@ class Thread {
 
         // check category id
         try {
-            $stmt = $pdo->prepare('SELECT COUNT(*) FROM categories WHERE id = ?');
+            $stmt = $pdo->prepare('SELECT * FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
-            if (count($result) === 0) {
+            if (!$result) {
                 header('Location: /forum-pdo/index.php');
                 exit();
 

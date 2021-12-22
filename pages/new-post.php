@@ -3,6 +3,10 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
+if (!isset($_SESSION['username'])) {
+    header('Location: /forum-pdo/index.php');
+}
+
 // check for valid id
 Post::threadPostCheck();
 
@@ -18,7 +22,6 @@ Post::threadPostCheck();
     <input type="submit" name="btn" value="Post">
     </p>
 </form>
-
 
 <?php
 
