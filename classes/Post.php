@@ -28,6 +28,7 @@ class Post {
 
             echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '">here</a> to go back to the thread.</p>';
 
+
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -91,7 +92,7 @@ class Post {
             $stmt = $pdo->prepare('SELECT * FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
-            
+
             if (!$result) {
                 header('Location: /forum-pdo/index.php');
                 exit();
@@ -107,6 +108,30 @@ class Post {
     public static function emptyMessageCheck() {
         if (empty($_POST['post-body'])) {
             exit('Please enter a message!');
+        }
+    }
+
+
+    public static function updatePostCount() {
+        require('../includes/database.php');
+
+        //count user posts
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM posts WHERE author = ?');
+            $stmt->execute(array($_SESSION['username']));
+            $result = $stmt->fetchAll();
+            $number = count($result);
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        //update user postcount
+        try {
+            $stmt2 = $pdo->prepare("UPDATE users SET postcount = ? WHERE username = ?");
+            $stmt2->execute(array($number, $_SESSION['username']));
+        } catch(PDOException $e) {
+            echo $e->getMessage();
         }
     }
 

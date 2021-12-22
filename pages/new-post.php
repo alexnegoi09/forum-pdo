@@ -5,6 +5,7 @@ require('../classes/Post.php');
 
 // check for valid id
 Post::threadPostCheck();
+
 ?>
 
 <h2>Make a new post</h2>
@@ -28,6 +29,9 @@ if (isset($_POST['btn'])) {
     // create post
     $post = new Post($_POST['post-body']);
     $post->create();
+
+    // update postcount
+    Post::updatePostCount();
 
 }
 
