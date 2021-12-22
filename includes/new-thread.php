@@ -12,6 +12,6 @@
 
 <?php } else {
 
-    echo 'To create a thread, you must log in or create an account!'; 
+    echo '<p>To create a thread, you must log in or create an account!</p>'; 
 }   
 ?>

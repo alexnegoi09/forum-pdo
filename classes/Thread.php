@@ -52,7 +52,7 @@ class Thread {
     }
 
 
-    public static function titleCheck() {
+    public static function emptyTitleCheck() {
         if (empty($_POST['thread-title'])) {
             exit('Please enter a thread title!');
         }

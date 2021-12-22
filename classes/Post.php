@@ -26,6 +26,8 @@ class Post {
             
             $pdo = null;
 
+            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '">here</a> to go back to the thread.</p>';
+
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -77,6 +79,34 @@ class Post {
 
         } catch(PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+
+    public static function threadPostCheck() {
+        require('../includes/database.php');
+
+        // check thread id
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM threads WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+            
+            if (!$result) {
+                header('Location: /forum-pdo/index.php');
+                exit();
+
+                $pdo = null;
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public static function emptyMessageCheck() {
+        if (empty($_POST['post-body'])) {
+            exit('Please enter a message!');
         }
     }
 

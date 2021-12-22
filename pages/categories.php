@@ -16,7 +16,7 @@ require('../includes/new-thread.php');
 if (isset($_POST['btn'])) {
 
     // check for empty form
-    Thread::titleCheck();
+    Thread::emptyTitleCheck();
 
     // check for duplicate thread
     Thread::duplicateCheck();
