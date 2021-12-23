@@ -58,20 +58,39 @@ class Post {
                         </tr>';
 
                 foreach($result as $res) {
-                    echo '<tr>
+                      echo '<input type="hidden" name="post-id" value=' . $res['id'] . '>
+                            <tr>
                             <td>
                                 <p>Written by: <a href="/forum-pdo/pages/profile.php">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                 <p>Posted on ' . $res['created_at'] . '</p>
                             </td>
                             <td>' .  $res['body'] .  '</td>
                           </tr>';
+
+                          // if the user is an admin or a moderator, the edit and delete buttons remain on permanently, else, they disappear one hour after the message was posted
+
+                          date_default_timezone_set('Europe/Bucharest');
                           if (isset($_SESSION['username'])) {
                             if ($_SESSION['username'] === $res['author']) {
+                                if ($res['groups'] === 'Administrator' || $res['groups'] === 'Moderator') {     
+                                    echo '<tr>
+                                            <td>
+                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
+                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
+                                            </td>
+                                        </tr>';
+                              
+                            } else if (time() < strtotime($res['created_at']) + 3600) {
                                 echo '<tr>
-                                        <td><input type="submit" value="Delete Post"></td>
+                                        <td>
+                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
+                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
+                                        </td>
                                     </tr>';
-                          }
+                            }
                         }
+                    }
+                    
                 }
                     echo '</table>';
             }
