@@ -58,8 +58,7 @@ class Post {
                         </tr>';
 
                 foreach($result as $res) {
-                      echo '<input type="hidden" name="post-id" value=' . $res['id'] . '>
-                            <tr>
+                    echo '<tr>
                             <td>
                                 <p>Written by: <a href="/forum-pdo/pages/profile.php">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                 <p>Posted on ' . $res['created_at'] . '</p>
@@ -71,25 +70,22 @@ class Post {
 
                           date_default_timezone_set('Europe/Bucharest');
                           if (isset($_SESSION['username'])) {
-                            if ($_SESSION['username'] === $res['author']) {
-                                if ($res['groups'] === 'Administrator' || $res['groups'] === 'Moderator') {     
+                            if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
                                     echo '<tr>
                                             <td>
-                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
-                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
+                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
+                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
                                             </td>
-                                        </tr>';
-                              
-                            } else if (time() < strtotime($res['created_at']) + 3600) {
+                                        </tr>'; 
+                            } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
                                 echo '<tr>
-                                        <td>
+                                          <td>
                                             <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
                                             <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
-                                        </td>
-                                    </tr>';
+                                          </td>
+                                      </tr>';
                             }
                         }
-                    }
                     
                 }
                     echo '</table>';
