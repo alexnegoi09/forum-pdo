@@ -42,7 +42,7 @@ class Post {
 
         // retrieve posts from db
         try {
-            $stmt = $pdo->prepare('SELECT posts.id, posts.body, posts.author, posts.created_at, users.groups 
+            $stmt = $pdo->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
                                    WHERE threads.id = ?');
             $stmt->execute(array($_GET['id']));
@@ -73,15 +73,15 @@ class Post {
                             if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
                                     echo '<tr>
                                             <td>
-                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
-                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
+                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Edit</a>
+                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Delete</a>
                                             </td>
                                         </tr>'; 
                             } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
                                 echo '<tr>
                                           <td>
-                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '">Delete</a>
-                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '">Edit</a>
+                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Edit</a>
+                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Delete</a>
                                           </td>
                                       </tr>';
                             }
@@ -120,6 +120,28 @@ class Post {
     }
 
 
+    public static function messageCheck() {
+        require('../includes/database.php');
+
+        // check thread id
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM posts WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            if (!$result) {
+                header('Location: /forum-pdo/index.php');
+                exit();
+
+                $pdo = null;
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    
+
+
     public static function emptyMessageCheck() {
         if (empty($_POST['post-body'])) {
             exit('Please enter a message!');
@@ -148,6 +170,31 @@ class Post {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+    }
+
+
+    public function getMessageContent() {
+        try {
+            $stmt = $pdo->prepare('SELECT body FROM posts WHERE id= ?');
+            $stmt->execute(array($_GET['id']));
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function update() {
+
+        try {
+            $stmt = $pdo->prepare('UPDATE posts SET body = ? WHERE id = ?');
+            $stmt->execute(array($this->message, $_GET['id']));      
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+        
+        $pdo = null;
+
+        echo '<p>Message edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread-id'] . '">here</a> to go back to the thread.</p>';
     }
 
 }
