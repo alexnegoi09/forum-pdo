@@ -16,7 +16,7 @@ Post::threadPostCheck();
 
 <form action="" method="POST">
     <p>
-    <textarea name="post-body" cols="30" rows="10" name="message-body"></textarea>
+    <textarea name="post-body" cols="30" rows="10"></textarea>
     </p>
     <p>
     <input type="submit" name="btn" value="Post">

@@ -3,11 +3,11 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
+Post::messageCheck();
+
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
 
-        // check for valid id
-        Post::messageCheck();
         
 ?>
 
@@ -15,28 +15,27 @@ if (isset($_SESSION['username'])) {
 
 <form action="" method="POST">
     <p>
-    <textarea name="post-body" cols="30" rows="10" name="message-body"></textarea>
+    <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
     </p>
     <p>
-    <input type="submit" name="btn" value="Edit message">
+    <input type="submit" name="btn" value="Save">
     </p>
 </form>
 
 
-   <?php } else if (time() < strtotime($res['created_at']) + 3600) {
+   <?php } else if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
 
        // check for valid id
-       Post::messageCheck();
  ?>
 
 <h2>Edit post</h2>
 
 <form action="" method="POST">
     <p>
-    <textarea name="post-body" cols="30" rows="10" name="message-body"></textarea>
+    <textarea name="post-body" cols="30" rows="10" name="message-body"><?php echo $_SESSION['post_body']; ?></textarea>
     </p>
     <p>
-    <input type="submit" name="btn" value="Edit message">
+    <input type="submit" name="btn" value="Save">
     </p>
 </form>
 

@@ -135,12 +135,17 @@ class Post {
 
                 $pdo = null;
             }
+
+            if ($_SESSION['groups'] !== 'Administrator' || $_SESSION['groups'] !== 'Moderator') {
+                $_SESSION['post_author'] = $result['author'];
+                $_SESSION['created_at'] = $result['created_at'];
+                $_SESSION['post_body'] = $result['body'];
+            } 
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
     }
     
-
 
     public static function emptyMessageCheck() {
         if (empty($_POST['post-body'])) {
@@ -174,6 +179,8 @@ class Post {
 
 
     public function getMessageContent() {
+        require('../includes/database.php');
+
         try {
             $stmt = $pdo->prepare('SELECT body FROM posts WHERE id= ?');
             $stmt->execute(array($_GET['id']));
@@ -184,6 +191,7 @@ class Post {
 
 
     public function update() {
+        require('../includes/database.php');
 
         try {
             $stmt = $pdo->prepare('UPDATE posts SET body = ? WHERE id = ?');
