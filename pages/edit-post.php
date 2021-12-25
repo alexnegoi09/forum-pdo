@@ -32,7 +32,7 @@ if (isset($_SESSION['username'])) {
 
 <form action="" method="POST">
     <p>
-    <textarea name="post-body" cols="30" rows="10" name="message-body"><?php echo $_SESSION['post_body']; ?></textarea>
+    <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
     </p>
     <p>
     <input type="submit" name="btn" value="Save">
@@ -46,4 +46,17 @@ if (isset($_SESSION['username'])) {
         <?php } ?>
 
 <?php } ?>
+
+<?php 
+
+if (isset($_POST['btn'])) {
+    //check for empty message field
+    Post::emptyMessageCheck();
+
+    // edit and save 
+    $editedPost = new Post($_POST['post-body']);
+    $editedPost->update();
+}
+
+?>
 

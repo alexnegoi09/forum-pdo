@@ -123,7 +123,6 @@ class Post {
     public static function messageCheck() {
         require('../includes/database.php');
 
-        // check thread id
         try {
             $stmt = $pdo->prepare('SELECT * FROM posts WHERE id = ?');
             $stmt->execute(array($_GET['id']));
@@ -202,7 +201,21 @@ class Post {
         
         $pdo = null;
 
-        echo '<p>Message edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread-id'] . '">here</a> to go back to the thread.</p>';
+        echo '<p>Message edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '">here</a> to go back to the thread.</p>';
+    }
+
+
+    public static function delete() {
+        require('../includes/database.php');
+
+        try {
+            $stmt = $pdo->prepare('DELETE FROM posts WHERE id= ?');
+            $stmt->execute(array($_GET['id']));
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        $pdo = null;
     }
 
 }
