@@ -201,7 +201,7 @@ class Post {
         
         $pdo = null;
 
-        echo '<p>Message edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '">here</a> to go back to the thread.</p>';
+        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '">here</a> to go back to the thread.</p>';
     }
 
 
