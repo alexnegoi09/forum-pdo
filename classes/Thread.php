@@ -106,7 +106,7 @@ class Thread {
 
                 foreach ($result as $res) {
                     echo '<tr>
-                            <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '>' . $res['title'] . '</td>
+                            <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1>' . $res['title'] . '</td>
                             <td>' . $res['created_at'] . '</td>
                             <td>' . $res['author'] . '</td>
                           </tr>';

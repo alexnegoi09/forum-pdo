@@ -8,6 +8,7 @@ Post::threadPostCheck();
 
 // display posts
 Post::read();
+Post::pagination();
 
 // check if signed in 
 require('../includes/post-link.php');

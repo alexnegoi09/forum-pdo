@@ -44,7 +44,7 @@ class Post {
         try {
             $stmt = $pdo->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
-                                   WHERE threads.id = ?');
+                                   WHERE threads.id = ? LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetchAll();
             
@@ -216,6 +216,37 @@ class Post {
         }
 
         $pdo = null;
+    }
+
+
+    public static function pagination() {
+        require('../includes/database.php');
+
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM posts WHERE thread_id= ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetchAll();
+
+            // number of posts in the respective thred
+            $numberOfPosts = count($result);
+            echo $numberOfPosts;
+
+            // number of pages necessary to display posts (10 per page)
+            $pages = ceil($numberOfPosts / 10);
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 1;
+            echo '<p>Page: <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' .  $_GET['page'] . '">1</a></p>';
+        } else {
+                echo '<p>Page:</p>';
+                
+                for ($i = 1; $i <= $pages; $i++) {
+                   echo '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $i . '">' . $i . " " . '</a>';
+                }
+        }
     }
 
 }
