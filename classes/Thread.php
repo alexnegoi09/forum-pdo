@@ -120,6 +120,22 @@ class Thread {
             echo $e->getMessage();
         }
     }
+
+
+    public static function getTitle() {
+        require '../includes/database.php';
+    
+        try {
+            $stmt = $pdo->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            return '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] .  '&page=1">' . $result['title'] . '</a>';
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 
 ?>

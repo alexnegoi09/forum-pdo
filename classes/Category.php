@@ -59,6 +59,21 @@ class Category {
         }
     }
 
+
+    public static function getTitle() {
+        require '../includes/database.php';
+    
+        try {
+            $stmt = $pdo->prepare('SELECT name FROM categories WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            return '<a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] .  '">' . $result['name'] . '</a>';
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 
 ?>

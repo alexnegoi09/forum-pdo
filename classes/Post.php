@@ -26,7 +26,7 @@ class Post {
             
             $pdo = null;
 
-            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '">here</a> to go back to the thread.</p>';
+            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=1">here</a> to go back to the thread.</p>';
 
 
         } catch(PDOException $e) {
@@ -177,18 +177,6 @@ class Post {
     }
 
 
-    public function getMessageContent() {
-        require('../includes/database.php');
-
-        try {
-            $stmt = $pdo->prepare('SELECT body FROM posts WHERE id= ?');
-            $stmt->execute(array($_GET['id']));
-        } catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-
     public function update() {
         require('../includes/database.php');
 
@@ -201,7 +189,7 @@ class Post {
         
         $pdo = null;
 
-        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '">here</a> to go back to the thread.</p>';
+        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=1">here</a> to go back to the thread.</p>';
     }
 
 
@@ -229,17 +217,19 @@ class Post {
 
             // number of posts in the respective thred
             $numberOfPosts = count($result);
-            echo $numberOfPosts;
 
             // number of pages necessary to display posts (10 per page)
             $pages = ceil($numberOfPosts / 10);
+
+            if (!$pages) {
+                exit();
+            }
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
 
         if (!isset($_GET['page'])) {
-            $_GET['page'] = 1;
-            echo '<p>Page: <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' .  $_GET['page'] . '">1</a></p>';
+            header('Location: /forum-pdo/index.php');
         } else {
                 echo '<p>Page:</p>';
                 
@@ -247,6 +237,8 @@ class Post {
                    echo '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $i . '">' . $i . " " . '</a>';
                 }
         }
+
+        $pdo = null;
     }
 
 }
