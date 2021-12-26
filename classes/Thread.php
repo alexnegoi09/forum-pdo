@@ -23,7 +23,7 @@ class Thread {
             $thread_author = $_SESSION['username'];
 
             $stmt->execute();
-            echo '<p>Thread has been successfully created!</p>';
+            echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
             $pdo = null;
 
         } catch(PDOException $e) {
