@@ -26,7 +26,7 @@ class Post {
             
             $pdo = null;
 
-            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=1">here</a> to go back to the thread.</p>';
+            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
 
 
         } catch(PDOException $e) {
@@ -73,15 +73,15 @@ class Post {
                             if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
                                     echo '<tr>
                                             <td>
-                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Edit</a>
-                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Delete</a>
+                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Edit</a>
+                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $GET['page'] . '">Delete</a>
                                             </td>
                                         </tr>'; 
                             } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
                                 echo '<tr>
                                           <td>
-                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Edit</a>
-                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '">Delete</a>
+                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page='. $_GET['page'] . '">Edit</a>
+                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
                                           </td>
                                       </tr>';
                             }
@@ -189,7 +189,7 @@ class Post {
         
         $pdo = null;
 
-        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=1">here</a> to go back to the thread.</p>';
+        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
     }
 
 
@@ -215,23 +215,19 @@ class Post {
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetchAll();
 
-            // number of posts in the respective thred
+            // number of posts in the respective thread
             $numberOfPosts = count($result);
 
             // number of pages necessary to display posts (10 per page)
             $pages = ceil($numberOfPosts / 10);
-
-            if (!$pages) {
-                exit();
-            }
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
 
         if (!isset($_GET['page'])) {
             header('Location: /forum-pdo/index.php');
-        } else {
-                echo '<p>Page:</p>';
+        } else if ($pages) {
+                echo '<p>Pages:</p>';
                 
                 for ($i = 1; $i <= $pages; $i++) {
                    echo '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $i . '">' . $i . " " . '</a>';
