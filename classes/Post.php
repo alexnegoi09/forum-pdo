@@ -148,7 +148,8 @@ class Post {
 
     public static function emptyMessageCheck() {
         if (empty($_POST['post-body'])) {
-            exit('Please enter a message!');
+            exit('<p>Please enter a message!</p>');
+            exit();
         }
     }
 

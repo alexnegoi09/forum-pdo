@@ -19,7 +19,7 @@ class Login {
         // retrieve info from db
         require('../includes/database.php');
 
-        $query = $pdo->prepare('SELECT username, password, groups FROM users WHERE username = ?');
+        $query = $pdo->prepare('SELECT id, username, password, groups, email, joined, postcount, profilepic, location FROM users WHERE username = ?');
         $query->execute(array($this->username));
         $result = $query->fetch();
         
@@ -32,6 +32,12 @@ class Login {
             session_start();
             $_SESSION['username'] = $result['username'];
             $_SESSION['groups'] = $result['groups'];
+            $_SESSION['user-id'] = $result['id'];
+            $_SESSION['profilepic'] = $result['profilepic'];
+            $_SESSION['postcount'] = $result['postcount'];
+            $_SESSION['joined'] = $result['joined'];
+            $_SESSION['email'] = $result['email'];
+            $_SESSION['location'] = $result['location'];
 
             $pdo = null;
 

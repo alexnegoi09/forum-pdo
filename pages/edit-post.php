@@ -25,19 +25,30 @@ if (isset($_SESSION['username'])) {
 
    <?php } else if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
 
-       // check for valid id
  ?>
 
-<h2>Edit post</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Forum - Edit Post</title>
+</head>
+<body>
+    <h2>Edit post</h2>
 
-<form action="" method="POST">
-    <p>
-    <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
-    </p>
-    <p>
-    <input type="submit" name="btn" value="Save">
-    </p>
-</form>
+    <form action="" method="POST">
+        <p>
+        <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
+        </p>
+        <p>
+        <input type="submit" name="btn" value="Save">
+        </p>
+    </form>     
+ </body>
+ </html>
+
 
     <?php } else {  ?>
 

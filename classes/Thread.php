@@ -135,6 +135,25 @@ class Thread {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+
+        $pdo = null;
+    }
+
+
+    public static function getPageTitle() {
+        require '../includes/database.php';
+
+        try {
+            $stmt = $pdo->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            echo $result['title'] . ' - My Forum';
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        $pdo = null;
     }
 }
 

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php Category::getTitle(); ?></title>
+    <title><?php Category::getPageTitle(); ?></title>
 </head>
 <body>
     
@@ -29,6 +29,5 @@ Thread::read();
 
 // check if signed in
 require('../includes/thread-link.php');
-
 
  ?>

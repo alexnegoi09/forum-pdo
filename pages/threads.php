@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php Thread::getTitle(); ?></title>
+    <title><?php Thread::getPageTitle(); ?></title>
 </head>
 <body>
     
@@ -30,4 +30,5 @@ Post::pagination();
 
 // check if signed in 
 require('../includes/post-link.php');
+
 ?>
