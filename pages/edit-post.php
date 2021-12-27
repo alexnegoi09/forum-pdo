@@ -33,7 +33,7 @@ if (isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Forum - Edit Post</title>
+    <title>Edit post - My Forum</title>
 </head>
 <body>
     <h2>Edit post</h2>
@@ -64,9 +64,16 @@ if (isset($_POST['btn'])) {
     //check for empty message field
     Post::emptyMessageCheck();
 
-    // edit and save 
+    // edit and save
+    if (empty($_SESSION['errors'])) { 
     $editedPost = new Post($_POST['post-body']);
     $editedPost->update();
+    } else {
+
+        // display errors
+        echo '<p>' . $_SESSION['errors'][0] . '</p>';
+        $_SESSION['errors'] = null;
+    }
 }
 
 ?>

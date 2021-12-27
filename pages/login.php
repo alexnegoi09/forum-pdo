@@ -10,6 +10,9 @@
     <title>My Forum - Log In</title>
 </head>
 <body>
+
+    <h2>Log in</h2>
+
     <form action="login.php" class="login-form" method="POST">
         <p>
             <label for="username">Username:</label>

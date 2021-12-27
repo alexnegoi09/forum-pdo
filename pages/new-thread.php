@@ -18,7 +18,7 @@ Thread::categoryCheck();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Forum - New Thread</title>
+    <title>New thread - My Forum</title>
 </head>
 <body>
     <h2>Start a new thread</h2>
@@ -45,8 +45,13 @@ if (isset($_POST['btn'])) {
     Thread::duplicateCheck();
 
     //create new thread
-    $thread = new Thread($_POST['thread-title']);  
-    $thread->create();
+    if(empty($_SESSION['errors'])) {
+        $thread = new Thread($_POST['thread-title']);  
+        $thread->create();
+    } else {
+        echo '<p>' . $_SESSION['errors'][0] . '</p>';
+        $_SESSION['errors'] = null;
+    }
     
 } 
 

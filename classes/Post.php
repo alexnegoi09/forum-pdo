@@ -147,9 +147,10 @@ class Post {
     
 
     public static function emptyMessageCheck() {
+        $_SESSION['errors'] = [];
+
         if (empty($_POST['post-body'])) {
-            exit('<p>Please enter a message!</p>');
-            exit();
+            $_SESSION['errors'][] = 'Please enter a message!';
         }
     }
 

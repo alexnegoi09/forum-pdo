@@ -35,6 +35,8 @@ class Thread {
     public static function categoryCheck() {
         require('../includes/database.php');
 
+        $_SESSION['errors'] = [];
+
         // check category id
         try {
             $stmt = $pdo->prepare('SELECT * FROM categories WHERE id = ?');
@@ -54,7 +56,7 @@ class Thread {
 
     public static function emptyTitleCheck() {
         if (empty($_POST['thread-title'])) {
-            exit('Please enter a thread title!');
+            $_SESSION['errors'][] = 'Please enter a thread title!';
         }
     }
 
@@ -68,7 +70,7 @@ class Thread {
             $stmt->execute(array($_POST['thread-title']));
             $result = $stmt->fetchAll();
             if ($result) {
-                exit('There is already a thread with the same name!');
+                $_SESSION['errors'][] = 'There is already a thread with the same name!';
             }
             
 

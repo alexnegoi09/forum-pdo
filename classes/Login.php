@@ -19,17 +19,26 @@ class Login {
         // retrieve info from db
         require('../includes/database.php');
 
+        session_start();
+
+        $_SESSION['errors'] = [];
+
         $query = $pdo->prepare('SELECT id, username, password, groups, email, joined, postcount, profilepic, location FROM users WHERE username = ?');
         $query->execute(array($this->username));
         $result = $query->fetch();
         
         // compare user input data to db data
         if(!$result || !password_verify($this->password, $result['password'])) {
-            exit('<p>The credentials you have entered are incorrect!</p>');
+            $_SESSION['errors'][] = 'The credentials you have entered are incorrect!';
+
+            foreach ($_SESSION['errors'] as $err) {
+                echo '<p>' . $err . '</p>'; 
+            }
+
+            $_SESSION['errors'] = null;
 
         } else {
             //save data and redirect
-            session_start();
             $_SESSION['username'] = $result['username'];
             $_SESSION['groups'] = $result['groups'];
             $_SESSION['user-id'] = $result['id'];

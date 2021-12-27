@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class Signup {
     public $username;
     public $password;
@@ -13,33 +15,38 @@ class Signup {
         $this->repass = $repass;
         $this->email = $email;
 
+        // initialize array for storing potential errors
+        $_SESSION['errors'] = [];
+
         // check for empty fields
         if (empty($user) || empty($pass) || empty($repass) || empty($email)) {
-            exit('<p>Please complete all fields!</p>');
-        }
+            array_push($_SESSION['errors'], 'Please complete all fields!');
+        } else {
 
         // check if username already exists
         require('../includes/database.php');
         $sql = "SELECT * FROM users WHERE username='" . $user . "'";
         if ($pdo->query($sql)->rowCount() != 0) {
-            exit('<p>The username already exists! Please enter a different username.');
+            array_push($_SESSION['errors'], 'The username already exists! Please enter a different username.');
         }
 
         // check e-mail
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            exit('<p>Please enter a valid e-mail address!</p>');
+            array_push($_SESSION['errors'], 'Please enter a valid e-mail address!');
         }
 
         // check password
         if (!password_verify($repass, $pass)) {
-            exit('<p>The passwords do not match!</p>');
+            array_push($_SESSION['errors'], 'The passwords do not match!');
         }
         
         $pdo = null;
         
     }
+}
+
 
 
     public function store() {
