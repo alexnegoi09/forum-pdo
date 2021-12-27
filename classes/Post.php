@@ -26,14 +26,13 @@ class Post {
             
             $pdo = null;
 
-            echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+            // echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+            header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page']);
 
 
         } catch(PDOException $e) {
             echo $e->getMessage();
-        }
-
-        
+        }       
     }
 
 
@@ -191,7 +190,8 @@ class Post {
         
         $pdo = null;
 
-        echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+        // echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+        header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page']);
     }
 
 
@@ -222,6 +222,11 @@ class Post {
 
             // number of pages necessary to display posts (10 per page)
             $pages = ceil($numberOfPosts / 10);
+
+            //prevent empty pages when posts <= 10
+            if ($numberOfPosts <= 10 && $_GET['page'] > 1) {
+                header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=1'); 
+            }
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
