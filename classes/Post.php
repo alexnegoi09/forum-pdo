@@ -154,7 +154,7 @@ class Post {
     }
 
 
-    public static function updatePostCount() {
+    public static function getPostCount() {
         require('../includes/database.php');
 
         //count user posts
@@ -163,18 +163,24 @@ class Post {
             $stmt->execute(array($_SESSION['username']));
             $result = $stmt->fetchAll();
             $number = count($result);
+            $_SESSION['postcount'] = $number;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+        $pdo = null;
+    }
 
-        //update user postcount
-        try {
+
+    public static function setPostCount() {
+         //update user postcount
+         try {
             $stmt2 = $pdo->prepare("UPDATE users SET postcount = ? WHERE username = ?");
-            $stmt2->execute(array($number, $_SESSION['username']));
+            $stmt2->execute(array($_SESSION['postcount'], $_SESSION['username']));
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
+        $pdo = null;
     }
 
 
@@ -201,6 +207,7 @@ class Post {
         try {
             $stmt = $pdo->prepare('DELETE FROM posts WHERE id= ?');
             $stmt->execute(array($_GET['id']));
+            $_SESSION['postcount']--;
         } catch(PDOException $e) {
             echo $e->getMessage();
         }

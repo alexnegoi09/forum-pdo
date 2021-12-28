@@ -46,7 +46,8 @@ if (isset($_POST['btn'])) {
     $post->create();
 
     // update postcount
-    Post::updatePostCount();
+    Post::getPostCount();
+    Post::setPostCount();
     } else {
 
         // display errors
