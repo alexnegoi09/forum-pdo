@@ -173,6 +173,8 @@ class Post {
 
 
     public static function setPostCount() {
+        require('../includes/database.php');
+
          //update user postcount
          try {
             $stmt2 = $pdo->prepare("UPDATE users SET postcount = ? WHERE username = ?");
@@ -207,7 +209,6 @@ class Post {
         try {
             $stmt = $pdo->prepare('DELETE FROM posts WHERE id= ?');
             $stmt->execute(array($_GET['id']));
-            $_SESSION['postcount']--;
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
