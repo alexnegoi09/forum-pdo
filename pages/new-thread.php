@@ -1,4 +1,5 @@
-<?php 
+<?php
+require('../classes/Database.php'); 
 require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Thread.php');
@@ -8,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 // check for valid id
-Thread::categoryCheck();
+Thread::categoryCheck($db);
 
 ?>
 
@@ -42,11 +43,11 @@ if (isset($_POST['btn'])) {
     Thread::emptyTitleCheck();
 
     // check for duplicate thread
-    Thread::duplicateCheck();
+    Thread::duplicateCheck($db);
 
     //create new thread
     if(empty($_SESSION['errors'])) {
-        $thread = new Thread($_POST['thread-title']);  
+        $thread = new Thread($_POST['thread-title'], $db);  
         $thread->create();
     } else {
         echo '<p>' . $_SESSION['errors'][0] . '</p>';
@@ -55,6 +56,7 @@ if (isset($_POST['btn'])) {
     
 } 
 
+require('../includes/footer.php');
 ?>
 
 

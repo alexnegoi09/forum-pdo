@@ -2,18 +2,18 @@
 
 class Post {
     public $message;
+    public $db;
 
 
-    public function __construct($message) {
+    public function __construct($message, $db) {
         $this->message = $message;
+        $this->db = $db;
     }
 
 
     public function create() {
-        require('../includes/database.php');
-
         try {
-            $stmt = $pdo->prepare('INSERT INTO posts(thread_id, body, author) VALUES (:thread_id, :body, :author)');
+            $stmt = $this->db->prepare('INSERT INTO posts(thread_id, body, author) VALUES (:thread_id, :body, :author)');
             $stmt->bindParam(':thread_id', $thread_id);
             $stmt->bindParam(':body', $body);
             $stmt->bindParam(':author', $author);
@@ -36,12 +36,26 @@ class Post {
     }
 
 
-    public static function read() {
-        require('../includes/database.php');
+    public function update() {
+        try {
+            $stmt = $this->db->prepare('UPDATE posts SET body = ? WHERE id = ?');
+            $stmt->execute(array($this->message, $_GET['id']));      
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+        
+        $db = null;
+
+        // echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+        header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page']);
+    }
+
+
+    public static function read($db) {
 
         // retrieve posts from db
         try {
-            $stmt = $pdo->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.groups 
+            $stmt = $db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
                                    WHERE threads.id = ? LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
             $stmt->execute(array($_GET['id']));
@@ -59,7 +73,7 @@ class Post {
                 foreach($result as $res) {
                     echo '<tr>
                             <td>
-                                <p>Written by: <a href="/forum-pdo/pages/profile.php">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
+                                <p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                 <p>Posted on ' . $res['created_at'] . '</p>
                             </td>
                             <td>' .  $res['body'] .  '</td>
@@ -90,7 +104,7 @@ class Post {
                     echo '</table>';
             }
 
-            $pdo = null;
+            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -98,20 +112,17 @@ class Post {
     }
 
 
-    public static function threadPostCheck() {
-        require('../includes/database.php');
+    public static function threadPostCheck($db) {
 
         // check thread id
         try {
-            $stmt = $pdo->prepare('SELECT * FROM threads WHERE id = ?');
+            $stmt = $db->prepare('SELECT * FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
             if (!$result) {
                 header('Location: /forum-pdo/index.php');
                 exit();
-
-                $pdo = null;
             }
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -119,11 +130,10 @@ class Post {
     }
 
 
-    public static function messageCheck() {
-        require('../includes/database.php');
+    public static function messageCheck($db) {
 
         try {
-            $stmt = $pdo->prepare('SELECT * FROM posts WHERE id = ?');
+            $stmt = $db->prepare('SELECT * FROM posts WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -131,7 +141,6 @@ class Post {
                 header('Location: /forum-pdo/index.php');
                 exit();
 
-                $pdo = null;
             }
 
             if ($_SESSION['groups'] !== 'Administrator' || $_SESSION['groups'] !== 'Moderator') {
@@ -154,12 +163,11 @@ class Post {
     }
 
 
-    public static function getPostCount() {
-        require('../includes/database.php');
+    public static function getPostCount($db) {
 
         //count user posts
         try {
-            $stmt = $pdo->prepare('SELECT * FROM posts WHERE author = ?');
+            $stmt = $db->prepare('SELECT * FROM posts WHERE author = ?');
             $stmt->execute(array($_SESSION['username']));
             $result = $stmt->fetchAll();
             $number = count($result);
@@ -168,60 +176,40 @@ class Post {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
-        $pdo = null;
+        $db = null;
     }
 
 
-    public static function setPostCount() {
-        require('../includes/database.php');
+    public static function setPostCount($db) {
 
          //update user postcount
          try {
-            $stmt2 = $pdo->prepare("UPDATE users SET postcount = ? WHERE username = ?");
+            $stmt2 = $db->prepare("UPDATE users SET postcount = ? WHERE username = ?");
             $stmt2->execute(array($_SESSION['postcount'], $_SESSION['username']));
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
-        $pdo = null;
+        $db = null;
     }
 
 
-    public function update() {
-        require('../includes/database.php');
+    public static function delete($db) {
 
         try {
-            $stmt = $pdo->prepare('UPDATE posts SET body = ? WHERE id = ?');
-            $stmt->execute(array($this->message, $_GET['id']));      
-        } catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-        
-        $pdo = null;
-
-        // echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
-        header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page']);
-    }
-
-
-    public static function delete() {
-        require('../includes/database.php');
-
-        try {
-            $stmt = $pdo->prepare('DELETE FROM posts WHERE id= ?');
+            $stmt = $db->prepare('DELETE FROM posts WHERE id= ?');
             $stmt->execute(array($_GET['id']));
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
 
-        $pdo = null;
+        $db = null;
     }
 
 
-    public static function pagination() {
-        require('../includes/database.php');
+    public static function pagination($db) {
 
         try {
-            $stmt = $pdo->prepare('SELECT * FROM posts WHERE thread_id= ?');
+            $stmt = $db->prepare('SELECT * FROM posts WHERE thread_id= ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetchAll();
 
@@ -249,7 +237,7 @@ class Post {
                 }
         }
 
-        $pdo = null;
+        $db = null;
     }
 
 }

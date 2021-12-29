@@ -2,18 +2,19 @@
 
 class Thread {
     public $title;
+    public $db;
 
 
-    public function __construct($title) {
+    public function __construct($title, $db) {
         $this->title = $title;
+        $this->db = $db;
     }
 
 
     public function create() {
-        require('../includes/database.php');
 
         try {
-            $stmt = $pdo->prepare('INSERT INTO threads(category_id, title, author) VALUES (:category_id, :title, :author)');
+            $stmt = $this->db->prepare('INSERT INTO threads(category_id, title, author) VALUES (:category_id, :title, :author)');
             $stmt->bindParam(':category_id', $category_id);
             $stmt->bindParam(':title', $thread_title);
             $stmt->bindParam(':author', $thread_author);
@@ -24,7 +25,7 @@ class Thread {
 
             $stmt->execute();
             echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
-            $pdo = null;
+            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -32,21 +33,19 @@ class Thread {
     }
 
 
-    public static function categoryCheck() {
-        require('../includes/database.php');
+    public static function categoryCheck($db) {
 
         $_SESSION['errors'] = [];
 
         // check category id
         try {
-            $stmt = $pdo->prepare('SELECT * FROM categories WHERE id = ?');
+            $stmt = $db->prepare('SELECT * FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
             if (!$result) {
                 header('Location: /forum-pdo/index.php');
                 exit();
 
-                $pdo = null;
             }
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -61,12 +60,11 @@ class Thread {
     }
 
 
-    public static function duplicateCheck() {
-        require('../includes/database.php');
+    public static function duplicateCheck($db) {
 
         // check for duplicate threads
         try {
-            $stmt = $pdo->prepare('SELECT * FROM threads WHERE title = ?');
+            $stmt = $db->prepare('SELECT * FROM threads WHERE title = ?');
             $stmt->execute(array($_POST['thread-title']));
             $result = $stmt->fetchAll();
             if ($result) {
@@ -80,12 +78,11 @@ class Thread {
     }
 
 
-    public static function read() {
-        require('../includes/database.php');
+    public static function read($db) {
 
         // retrieve threads from db
         try {
-            $stmt = $pdo->prepare('SELECT threads.id, threads.title, threads.author, threads.created_at 
+            $stmt = $db->prepare('SELECT threads.id, threads.title, threads.author, threads.created_at 
                                    FROM threads INNER JOIN categories ON threads.category_id = categories.id 
                                    WHERE categories.id = ?');
             $stmt->execute(array($_GET['id']));
@@ -116,7 +113,7 @@ class Thread {
                 echo '</table>';
             }
 
-            $pdo = null;
+            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -124,11 +121,10 @@ class Thread {
     }
 
 
-    public static function getTitle() {
-        require '../includes/database.php';
+    public static function getTitle($db) {
     
         try {
-            $stmt = $pdo->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt = $db->prepare('SELECT title FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -142,11 +138,10 @@ class Thread {
     }
 
 
-    public static function getPageTitle() {
-        require '../includes/database.php';
+    public static function getPageTitle($db) {
 
         try {
-            $stmt = $pdo->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt = $db->prepare('SELECT title FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -155,7 +150,7 @@ class Thread {
             echo $e->getMessage();
         }
 
-        $pdo = null;
+        $db = null;
     }
 }
 

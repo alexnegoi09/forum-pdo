@@ -7,13 +7,15 @@ class Signup {
     public $password;
     public $repass;
     public $email;
+    public $db;
 
 
-    public function __construct($user, $pass, $repass, $email) {
+    public function __construct($user, $pass, $repass, $email, $db) {
         $this->username = $user;
         $this->password = $pass;
         $this->repass = $repass;
         $this->email = $email;
+        $this->db = $db;
 
         // initialize array for storing potential errors
         $_SESSION['errors'] = [];
@@ -24,9 +26,8 @@ class Signup {
         } else {
 
         // check if username already exists
-        require('../includes/database.php');
         $sql = "SELECT * FROM users WHERE username='" . $user . "'";
-        if ($pdo->query($sql)->rowCount() != 0) {
+        if ($this->db->query($sql)->rowCount() != 0) {
             array_push($_SESSION['errors'], 'The username already exists! Please enter a different username.');
         }
 
@@ -42,7 +43,7 @@ class Signup {
             array_push($_SESSION['errors'], 'The passwords do not match!');
         }
         
-        $pdo = null;
+        $db = null;
         
     }
 }
@@ -50,9 +51,9 @@ class Signup {
 
 
     public function store() {
+
         // insert data into db
-        require('../includes/database.php');
-        $stmt = $pdo->prepare('INSERT INTO users(username, password, email, groups, postcount) VALUES (:username, :password, :email, :groups, :postcount)');
+        $stmt = $this->db->prepare('INSERT INTO users(username, password, email, groups, postcount) VALUES (:username, :password, :email, :groups, :postcount)');
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt->bindParam(':email', $email);
@@ -67,7 +68,7 @@ class Signup {
 
         $stmt->execute();
 
-        $pdo = null;
+        $db = null;
 
         echo '<p>Your account has been created successfully! You can now <a href="../pages/login.php">log in.</a></p>';
 

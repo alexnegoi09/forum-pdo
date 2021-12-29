@@ -1,9 +1,10 @@
 <?php
+require('../classes/Database.php');
 require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
-Post::messageCheck();
+Post::messageCheck($db);
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
@@ -66,7 +67,7 @@ if (isset($_POST['btn'])) {
 
     // edit and save
     if (empty($_SESSION['errors'])) { 
-    $editedPost = new Post($_POST['post-body']);
+    $editedPost = new Post($_POST['post-body'], $db);
     $editedPost->update();
     } else {
 
@@ -76,5 +77,6 @@ if (isset($_POST['btn'])) {
     }
 }
 
+require('../includes/footer.php');
 ?>
 

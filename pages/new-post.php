@@ -1,4 +1,5 @@
 <?php 
+require('../classes/Database.php');
 require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
@@ -8,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 // check for valid id
-Post::threadPostCheck();
+Post::threadPostCheck($db);
 
 ?>
 
@@ -42,12 +43,12 @@ if (isset($_POST['btn'])) {
 
     // create post
     if (empty($_SESSION['errors'])) {
-    $post = new Post($_POST['post-body']);
+    $post = new Post($_POST['post-body'], $db);
     $post->create();
 
     // update postcount
-    Post::getPostCount();
-    Post::setPostCount();
+    Post::getPostCount($db);
+    Post::setPostCount($db);
     } else {
 
         // display errors
@@ -56,4 +57,5 @@ if (isset($_POST['btn'])) {
     }
 }
 
+require('../includes/footer.php');
 ?>

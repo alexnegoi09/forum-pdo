@@ -1,4 +1,7 @@
-<?php require('../classes/Login.php'); ?>
+<?php
+require('../classes/Database.php');
+require('../classes/Login.php'); 
+ ?>
 
 
 <!DOCTYPE html>
@@ -38,9 +41,9 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    $login = new Login($_POST['username'], $_POST['password']);
+    $login = new Login($_POST['username'], $_POST['password'], $db);
     $login->validate();
 }
 
-
+require('../includes/footer.php');
 ?>

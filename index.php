@@ -1,7 +1,7 @@
 <?php
 require('includes/header.php');
 require('includes/logout.php');
-require('includes/database.php');
+require('classes/Database.php');
 ?>
 
 <!DOCTYPE html>
@@ -15,10 +15,9 @@ require('includes/database.php');
 <body>
     <?php 
         require('classes/Category.php');
-        $category = new Category();
-        $category->read(); 
+        Category::read($db); 
     ?>
 
-
+<?php require('includes/footer.php'); ?>
 </body>
 </html>

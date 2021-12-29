@@ -1,13 +1,20 @@
 <?php
 
+
 class Category {
+    public $db;
 
-    public function read() {
-        require 'includes/database.php';
 
+    public function __construct($db) {
+        $this->db = $db;
+    }
+
+
+    public static function read($db) {
+        
         //select categories from db
         try {
-            $query = $pdo->query('SELECT * FROM categories');
+            $query = $db->query('SELECT * FROM categories');
             $result = $query->fetchAll(PDO::FETCH_ASSOC);            
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -35,15 +42,14 @@ class Category {
             exit('<p>No categories to show!</p>');
         }
 
-        $pdo = null;
+        $db = null;
     }
 
 
     public function create() {
-        require 'includes/database.php';
 
         try {
-            $stmt = $pdo->prepare('INSERT INTO categories(name, description) VALUES (:name, :description)');
+            $stmt = $this->db->prepare('INSERT INTO categories(name, description) VALUES (:name, :description)');
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
 
@@ -60,11 +66,10 @@ class Category {
     }
 
 
-    public static function getTitle() {
-        require '../includes/database.php';
+    public static function getTitle($db) {
     
         try {
-            $stmt = $pdo->prepare('SELECT name FROM categories WHERE id = ?');
+            $stmt = $db->prepare('SELECT name FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -76,11 +81,10 @@ class Category {
     }
 
 
-    public static function getPageTitle() {
-        require '../includes/database.php';
+    public static function getPageTitle($db) {
 
         try {
-            $stmt = $pdo->prepare('SELECT name FROM categories WHERE id = ?');
+            $stmt = $db->prepare('SELECT name FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 

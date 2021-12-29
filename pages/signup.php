@@ -1,4 +1,7 @@
-<?php require('../classes/Signup.php'); ?>
+<?php 
+require('../classes/Database.php');
+require('../classes/Signup.php'); 
+?>
 
 
 <!DOCTYPE html>
@@ -43,7 +46,7 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email']);
+    $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email'], $db);
 
     if (empty($_SESSION['errors'])) {
     $signup->store();
@@ -57,4 +60,5 @@ if (isset($_POST['submit'])) {
     }
 }
 
+require('../includes/footer.php');
 ?>

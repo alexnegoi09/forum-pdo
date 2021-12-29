@@ -1,7 +1,12 @@
 <?php 
 require('../includes/header.php');
 require('../includes/logout.php');
-require('../includes/database.php');
+require('../classes/Database.php');
+require('../classes/Login.php');
+
+if (!isset($_GET['user_id'])) {
+    header('Location: /forum-pdo/index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,23 +18,9 @@ require('../includes/database.php');
     <title>My Forum - User Profile: <?php echo $_SESSION['username']; ?></title>
 </head>
 <body>
-    <div>
-        <div>
-            <img src="" alt="">
-        </div>
-        <h2>User Profile - <?php echo $_SESSION['username']; ?></h2>
-    </div>
+    
+    <?php Login::userProfileInfo($db) ?>
 
-    <div>
-        <h3>Statistics</h3>
-        <p>Profile picture: <?php echo $_SESSION['profilepic']; ?></p>
-        <p>E-mail: <?php echo $_SESSION['email']; ?></p>
-        <p>Join date: <?php echo $_SESSION['joined']; ?></p>
-        <p>Rank: <?php echo $_SESSION['groups']; ?></p>
-        <p>Number of posts: <?php echo $_SESSION['postcount']; ?></p>
-        <p>Location: <?php echo $_SESSION['location']; ?></p>
-
-    </div>
-
+<?php require('../includes/footer.php'); ?>
 </body>
 </html>

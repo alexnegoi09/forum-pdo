@@ -1,4 +1,9 @@
-<?php require '../classes/Category.php'; ?>
+<?php
+require '../classes/Database.php';
+require '../classes/Thread.php'; 
+require '../classes/Category.php';
+ 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php Category::getPageTitle(); ?></title>
+    <title><?php Category::getPageTitle($db); ?></title>
 </head>
 <body>
     
@@ -16,18 +21,18 @@
 <?php
 require('../includes/header.php');
 require('../includes/logout.php'); 
-require('../classes/Thread.php');
 
 // check for valid id
-Thread::categoryCheck();
+Thread::categoryCheck($db);
 
 //display category title
-echo '<h3>Category: ' . Category::getTitle() . '</h3>';
+echo '<h3>Category: ' . Category::getTitle($db) . '</h3>';
 
 // retrieve and display threads from db
-Thread::read();
+Thread::read($db);
 
 // check if signed in
 require('../includes/thread-link.php');
 
+require('../includes/footer.php');
  ?>
