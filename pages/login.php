@@ -41,8 +41,13 @@ require('../classes/Login.php');
 <?php
 
 if (isset($_POST['submit'])) {
-    $login = new Login($_POST['username'], $_POST['password'], $db);
-    $login->validate();
+    if (!empty($_POST['username'] && !empty($_POST['password']))) {
+        $login = new Login($_POST['username'], $_POST['password'], $db);
+        $login->validate();
+    } else {
+        echo '<p>Please enter a username and password!</p>';
+    }
+   
 }
 
 require('../includes/footer.php');

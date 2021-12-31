@@ -9,11 +9,6 @@ class Login {
         $this->username = $user;
         $this->password = $pass;
         $this->db = $db;
-
-        // check for empty fields
-        if (empty($user) || empty($pass)) {
-            exit('<p>Please enter a username and password!</p>');
-        }
     }
 
 
