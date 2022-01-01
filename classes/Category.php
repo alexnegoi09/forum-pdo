@@ -10,11 +10,11 @@ class Category {
     }
 
 
-    public static function read($db) {
+    public function read() {
         
         //select categories from db
         try {
-            $query = $db->query('SELECT * FROM categories');
+            $query = $this->db->query('SELECT * FROM categories');
             $result = $query->fetchAll(PDO::FETCH_ASSOC);            
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -42,7 +42,7 @@ class Category {
             exit('<p>No categories to show!</p>');
         }
 
-        $db = null;
+        $this->db = null;
     }
 
 
@@ -66,10 +66,10 @@ class Category {
     }
 
 
-    public static function getTitle($db) {
+    public function getTitle() {
     
         try {
-            $stmt = $db->prepare('SELECT name FROM categories WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT name FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -81,10 +81,10 @@ class Category {
     }
 
 
-    public static function getPageTitle($db) {
+    public function getPageTitle() {
 
         try {
-            $stmt = $db->prepare('SELECT name FROM categories WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT name FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 

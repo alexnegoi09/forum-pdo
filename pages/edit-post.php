@@ -4,7 +4,9 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
-Post::messageCheck($db);
+$post = new Post($db);
+
+$post->messageCheck();
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
@@ -63,12 +65,11 @@ if (isset($_SESSION['username'])) {
 
 if (isset($_POST['btn'])) {
     //check for empty message field
-    Post::emptyMessageCheck();
+    $post->emptyMessageCheck();
 
     // edit and save
     if (empty($_SESSION['errors'])) { 
-    $editedPost = new Post($_POST['post-body'], $db);
-    $editedPost->update();
+    $post->update();
     } else {
 
         // display errors

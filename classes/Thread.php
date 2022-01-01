@@ -1,12 +1,10 @@
 <?php
 
 class Thread {
-    public $title;
     public $db;
 
 
-    public function __construct($title, $db) {
-        $this->title = $title;
+    public function __construct($db) {
         $this->db = $db;
     }
 
@@ -20,7 +18,7 @@ class Thread {
             $stmt->bindParam(':author', $thread_author);
 
             $category_id = $_GET['id'];
-            $thread_title = $this->title;
+            $thread_title = $_POST['thread-title'];
             $thread_author = $_SESSION['username'];
 
             $stmt->execute();
@@ -33,13 +31,13 @@ class Thread {
     }
 
 
-    public static function categoryCheck($db) {
+    public function categoryCheck() {
 
         $_SESSION['errors'] = [];
 
         // check category id
         try {
-            $stmt = $db->prepare('SELECT * FROM categories WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
             if (!$result) {
@@ -53,18 +51,18 @@ class Thread {
     }
 
 
-    public static function emptyTitleCheck() {
+    public function emptyTitleCheck() {
         if (empty($_POST['thread-title'])) {
             $_SESSION['errors'][] = 'Please enter a thread title!';
         }
     }
 
 
-    public static function duplicateCheck($db) {
+    public function duplicateCheck() {
 
         // check for duplicate threads
         try {
-            $stmt = $db->prepare('SELECT * FROM threads WHERE title = ?');
+            $stmt = $this->db->prepare('SELECT * FROM threads WHERE title = ?');
             $stmt->execute(array($_POST['thread-title']));
             $result = $stmt->fetchAll();
             if ($result) {
@@ -78,11 +76,11 @@ class Thread {
     }
 
 
-    public static function read($db) {
+    public function read() {
 
         // retrieve threads from db
         try {
-            $stmt = $db->prepare('SELECT threads.id, threads.title, threads.author, threads.created_at 
+            $stmt = $this->db->prepare('SELECT threads.id, threads.title, threads.author, threads.created_at 
                                    FROM threads INNER JOIN categories ON threads.category_id = categories.id 
                                    WHERE categories.id = ?');
             $stmt->execute(array($_GET['id']));
@@ -121,10 +119,10 @@ class Thread {
     }
 
 
-    public static function getTitle($db) {
+    public function getTitle() {
     
         try {
-            $stmt = $db->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT title FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -138,10 +136,10 @@ class Thread {
     }
 
 
-    public static function getPageTitle($db) {
+    public function getPageTitle() {
 
         try {
-            $stmt = $db->prepare('SELECT title FROM threads WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT title FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 

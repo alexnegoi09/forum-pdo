@@ -8,8 +8,10 @@ if (!isset($_SESSION['username'])) {
     header('Location: /forum-pdo/index.php');
 }
 
+$thread = new Thread($db);
+
 // check for valid id
-Thread::categoryCheck($db);
+$thread->categoryCheck();
 
 ?>
 
@@ -40,14 +42,13 @@ Thread::categoryCheck($db);
 
 if (isset($_POST['btn'])) {
     // check for empty form
-    Thread::emptyTitleCheck();
+    $thread->emptyTitleCheck();
 
     // check for duplicate thread
-    Thread::duplicateCheck($db);
+    $thread->duplicateCheck();
 
     //create new thread
-    if(empty($_SESSION['errors'])) {
-        $thread = new Thread($_POST['thread-title'], $db);  
+    if(empty($_SESSION['errors'])) {  
         $thread->create();
     } else {
         echo '<p>' . $_SESSION['errors'][0] . '</p>';

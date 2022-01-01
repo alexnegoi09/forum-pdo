@@ -1,1 +1,1 @@
-<footer>Copyright &copy; 2021 My Forum</footer>
+<footer>Copyright &copy; 2022 My Forum</footer>

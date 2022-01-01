@@ -8,8 +8,10 @@ if (!isset($_SESSION['username'])) {
     header('Location: /forum-pdo/index.php');
 }
 
+$post = new Post($db);
+
 // check for valid id
-Post::threadPostCheck($db);
+$post->threadPostCheck();
 
 ?>
 
@@ -39,16 +41,15 @@ Post::threadPostCheck($db);
 <?php
 if (isset($_POST['btn'])) {
     //check for empty message field
-    Post::emptyMessageCheck();
+    $post->emptyMessageCheck();
 
     // create post
     if (empty($_SESSION['errors'])) {
-    $post = new Post($_POST['post-body'], $db);
     $post->create();
 
     // update postcount
-    Post::getPostCount($db);
-    Post::setPostCount($db);
+    $post->getPostCount();
+    $post->setPostCount();
     } else {
 
         // display errors

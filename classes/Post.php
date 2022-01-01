@@ -1,25 +1,23 @@
 <?php
 
 class Post {
-    public $message;
     public $db;
 
 
-    public function __construct($message, $db) {
-        $this->message = $message;
+    public function __construct($db) {
         $this->db = $db;
     }
 
 
     public function create() {
         try {
-            $stmt = $this->db->prepare('INSERT INTO posts(thread_id, body, author) VALUES (:thread_id, :body, :author)');
+            $stmt = $this->db->prepare('INSERT INTO posts (thread_id, body, author) VALUES (:thread_id, :body, :author)');
             $stmt->bindParam(':thread_id', $thread_id);
             $stmt->bindParam(':body', $body);
             $stmt->bindParam(':author', $author);
 
             $thread_id = $_GET['id'];
-            $body = $this->message;
+            $body = $_POST['post-body'];
             $author = $_SESSION['username'];
 
             $stmt->execute();
@@ -39,7 +37,7 @@ class Post {
     public function update() {
         try {
             $stmt = $this->db->prepare('UPDATE posts SET body = ? WHERE id = ?');
-            $stmt->execute(array($this->message, $_GET['id']));      
+            $stmt->execute(array($_POST['post-body'], $_GET['id']));      
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -51,11 +49,11 @@ class Post {
     }
 
 
-    public static function read($db) {
+    public function read() {
 
         // retrieve posts from db
         try {
-            $stmt = $db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
+            $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
                                    WHERE threads.id = ? LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
             $stmt->execute(array($_GET['id']));
@@ -112,11 +110,11 @@ class Post {
     }
 
 
-    public static function threadPostCheck($db) {
+    public function threadPostCheck() {
 
         // check thread id
         try {
-            $stmt = $db->prepare('SELECT * FROM threads WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT * FROM threads WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -130,10 +128,10 @@ class Post {
     }
 
 
-    public static function messageCheck($db) {
+    public function messageCheck() {
 
         try {
-            $stmt = $db->prepare('SELECT * FROM posts WHERE id = ?');
+            $stmt = $this->db->prepare('SELECT * FROM posts WHERE id = ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetch();
 
@@ -154,7 +152,7 @@ class Post {
     }
     
 
-    public static function emptyMessageCheck() {
+    public function emptyMessageCheck() {
         $_SESSION['errors'] = [];
 
         if (empty($_POST['post-body'])) {
@@ -163,11 +161,11 @@ class Post {
     }
 
 
-    public static function getPostCount($db) {
+    public function getPostCount() {
 
         //count user posts
         try {
-            $stmt = $db->prepare('SELECT * FROM posts WHERE author = ?');
+            $stmt = $this->db->prepare('SELECT * FROM posts WHERE author = ?');
             $stmt->execute(array($_SESSION['username']));
             $result = $stmt->fetchAll();
             $number = count($result);
@@ -180,11 +178,11 @@ class Post {
     }
 
 
-    public static function setPostCount($db) {
+    public function setPostCount() {
 
          //update user postcount
          try {
-            $stmt2 = $db->prepare("UPDATE users SET postcount = ? WHERE username = ?");
+            $stmt2 = $this->db->prepare("UPDATE users SET postcount = ? WHERE username = ?");
             $stmt2->execute(array($_SESSION['postcount'], $_SESSION['username']));
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -193,10 +191,10 @@ class Post {
     }
 
 
-    public static function delete($db) {
+    public function delete() {
 
         try {
-            $stmt = $db->prepare('DELETE FROM posts WHERE id= ?');
+            $stmt = $this->db->prepare('DELETE FROM posts WHERE id= ?');
             $stmt->execute(array($_GET['id']));
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -206,10 +204,10 @@ class Post {
     }
 
 
-    public static function pagination($db) {
+    public function pagination() {
 
         try {
-            $stmt = $db->prepare('SELECT * FROM posts WHERE thread_id= ?');
+            $stmt = $this->db->prepare('SELECT * FROM posts WHERE thread_id= ?');
             $stmt->execute(array($_GET['id']));
             $result = $stmt->fetchAll();
 

@@ -15,7 +15,8 @@ require('classes/Database.php');
 <body>
     <?php 
         require('classes/Category.php');
-        Category::read($db); 
+        $category = new Category($db);
+        $category->read(); 
     ?>
 
 <?php require('includes/footer.php'); ?>
