@@ -19,7 +19,10 @@ if (!isset($_GET['user_id'])) {
 </head>
 <body>
     
-    <?php Login::userProfileInfo($db) ?>
+    <?php
+    Login::userProfileInfo($db);
+    $db = null; 
+     ?>
 
 <?php require('../includes/footer.php'); ?>
 </body>

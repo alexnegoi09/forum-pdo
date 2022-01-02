@@ -32,6 +32,8 @@ echo '<h3>Category: ' . $category->getTitle() . '</h3>';
 // retrieve and display threads from db
 $thread->read();
 
+$db = null;
+
 // check if signed in
 require('../includes/thread-link.php');
 

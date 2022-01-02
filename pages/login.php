@@ -48,6 +48,8 @@ if (isset($_POST['submit'])) {
         echo '<p>Please enter a username and password!</p>';
     }
    
+    $db = null;
+
 }
 
 require('../includes/footer.php');

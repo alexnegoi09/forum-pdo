@@ -58,6 +58,8 @@ if (isset($_POST['submit'])) {
 
         $_SESSION['errors'] = null;
     }
+
+    $db = null;
 }
 
 require('../includes/footer.php');

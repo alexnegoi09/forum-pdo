@@ -22,7 +22,7 @@ class Post {
 
             $stmt->execute();
             
-            $pdo = null;
+            
 
             // echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
             header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page']);
@@ -42,7 +42,6 @@ class Post {
             echo $e->getMessage();
         }
         
-        $db = null;
 
         // echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
         header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page']);
@@ -86,6 +85,7 @@ class Post {
                                             <td>
                                                 <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Edit</a>
                                                 <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
+                                                <a href="/forum-pdo/pages/move-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Move</a>
                                             </td>
                                         </tr>'; 
                             } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
@@ -174,7 +174,6 @@ class Post {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
-        $db = null;
     }
 
 
@@ -187,7 +186,6 @@ class Post {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
-        $db = null;
     }
 
 
@@ -200,7 +198,6 @@ class Post {
             echo $e->getMessage();
         }
 
-        $db = null;
     }
 
 
@@ -234,10 +231,37 @@ class Post {
                    echo '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $i . '">' . $i . " " . '</a>';
                 }
         }
-
-        $db = null;
+    
     }
 
+
+    public function getThreads() {
+        try {
+            $stmt = $this->db->query('SELECT * FROM threads');
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            foreach($result as $res) {
+                echo '<option>' . $res['title'] . ' / id: ' . $res['id'] . '</option>';
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function move() {
+      
+        $id = substr($_POST['select-thread'], strrpos($_POST['select-thread'], '/'));
+    
+        try {
+            $stmt = $this->db->prepare('UPDATE posts SET thread_id = ? WHERE id = ?');
+            $stmt->execute(array(filter_var($id, FILTER_SANITIZE_NUMBER_INT), $_GET['id']));
+            echo 'The post has been successfully moved to the selected thread.';
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 
 ?>

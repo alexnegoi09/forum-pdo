@@ -23,7 +23,6 @@ class Thread {
 
             $stmt->execute();
             echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
-            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -111,7 +110,6 @@ class Thread {
                 echo '</table>';
             }
 
-            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -132,7 +130,6 @@ class Thread {
             echo $e->getMessage();
         }
 
-        $pdo = null;
     }
 
 
@@ -148,7 +145,6 @@ class Thread {
             echo $e->getMessage();
         }
 
-        $db = null;
     }
 }
 

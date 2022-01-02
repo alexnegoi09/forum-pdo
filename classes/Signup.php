@@ -43,7 +43,6 @@ class Signup {
             array_push($_SESSION['errors'], 'The passwords do not match!');
         }
         
-        $db = null;
         
     }
 }
@@ -68,7 +67,6 @@ class Signup {
 
         $stmt->execute();
 
-        $db = null;
 
         echo '<p>Your account has been created successfully! You can now <a href="../pages/login.php">log in.</a></p>';
 

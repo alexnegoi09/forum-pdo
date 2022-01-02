@@ -16,7 +16,10 @@ require('classes/Database.php');
     <?php 
         require('classes/Category.php');
         $category = new Category($db);
-        $category->read(); 
+        $category->read();
+        
+        // close connection
+        $db = null;
     ?>
 
 <?php require('includes/footer.php'); ?>

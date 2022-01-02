@@ -42,7 +42,6 @@ class Category {
             exit('<p>No categories to show!</p>');
         }
 
-        $this->db = null;
     }
 
 

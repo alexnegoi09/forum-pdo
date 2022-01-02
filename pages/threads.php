@@ -33,6 +33,8 @@ echo '<h3>Thread: ' . $thread->getTitle() . '</h3>';
 $post->read();
 $post->pagination();
 
+$db = null;
+
 // check if signed in 
 require('../includes/post-link.php');
 

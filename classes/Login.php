@@ -44,8 +44,6 @@ class Login {
             $_SESSION['email'] = $result['email'];
             $_SESSION['location'] = $result['location'];
 
-            $db = null;
-
             header('Location: ../index.php');
 
         }
@@ -77,8 +75,6 @@ class Login {
        <?php } catch(PDOException $e) {
             echo $e->getMessage();
         }
-
-        $db = null;
     }
 
 }
