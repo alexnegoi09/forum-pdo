@@ -34,9 +34,29 @@ class Category {
                             <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . $res['name'] . 
                             '</a>
                              <p>' . $res['description'] . '</p>
-                        </td>
-                      </tr>';
-                }
+                        </td>';
+
+                        // get last post in category
+                        try {
+                            $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, threads.category_id 
+                                     FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN categories ON threads.category_id = categories.id 
+                                     WHERE categories.id = ? ORDER BY posts.created_at DESC LIMIT 1');
+                            $stmt->execute(array($res['id']));
+                            $result2 = $stmt->fetch();
+    
+                            if (!$result2) {
+                                echo '<td>No posts</td>';
+                            } else {
+                                echo '<td>Last post by <span>' . $result2['author'] . '</span> on <span>' . $result2['created_at'] . '</span></td>';
+                            }
+                        } catch(PDOException $e) {
+                            echo $e->getMessage();
+                        }
+                    }
+
+                echo '</tr>';
+
+
                 echo '</table>';
             } else {
             exit('<p>No categories to show!</p>');

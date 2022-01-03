@@ -98,14 +98,27 @@ class Thread {
                         <td>Title</td>
                         <td>Created on</td>
                         <td>Created by</td>
+                        <td>Last post by<td>
                     </tr>';
 
                 foreach ($result as $res) {
                     echo '<tr>
                             <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1>' . $res['title'] . '</td>
                             <td>' . $res['created_at'] . '</td>
-                            <td>' . $res['author'] . '</td>
-                          </tr>';
+                            <td>' . $res['author'] . '</td>';
+
+                            // get last post
+                            $stmt2 = $this->db->prepare('SELECT * FROM posts WHERE thread_id = ? ORDER BY created_at DESC LIMIT 1');
+                            $stmt2->execute(array($res['id']));
+                            $result2 = $stmt2->fetch();
+
+                            if (!$result2) {
+                                echo '<td>No posts</td>';
+                            } else {
+                                echo '<td>' . $result2['author'] . ' on ' . $result2['created_at'] . '</td>';
+                            }
+
+                          '</tr>';
                 }
                 echo '</table>';
             }

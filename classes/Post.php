@@ -24,7 +24,6 @@ class Post {
             
             
 
-            // echo '<p>Message posted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
             header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page']);
 
 
@@ -43,7 +42,6 @@ class Post {
         }
         
 
-        // echo '<p>Your message has been edited! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
         header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page']);
     }
 
@@ -102,7 +100,6 @@ class Post {
                     echo '</table>';
             }
 
-            $db = null;
 
         } catch(PDOException $e) {
             echo $e->getMessage();
