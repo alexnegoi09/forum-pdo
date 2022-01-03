@@ -28,7 +28,7 @@ class Category {
                     <tr>
                         <td>Categories</td>
                     </tr>';
-            foreach($result as $res) {
+            foreach($result as $res) { 
                 echo '<tr>
                         <td>
                             <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . $res['name'] . 
@@ -52,10 +52,20 @@ class Category {
                         } catch(PDOException $e) {
                             echo $e->getMessage();
                         }
+                        echo '</tr>';
+
+                        // if the user is an admin, display category buttons
+                        if (isset($_SESSION['username'])) {
+                            if ($_SESSION['groups'] === 'Administrator') {
+                                echo '<tr>
+                                        <td>
+                                            <a href="/forum-pdo/pages/edit-category.php?id=' . $res['id'] . '">Edit</a>
+                                            <a href="/forum-pdo/pages/delete-category.php?id=' . $res['id'] . '">Delete</a>
+                                        </td>
+                                    </tr>';
+                        }
                     }
-
-                echo '</tr>';
-
+                }
 
                 echo '</table>';
             } else {
@@ -65,6 +75,36 @@ class Category {
     }
 
 
+    public function emptyFieldsCheck() {
+        if (empty($_POST['category-title'])) {
+            $_SESSION['errors'][] = 'Please enter a category title!';
+        }
+
+        if (empty($_POST['category-description'])) {
+            $_SESSION['errors'][] = 'Please enter a category description!';
+        }
+    }
+
+
+    public function duplicateCheck() {
+
+        // check for duplicate threads
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM categories WHERE name = ?');
+            $stmt->execute(array($_POST['category-title']));
+            $result = $stmt->fetchAll();
+            if ($result) {
+                $_SESSION['errors'][] = 'There is already a category with the same name!';
+            }
+            
+
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+
     public function create() {
 
         try {
@@ -72,12 +112,12 @@ class Category {
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
 
-            $name = $_POST['name'];
-            $description = $_POST['description'];
+            $name = $_POST['category-title'];
+            $description = $_POST['category-description'];
 
             $stmt->execute();
 
-            echo '<p>Category created! Click <a href=/dev-php/forum-pdo/index.php>here</a> to go to the homepage.</p>';
+            echo '<p>Category created! Click <a href=/forum-pdo/index.php>here</a> to go to the homepage.</p>';
 
         } catch(PDOException $e) {
             echo $e->getMessage();

@@ -22,6 +22,9 @@ require('classes/Database.php');
         $db = null;
     ?>
 
-<?php require('includes/footer.php'); ?>
+    <?php 
+    require('includes/category-link.php');
+    require('includes/footer.php'); 
+    ?>
 </body>
 </html>
