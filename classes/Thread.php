@@ -1,10 +1,16 @@
 <?php
 
 class Thread {
+    public $category_id;
+    public $title;
+    public $author;
     public $db;
 
 
-    public function __construct($db) {
+    public function __construct($category_id, $title, $author, $db) {
+        $this->category_id = $category_id;
+        $this->title = $title;
+        $this->author = $author;
         $this->db = $db;
     }
 
@@ -17,9 +23,9 @@ class Thread {
             $stmt->bindParam(':title', $thread_title);
             $stmt->bindParam(':author', $thread_author);
 
-            $category_id = $_GET['id'];
-            $thread_title = $_POST['thread-title'];
-            $thread_author = $_SESSION['username'];
+            $category_id = $this->category_id;
+            $thread_title = $this->title;
+            $thread_author = $this->author; //$_SESSI;
 
             $stmt->execute();
             echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
@@ -37,7 +43,7 @@ class Thread {
         // check category id
         try {
             $stmt = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
-            $stmt->execute(array($_GET['id']));
+            $stmt->execute(array($this->category_id));
             $result = $stmt->fetch();
             if (!$result) {
                 header('Location: /forum-pdo/index.php');
@@ -51,7 +57,7 @@ class Thread {
 
 
     public function emptyTitleCheck() {
-        if (empty($_POST['thread-title'])) {
+        if (empty($this->title)) {
             $_SESSION['errors'][] = 'Please enter a thread title!';
         }
     }
@@ -62,7 +68,7 @@ class Thread {
         // check for duplicate threads
         try {
             $stmt = $this->db->prepare('SELECT * FROM threads WHERE title = ?');
-            $stmt->execute(array($_POST['thread-title']));
+            $stmt->execute(array($this->title));
             $result = $stmt->fetchAll();
             if ($result) {
                 $_SESSION['errors'][] = 'There is already a thread with the same name!';
@@ -82,7 +88,7 @@ class Thread {
             $stmt = $this->db->prepare('SELECT threads.id, threads.title, threads.author, threads.created_at 
                                    FROM threads INNER JOIN categories ON threads.category_id = categories.id 
                                    WHERE categories.id = ?');
-            $stmt->execute(array($_GET['id']));
+            $stmt->execute(array($this->category_id));
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {

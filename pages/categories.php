@@ -11,7 +11,7 @@ require '../classes/Category.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php $category = new Category($db); $category->getPageTitle(); ?></title>
+    <title><?php $category = new Category(null, null, $db); $category->getPageTitle(); ?></title>
 </head>
 <body>
     
@@ -23,7 +23,7 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 
 // check for valid id
-$thread = new Thread($db);
+$thread = new Thread($_GET['id'], null, null, $db);
 $thread->categoryCheck();
 
 //display category title

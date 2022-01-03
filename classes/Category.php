@@ -2,10 +2,14 @@
 
 
 class Category {
+    public $name;
+    public $description;
     public $db;
 
 
-    public function __construct($db) {
+    public function __construct($name, $description, $db) {
+        $this->name = $name;
+        $this->description = $description;
         $this->db = $db;
     }
 
@@ -112,8 +116,8 @@ class Category {
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
 
-            $name = $_POST['category-title'];
-            $description = $_POST['category-description'];
+            $name = $this->name;
+            $description = $this->description;
 
             $stmt->execute();
 

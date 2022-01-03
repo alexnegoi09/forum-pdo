@@ -1,10 +1,16 @@
 <?php
 
 class Post {
+    public $thread_id;
+    public $body;
+    public $author;
     public $db;
 
 
-    public function __construct($db) {
+    public function __construct($thread_id, $body, $author, $db) {
+        $this->thread_id = $thread_id;
+        $this->body = $body;
+        $this->author = $author;
         $this->db = $db;
     }
 
@@ -16,15 +22,15 @@ class Post {
             $stmt->bindParam(':body', $body);
             $stmt->bindParam(':author', $author);
 
-            $thread_id = $_GET['id'];
-            $body = $_POST['post-body'];
-            $author = $_SESSION['username'];
+            $thread_id = $this->thread_id; //$_GET['id'];
+            $body = $this->body; //$_POST['post-body'];
+            $author = $this->author; //$_SESSION['username'];
 
             $stmt->execute();
             
             
 
-            header('Location: /forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $_GET['page']);
+            header('Location: /forum-pdo/pages/threads.php?id=' . $this->thread_id . '&page=' . $_GET['page']);
 
 
         } catch(PDOException $e) {
@@ -36,7 +42,7 @@ class Post {
     public function update() {
         try {
             $stmt = $this->db->prepare('UPDATE posts SET body = ? WHERE id = ?');
-            $stmt->execute(array($_POST['post-body'], $_GET['id']));      
+            $stmt->execute(array($this->body, $_GET['id']));      
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -53,7 +59,7 @@ class Post {
             $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
                                    WHERE threads.id = ? LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
-            $stmt->execute(array($_GET['id']));
+            $stmt->execute(array($this->thread_id));
             $result = $stmt->fetchAll();
             
             if (count($result) === 0) {
@@ -112,7 +118,7 @@ class Post {
         // check thread id
         try {
             $stmt = $this->db->prepare('SELECT * FROM threads WHERE id = ?');
-            $stmt->execute(array($_GET['id']));
+            $stmt->execute(array($this->thread_id));
             $result = $stmt->fetch();
 
             if (!$result) {
@@ -202,7 +208,7 @@ class Post {
 
         try {
             $stmt = $this->db->prepare('SELECT * FROM posts WHERE thread_id= ?');
-            $stmt->execute(array($_GET['id']));
+            $stmt->execute(array($this->thread_id));
             $result = $stmt->fetchAll();
 
             // number of posts in the respective thread
@@ -225,7 +231,7 @@ class Post {
                 echo '<p>Pages:</p>';
                 
                 for ($i = 1; $i <= $pages; $i++) {
-                   echo '<a href="/forum-pdo/pages/threads.php?id=' . $_GET['id'] . '&page=' . $i . '">' . $i . " " . '</a>';
+                   echo '<a href="/forum-pdo/pages/threads.php?id=' . $this->thread_id . '&page=' . $i . '">' . $i . " " . '</a>';
                 }
         }
     

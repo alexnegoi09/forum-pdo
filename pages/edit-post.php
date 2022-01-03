@@ -4,9 +4,9 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
-$post = new Post($db);
+$post_id = new Post($_GET['id'], null, null, $db);
 
-$post->messageCheck();
+$post_id->messageCheck();
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
@@ -52,18 +52,16 @@ if (isset($_SESSION['username'])) {
  </body>
  </html>
 
-
-    <?php } else {  ?>
-
-        <?php // header('Location: /forum-pdo/index.php');  ?>
-
-        <?php } ?>
+    <?php } ?>
 
 <?php } ?>
 
 <?php 
 
 if (isset($_POST['btn'])) {
+
+    $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
+
     //check for empty message field
     $post->emptyMessageCheck();
 

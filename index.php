@@ -15,7 +15,7 @@ require('classes/Database.php');
 <body>
     <?php 
         require('classes/Category.php');
-        $category = new Category($db);
+        $category = new Category(null, null, $db);
         $category->read();
         
         // close connection

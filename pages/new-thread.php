@@ -8,10 +8,10 @@ if (!isset($_SESSION['username'])) {
     header('Location: /forum-pdo/index.php');
 }
 
-$thread = new Thread($db);
+$thread_id = new Thread($_GET['id'], null, null, $db);
 
 // check for valid id
-$thread->categoryCheck();
+$thread_id->categoryCheck();
 
 ?>
 
@@ -40,7 +40,11 @@ $thread->categoryCheck();
 
 <?php
 
+
 if (isset($_POST['btn'])) {
+
+    $thread = new Thread($_GET['id'], $_POST['thread-title'], $_SESSION['username'], $db);
+
     // check for empty form
     $thread->emptyTitleCheck();
 

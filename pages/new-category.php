@@ -10,8 +10,6 @@ if (isset($_SESSION['username'])) {
     }
 }
 
-$category = new Category($db);
-
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +41,9 @@ $category = new Category($db);
 <?php
 
 if (isset($_POST['btn'])) {
+
+    $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
+
     // check for empty form
     $category->emptyFieldsCheck();
 

@@ -4,7 +4,7 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
-$post = new Post($db);
+$post = new Post($_GET['id'], null, null, $db);
 
 //$post->messageCheck();
 

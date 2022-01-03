@@ -8,10 +8,10 @@ if (!isset($_SESSION['username'])) {
     header('Location: /forum-pdo/index.php');
 }
 
-$post = new Post($db);
+$post_id = new Post($_GET['id'], null, null, $db);
 
 // check for valid id
-$post->threadPostCheck();
+$post_id->threadPostCheck();
 
 ?>
 
@@ -39,7 +39,12 @@ $post->threadPostCheck();
 
 
 <?php
+
+
 if (isset($_POST['btn'])) {
+
+    $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
+
     //check for empty message field
     $post->emptyMessageCheck();
 
