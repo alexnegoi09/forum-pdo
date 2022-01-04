@@ -73,7 +73,7 @@ class Category {
 
                 echo '</table>';
             } else {
-            exit('<p>No categories to show!</p>');
+            echo '<p>No categories to show!</p>';
         }
 
     }
@@ -95,7 +95,7 @@ class Category {
         // check for duplicate threads
         try {
             $stmt = $this->db->prepare('SELECT * FROM categories WHERE name = ?');
-            $stmt->execute(array($_SESSION['name']));
+            $stmt->execute(array($this->name));
             $result = $stmt->fetch();
             if ($result) {
                 $_SESSION['errors'][] = 'There is already a category with the same name!';
@@ -189,6 +189,18 @@ class Category {
         } catch(PDOException $e) {
             echo $e->getMessage();
             
+        }
+    }
+
+
+    public function delete() {
+        try {
+            $stmt = $this->db->prepare('DELETE categories, threads, posts 
+                                        FROM categories INNER JOIN threads ON categories.id = threads.category_id INNER JOIN posts on threads.id = posts.thread_id 
+                                        WHERE threads.category_id = ?');
+            $stmt->execute(array($_GET['id']));
+        } catch(PDOException $e) {
+            echo $e->getMessage();
         }
     }
 }
