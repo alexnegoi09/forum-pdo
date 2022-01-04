@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])) {
             <input type="text" name="category-title" maxlength="255" placeholder="Enter category title..">
         </p>
         <p>
-            <input type="text" name="category-description" maxlength="255" placeholder="Enter category description..">
+            <textarea name="category-description" cols="30" rows="10" maxlength="255" placeholder="Enter category description.."></textarea>
         </p>
         <p>
             <input type="submit" name="btn" value="Create Category">

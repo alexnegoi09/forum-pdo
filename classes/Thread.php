@@ -25,7 +25,7 @@ class Thread {
 
             $category_id = $this->category_id;
             $thread_title = $this->title;
-            $thread_author = $this->author; //$_SESSI;
+            $thread_author = $this->author;
 
             $stmt->execute();
             echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
@@ -125,6 +125,17 @@ class Thread {
                             }
 
                           '</tr>';
+
+                          // if the user is an admin or a moderator, display thread buttons
+
+                          if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+                            echo '<tr>
+                                        <td>
+                                            <a href="/forum-pdo/pages/edit-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '">Edit</a>
+                                            <a href="/forum-pdo/pages/delete-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '">Delete</a>
+                                        </td>
+                                 </tr>';
+                          }
                 }
                 echo '</table>';
             }
@@ -165,6 +176,52 @@ class Thread {
         }
 
     }
+
+
+    public function messageCheck() {
+
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM threads WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            if (!$result) {
+                header('Location: /forum-pdo/index.php');
+                exit();
+
+            }
+
+            if ($_SESSION['groups'] !== 'Administrator' || $_SESSION['groups'] !== 'Moderator') {
+                $_SESSION['title'] = $result['title'];
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function update() {
+        try {
+            $stmt = $this->db->prepare('UPDATE threads SET title = ? WHERE id = ?');
+            $stmt->execute(array($this->title, $_GET['id']));      
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+            
+        }
+    }
+
+
+    public function delete() {
+        try {
+            $stmt = $this->db->prepare('DELETE categories, threads, posts 
+                                        FROM categories INNER JOIN threads ON categories.id = threads.category_id INNER JOIN posts on threads.id = posts.thread_id 
+                                        WHERE threads.category_id = ?');
+            $stmt->execute(array($_GET['id']));
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
+
 
 ?>
