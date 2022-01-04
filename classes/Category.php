@@ -188,6 +188,7 @@ class Category {
             $stmt->execute(array($this->name, $this->description, $_GET['id']));      
         } catch(PDOException $e) {
             echo $e->getMessage();
+            
         }
     }
 }

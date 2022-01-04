@@ -71,4 +71,5 @@ if (isset($_POST['btn'])) {
 }
 
 require('../includes/footer.php');
+
 ?>
