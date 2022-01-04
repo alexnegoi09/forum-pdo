@@ -222,6 +222,4 @@ class Thread {
         }
     }
 }
-
-
 ?>

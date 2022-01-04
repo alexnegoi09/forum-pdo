@@ -37,7 +37,6 @@ if (isset($_SESSION['username'])) {
 </body>
 </html>
 
-
 <?php
 
 if (isset($_POST['btn'])) {
