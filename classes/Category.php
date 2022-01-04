@@ -95,8 +95,8 @@ class Category {
         // check for duplicate threads
         try {
             $stmt = $this->db->prepare('SELECT * FROM categories WHERE name = ?');
-            $stmt->execute(array($_POST['category-title']));
-            $result = $stmt->fetchAll();
+            $stmt->execute(array($_SESSION['name']));
+            $result = $stmt->fetch();
             if ($result) {
                 $_SESSION['errors'][] = 'There is already a category with the same name!';
             }
@@ -157,6 +157,37 @@ class Category {
             echo $e->getMessage();
         }
     }
-}
 
-?>
+
+    public function messageCheck() {
+
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            if (!$result) {
+                header('Location: /forum-pdo/index.php');
+                exit();
+
+            }
+
+            if ($_SESSION['groups'] !== 'Administrator' || $_SESSION['groups'] !== 'Moderator') {
+                $_SESSION['name'] = $result['name'];
+                $_SESSION['description'] = $result['description'];
+            } 
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function update() {
+        try {
+            $stmt = $this->db->prepare('UPDATE categories SET name = ?, description = ? WHERE id = ?');
+            $stmt->execute(array($this->name, $this->description, $_GET['id']));      
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+}

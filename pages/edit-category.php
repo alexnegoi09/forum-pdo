@@ -4,31 +4,15 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Category.php');
 
-$category = new Category($db);
+$category_id = new Category(null, null, $db);
 
-$post->messageCheck();
+$category_id->messageCheck();
 
 if (isset($_SESSION['username'])) {
-    if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+    if ($_SESSION['groups'] === 'Administrator') {
 
         
 ?>
-
-<h2>Edit post</h2>
-
-<form action="" method="POST">
-    <p>
-    <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
-    </p>
-    <p>
-    <input type="submit" name="btn" value="Save">
-    </p>
-</form>
-
-
-   <?php } else if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
-
- ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,26 +20,28 @@ if (isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit post - My Forum</title>
+    <title>Edit category - My Forum</title>
 </head>
 <body>
-    <h2>Edit post</h2>
+    <h2>Edit category</h2>
 
     <form action="" method="POST">
         <p>
-        <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
+            <input type="text" name="category-title" maxlength="255" placeholder="Enter category title.." value="<?php echo $_SESSION['name']; ?>">
         </p>
         <p>
-        <input type="submit" name="btn" value="Save">
+            <textarea name="category-description" cols="30" rows="10" maxlength="255" placeholder="Enter category description.."><?php echo $_SESSION['description']; ?></textarea>
         </p>
-    </form>     
+        <p>
+            <input type="submit" name="btn" value="Edit Category">
+        </p>
+    </form>
  </body>
  </html>
 
-
     <?php } else {  ?>
 
-        <?php // header('Location: /forum-pdo/index.php');  ?>
+        <?php header('Location: /forum-pdo/index.php');  ?>
 
         <?php } ?>
 
@@ -64,12 +50,18 @@ if (isset($_SESSION['username'])) {
 <?php 
 
 if (isset($_POST['btn'])) {
+
+    $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
+
     //check for empty message field
-    $post->emptyMessageCheck();
+    $category->emptyFieldsCheck();
 
     // edit and save
     if (empty($_SESSION['errors'])) { 
-    $post->update();
+    $category->update();
+
+    header('Location: /forum-pdo/index.php');
+
     } else {
 
         // display errors
