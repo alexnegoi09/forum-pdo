@@ -6,7 +6,7 @@ require('../classes/Category.php');
 
 $category_id = new Category(null, null, $db);
 
-$category_id->messageCheck();
+$category_id->categoryCheck();
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator') {

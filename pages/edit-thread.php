@@ -6,7 +6,7 @@ require('../classes/Thread.php');
 
 $thread_id = new Thread(null, null, null, $db);
 
-$thread_id->messageCheck();
+$thread_id->threadCheck();
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {

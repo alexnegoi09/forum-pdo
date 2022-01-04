@@ -178,7 +178,7 @@ class Thread {
     }
 
 
-    public function messageCheck() {
+    public function threadCheck() {
 
         try {
             $stmt = $this->db->prepare('SELECT * FROM threads WHERE id = ?');
@@ -197,7 +197,7 @@ class Thread {
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
-    }
+    } 
 
 
     public function update() {
@@ -213,9 +213,9 @@ class Thread {
 
     public function delete() {
         try {
-            $stmt = $this->db->prepare('DELETE categories, threads, posts 
-                                        FROM categories INNER JOIN threads ON categories.id = threads.category_id INNER JOIN posts on threads.id = posts.thread_id 
-                                        WHERE threads.category_id = ?');
+            $stmt = $this->db->prepare('DELETE threads, posts 
+                                        FROM threads INNER JOIN posts ON threads.id = posts.thread_id 
+                                        WHERE threads.id = ?');
             $stmt->execute(array($_GET['id']));
         } catch(PDOException $e) {
             echo $e->getMessage();

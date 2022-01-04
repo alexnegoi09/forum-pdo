@@ -159,7 +159,7 @@ class Category {
     }
 
 
-    public function messageCheck() {
+    public function categoryCheck() {
 
         try {
             $stmt = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
@@ -194,13 +194,32 @@ class Category {
 
 
     public function delete() {
+        // check if category is empty
         try {
-            $stmt = $this->db->prepare('DELETE categories, threads, posts 
-                                        FROM categories INNER JOIN threads ON categories.id = threads.category_id INNER JOIN posts on threads.id = posts.thread_id 
-                                        WHERE threads.category_id = ?');
+            $stmt = $this->db->prepare('SELECT * FROM threads WHERE category_id = ?');
             $stmt->execute(array($_GET['id']));
-        } catch(PDOException $e) {
+            $result = $stmt->fetchAll();
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
+
+        if (!$result) {
+            try {
+                $stmt = $this->db->prepare('DELETE FROM categories WHERE id = ?');
+                $stmt->execute(array($_GET['id']));
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        } else {
+            try {
+                $stmt = $this->db->prepare('DELETE categories, threads, posts 
+                                            FROM categories INNER JOIN threads ON categories.id = threads.category_id INNER JOIN posts on threads.id = posts.thread_id 
+                                            WHERE threads.category_id = ?');
+                $stmt->execute(array($_GET['id'])); 
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+
+        }
+      }
     }
-}
