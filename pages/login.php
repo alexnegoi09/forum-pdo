@@ -13,6 +13,7 @@ require('../classes/Login.php');
     <title>Log in - My Forum</title>
 </head>
 <body>
+    <h1><a href="/forum-pdo/index.php">My Forum</a></h1>
 
     <h2>Log in</h2>
 

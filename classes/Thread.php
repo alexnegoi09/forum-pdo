@@ -92,7 +92,7 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                echo'<p>There are no threads to show!</p>';
+                header('Location: /forum-pdo/pages/new-thread.php?id=' . $_GET['id']);
             } else {
 
                 // display threads
@@ -126,8 +126,9 @@ class Thread {
 
                           '</tr>';
 
-                          // if the user is an admin or a moderator, display thread buttons
-
+                        
+                        // if the user is an admin or a moderator, display thread buttons
+                        if (isset($_SESSION['username'])) {
                           if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
                             echo '<tr>
                                         <td>
@@ -135,10 +136,11 @@ class Thread {
                                             <a href="/forum-pdo/pages/delete-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '">Delete</a>
                                         </td>
                                  </tr>';
-                          }
-                }
+                           }
+                   }
+               }
                 echo '</table>';
-            }
+           }
 
 
         } catch(PDOException $e) {

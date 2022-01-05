@@ -1,7 +1,10 @@
 <?php
-require '../classes/Database.php';
-require '../classes/Thread.php'; 
+require('../classes/Database.php');
+require('../classes/Thread.php'); 
 require '../classes/Category.php';
+require('../classes/Nav.php');
+require('../includes/header.php');
+require('../includes/logout.php');
  
 ?>
 
@@ -14,28 +17,30 @@ require '../classes/Category.php';
     <title><?php $category = new Category(null, null, $db); $category->getPageTitle(); ?></title>
 </head>
 <body>
-    
+    <?php 
+
+    // check for valid id
+    $thread = new Thread($_GET['id'], null, null, $db);
+    $thread->categoryCheck();
+
+    // display forum navigation
+    $nav = new Nav($db);
+    $nav->display();
+
+    // display category title
+    echo '<h3>Category: ' . $category->getTitle() . '</h3>';
+
+
+    // retrieve and display threads from db
+    $thread->read();
+
+    $db = null;
+
+    // check if signed in
+    require('../includes/thread-link.php');
+
+    require('../includes/footer.php');
+    ?>    
 </body>
 </html>
 
-<?php
-require('../includes/header.php');
-require('../includes/logout.php'); 
-
-// check for valid id
-$thread = new Thread($_GET['id'], null, null, $db);
-$thread->categoryCheck();
-
-//display category title
-echo '<h3>Category: ' . $category->getTitle() . '</h3>';
-
-// retrieve and display threads from db
-$thread->read();
-
-$db = null;
-
-// check if signed in
-require('../includes/thread-link.php');
-
-require('../includes/footer.php');
- ?>

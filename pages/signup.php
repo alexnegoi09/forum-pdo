@@ -13,6 +13,7 @@ require('../classes/Signup.php');
     <title>New account - My Forum</title>
 </head>
 <body>
+    <h1><a href="/forum-pdo/index.php">My Forum</a></h1>
 
     <h2>Create a new account</h2>
 

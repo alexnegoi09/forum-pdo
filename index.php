@@ -13,6 +13,8 @@ require('classes/Database.php');
     <title>Home - My Forum</title>
 </head>
 <body>
+
+    
     <?php 
         require('classes/Category.php');
         $category = new Category(null, null, $db);
@@ -26,5 +28,6 @@ require('classes/Database.php');
     require('includes/category-link.php');
     require('includes/footer.php'); 
     ?>
+    
 </body>
 </html>
