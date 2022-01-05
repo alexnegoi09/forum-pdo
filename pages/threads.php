@@ -4,7 +4,7 @@ require('../classes/Thread.php');
 require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php'); 
-require('../classes/Nav.php');
+require('../classes/Navigation.php');
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ require('../classes/Nav.php');
     $post->threadPostCheck();
 
     //display forum navigation
-    $nav = new Nav($db);
+    $nav = new Navigation($db);
     $nav->display();
 
     // display thread title

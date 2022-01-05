@@ -2,7 +2,7 @@
 require('../classes/Database.php');
 require('../classes/Thread.php'); 
 require '../classes/Category.php';
-require('../classes/Nav.php');
+require('../classes/Navigation.php');
 require('../includes/header.php');
 require('../includes/logout.php');
  
@@ -24,7 +24,7 @@ require('../includes/logout.php');
     $thread->categoryCheck();
 
     // display forum navigation
-    $nav = new Nav($db);
+    $nav = new Navigation($db);
     $nav->display();
 
     // display category title

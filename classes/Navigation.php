@@ -1,6 +1,6 @@
 <?php
 
-class Nav {
+class Navigation {
     public $db;
 
     public function __construct($db) {
@@ -14,7 +14,7 @@ class Nav {
                 $stmt->execute(array($_GET['id']));
                 $result = $stmt->fetch();
 
-                echo '<nav>You are here: <a href="/forum-pdo/index.php">My Forum</a> >> <span>' . $result['name'] . '<span></nav>';
+                echo '<nav>You are here: <a href="/forum-pdo/index.php">My Forum</a> > <span>' . $result['name'] . '<span></nav>';
             
             } catch(PDOException $e) {
                 echo $e->getMessage();

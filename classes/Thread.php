@@ -92,7 +92,7 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                header('Location: /forum-pdo/pages/new-thread.php?id=' . $_GET['id']);
+                echo '<p>No threads to show!</p>';
             } else {
 
                 // display threads
@@ -216,7 +216,7 @@ class Thread {
     public function delete() {
         try {
             $stmt = $this->db->prepare('DELETE threads, posts 
-                                        FROM threads INNER JOIN posts ON threads.id = posts.thread_id 
+                                        FROM threads LEFT JOIN posts ON threads.id = posts.thread_id 
                                         WHERE threads.id = ?');
             $stmt->execute(array($_GET['id']));
         } catch(PDOException $e) {
