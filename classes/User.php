@@ -46,6 +46,24 @@ class User {
             echo $e->getMessage();
         }
     }
+
+
+    public function getPageTitle() {
+        switch($_SESSION['groups']) {
+            case 'Administrator':
+                echo '<h3>Administrator Control Panel</h3>';
+                break;
+            
+            case 'Moderator':
+                echo '<h3>Moderator Control Panel</h3>';
+                break;
+
+            default:
+                echo '<h3>User Control Panel</h3>';
+        }
+    }
+    
+
 }
 
 ?>

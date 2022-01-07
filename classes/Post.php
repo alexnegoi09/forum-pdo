@@ -58,7 +58,7 @@ class Post {
         try {
             $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
                                    FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
-                                   WHERE threads.id = ? LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
+                                   WHERE threads.id = ? ORDER BY posts.created_at ASC LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
             $stmt->execute(array($this->thread_id));
             $result = $stmt->fetchAll();
             
