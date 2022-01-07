@@ -44,39 +44,55 @@ class Login {
             $_SESSION['email'] = $result['email'];
             $_SESSION['location'] = $result['location'];
 
+            
+            if (isset($_POST['checkbox'])) {
+                $this->remember();
+            }
+
             header('Location: ../index.php');
 
         }
     }
 
 
-    public static function userProfileInfo($db) {
+    public function remember() {
         try {
-            $query = $db->prepare('SELECT username, groups, email, joined, postcount, profilepic, location FROM users WHERE userid = ?');
-            $query->execute(array($_GET['user_id']));
-            $result = $query->fetch();
+            $random = random_bytes(5);
+            $rememberToken = $_SESSION['user_id'] . bin2hex($random);
+            echo $rememberToken . '<br>';
 
-            if (count($result) === 0) {
-                header('Location: ../index.php');
-            } else { ?>
-
-                <h3>User Profile - <?php echo $result['username']; ?></h3>
-                    
-                <div>
-                    <p>Statistics</p>
-                    <p>Profile picture: <?php echo $result['profilepic']; ?></p>
-                    <p>E-mail: <?php echo $result['email']; ?></p>
-                    <p>Join date: <?php echo $result['joined']; ?></p>
-                    <p>Rank: <?php echo $result['groups']; ?></p>
-                    <p>Number of posts: <?php echo $result['postcount']; ?></p>
-                    <p>Location: <?php echo $result['location']; ?></p>
-                </div>
-            <?php } ?>
-       <?php } catch(PDOException $e) {
+            $stmt = $this->db->prepare('UPDATE users SET remember = ? WHERE userid = ?');
+            $stmt->execute(array($rememberToken, $_SESSION['user_id']));
+            setcookie('remember', $rememberToken, time() + 604800, '/');
+        } catch(PDOException $e) {
             echo $e->getMessage();
         }
     }
 
+
+    public function stayLoggedIn() {
+
+        try {
+            $stmt = $this->db->prepare('SELECT * FROM users WHERE remember = ?');
+            $stmt->execute(array($_COOKIE['remember']));
+            $result = $stmt->fetch();
+
+            if ($result) {
+                $_SESSION['username'] = $result['username'];
+                $_SESSION['groups'] = $result['groups'];
+                $_SESSION['user_id'] = $result['userid'];
+                $_SESSION['profilepic'] = $result['profilepic'];
+                $_SESSION['postcount'] = $result['postcount'];
+                $_SESSION['joined'] = $result['joined'];
+                $_SESSION['email'] = $result['email'];
+                $_SESSION['location'] = $result['location'];
+
+               // header('Location: /forum-pdo/index.php');
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    } 
 }
 
 ?>

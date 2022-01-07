@@ -1,6 +1,11 @@
 <?php
 require('../classes/Database.php');
-require('../classes/Login.php'); 
+require('../classes/Login.php');
+
+if (isset($_COOKIE['remember'])) {
+    header('Location: /forum-pdo/index.php');
+}
+
  ?>
 
 

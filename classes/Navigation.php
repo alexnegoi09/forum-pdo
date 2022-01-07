@@ -8,7 +8,7 @@ class Navigation {
     }
 
     public function display() {
-       if (strpos($_SERVER['PHP_SELF'], 'categories')) {
+        if (strpos($_SERVER['PHP_SELF'], 'categories')) {
             try {
                 $stmt = $this->db->prepare('SELECT name FROM categories WHERE id = ?');
                 $stmt->execute(array($_GET['id']));
@@ -31,8 +31,8 @@ class Navigation {
                 
             } catch(PDOException $e) {
                 echo $e->getMessage();
-            }
-        } 
+            } 
+        }
     }   
 }
 

@@ -2,10 +2,14 @@
 require('../includes/header.php');
 require('../includes/logout.php');
 require('../classes/Database.php');
-require('../classes/Login.php');
+require('../classes/User.php');
 
-if (!isset($_GET['user_id'])) {
-    header('Location: /forum-pdo/index.php');
+if (isset($_SESSION['username'])) {
+    if (!isset($_GET['user_id'])) {
+        header('Location: /forum-pdo/index.php');
+    }
+} else {
+    header('Location: /forum-pdo/pages/login.php');
 }
 ?>
 
@@ -20,7 +24,8 @@ if (!isset($_GET['user_id'])) {
 <body>
     
     <?php
-    Login::userProfileInfo($db);
+    $user = new User(null, null, null, null, null, null, $db);
+    $user->getProfileInfo();
     $db = null; 
      ?>
 

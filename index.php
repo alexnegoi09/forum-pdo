@@ -2,6 +2,13 @@
 require('includes/header.php');
 require('includes/logout.php');
 require('classes/Database.php');
+require('classes/Login.php');
+
+if (isset($_COOKIE['remember'])) {
+    $login = new Login(null, null, $db);
+    $login->stayLoggedIn();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +26,7 @@ require('classes/Database.php');
         require('classes/Category.php');
         $category = new Category(null, null, $db);
         $category->read();
+        print_r($_COOKIE);
         
         // close connection
         $db = null;
