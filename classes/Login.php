@@ -59,7 +59,6 @@ class Login {
         try {
             $random = random_bytes(5);
             $rememberToken = $_SESSION['user_id'] . bin2hex($random);
-            echo $rememberToken . '<br>';
 
             $stmt = $this->db->prepare('UPDATE users SET remember = ? WHERE userid = ?');
             $stmt->execute(array($rememberToken, $_SESSION['user_id']));
@@ -87,7 +86,6 @@ class Login {
                 $_SESSION['email'] = $result['email'];
                 $_SESSION['location'] = $result['location'];
 
-               // header('Location: /forum-pdo/index.php');
             }
         } catch(PDOException $e) {
             echo $e->getMessage();

@@ -26,7 +26,6 @@ if (isset($_COOKIE['remember'])) {
         require('classes/Category.php');
         $category = new Category(null, null, $db);
         $category->read();
-        print_r($_COOKIE);
         
         // close connection
         $db = null;
