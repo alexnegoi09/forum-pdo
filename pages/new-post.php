@@ -24,6 +24,8 @@ $post_id->threadPostCheck();
     <title>New post - My Forum</title>
 </head>
 <body>
+    <button class="back">Go back</button>
+
     <h2>Make a new post</h2>
 
     <form action="" method="POST">
@@ -34,6 +36,8 @@ $post_id->threadPostCheck();
         <input type="submit" name="btn" value="Post">
         </p>
     </form>
+
+    <script src="../js/nav.js"></script>
 </body>
 </html>
 

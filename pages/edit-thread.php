@@ -23,6 +23,8 @@ if (isset($_SESSION['username'])) {
     <title>Edit thread - My Forum</title>
 </head>
 <body>
+    <button class="back">Go back</button>
+
     <h2>Edit thread</h2>
 
     <form action="" method="POST">
@@ -33,6 +35,8 @@ if (isset($_SESSION['username'])) {
             <input type="submit" name="btn" value="Edit Thread">
         </p>
     </form>
+
+    <script src="../js/nav.js"></script>
  </body>
  </html>
 

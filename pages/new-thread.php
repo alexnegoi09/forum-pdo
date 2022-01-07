@@ -24,6 +24,8 @@ $thread_id->categoryCheck();
     <title>New thread - My Forum</title>
 </head>
 <body>
+    <button class="back">Go back</button>
+
     <h2>Start a new thread</h2>
 
     <form action="" method="POST">
@@ -34,6 +36,8 @@ $thread_id->categoryCheck();
         <input type="submit" name="btn" value="Create Thread">
         </p>
     </form>
+
+    <script src="../js/nav.js"></script>
 </body>
 </html>
 

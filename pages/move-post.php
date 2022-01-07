@@ -6,13 +6,23 @@ require('../classes/Post.php');
 
 $post = new Post($_GET['id'], null, null, $db);
 
-//$post->messageCheck();
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
 
         
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move post - My Forum</title>
+</head>
+<body>
+<button class="back">Go back</button>
 
 <h2>Move post</h2>
 
@@ -40,3 +50,7 @@ if (isset($_SESSION['username'])) {
 <?php
 require('../includes/footer.php');
 ?>
+
+    <script src="../js/nav.js"></script>
+</body>
+</html>

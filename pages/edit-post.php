@@ -9,26 +9,10 @@ $post_id = new Post($_GET['id'], null, null, $db);
 $post_id->messageCheck();
 
 if (isset($_SESSION['username'])) {
-    if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+    if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator' || $_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
 
         
 ?>
-
-<h2>Edit post</h2>
-
-<form action="" method="POST">
-    <p>
-    <textarea name="post-body" cols="30" rows="10"><?php echo $_SESSION['post_body']; ?></textarea>
-    </p>
-    <p>
-    <input type="submit" name="btn" value="Save">
-    </p>
-</form>
-
-
-   <?php } else if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
-
- ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +23,8 @@ if (isset($_SESSION['username'])) {
     <title>Edit post - My Forum</title>
 </head>
 <body>
+    <button class="back">Go back</button>
+
     <h2>Edit post</h2>
 
     <form action="" method="POST">
@@ -48,11 +34,15 @@ if (isset($_SESSION['username'])) {
         <p>
         <input type="submit" name="btn" value="Save">
         </p>
-    </form>     
- </body>
- </html>
+    </form>
 
-    <?php } ?>
+    <script src="../js/nav.js"></script>
+</body>
+</html>
+
+    <?php } else {
+        header('Location: /forum-pdo/index.php');
+    } ?>
 
 <?php } ?>
 
@@ -77,5 +67,5 @@ if (isset($_POST['btn'])) {
 }
 
 require('../includes/footer.php');
-?>
 
+?>
