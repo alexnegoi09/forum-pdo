@@ -29,6 +29,59 @@ if (!isset($_SESSION['username'])) {
             <label for="username">Username: </label>
             <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" disabled>
         </p>
+        <p>
+            <label for="password">New password: </label>
+            <input type="password" name="password">
+        </p>
+        <p>
+            <label for="repass">Re-type password: </label>
+            <input type="repass" name="repass">
+        </p>
+        <p>
+            <label for="profilepic">Change profile picture:</label>
+            <input type="file" name="profilepic">
+            <pre>The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
+        </p>
+        <p>
+            <label for="location">Location: </label>
+            <input type="text" name="location">
+        </p>
+        <p>
+            <input type="submit" value="Update info">
+        </p>
     </form>
+
+    <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
+
+        <h4>Forum Controls</h4>
+
+        <form action="" method="POST">
+            <p>Number of warnings received: </p>
+    
+            <p>
+                <label for="lock">Lock or unlock a thread: </label>
+                <select name="lock"></select>
+                <input type="submit" value="Lock">
+                <input type="submit" value="Unlock">
+            </p>
+            <p>
+                <label for="warn">Warn users: </label>
+                <select name="warn"></select>
+                <input type="submit" value="Warn user">
+            </p>
+
+            <?php if($_SESSION['groups'] === 'Administrator') { ?>
+
+            <p>
+                <label for="ban">Ban users: </label>
+                <select name="ban"></select>
+                <input type="submit" value="Ban user">
+            </p>
+                <?php } ?>
+    <?php } ?>
+        </form>
+
+
+    
 </body>
 </html>
