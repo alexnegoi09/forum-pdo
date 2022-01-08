@@ -35,7 +35,7 @@ if (!isset($_SESSION['username'])) {
         </p>
         <p>
             <label for="repass">Re-type password: </label>
-            <input type="repass" name="repass">
+            <input type="password" name="repass">
         </p>
         <p>
             <label for="profilepic">Change profile picture:</label>
@@ -47,9 +47,24 @@ if (!isset($_SESSION['username'])) {
             <input type="text" name="location">
         </p>
         <p>
-            <input type="submit" value="Update info">
+            <input type="submit" name="update" value="Update info">
         </p>
     </form>
+
+    <?php 
+        if (isset($_POST['update'])) {
+            $user = new User($_SESSION['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], null, null, null, $db);
+            $user->updatePassword();
+
+            if (!empty($_SESSION['errors'])) {
+                foreach($_SESSION['errors'] as $err) {
+                    echo '<p>' . $err . '</p>';
+                }
+            } else {
+                echo '<p>Your user information has been updated!</p>';
+            }
+        }
+    ?>
 
     <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
 
