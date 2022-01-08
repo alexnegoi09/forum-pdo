@@ -67,12 +67,15 @@ class User {
     public function updatePassword() {
         $_SESSION['errors'] = [];
 
-        if (empty($this->password) || empty($this->repass)  || $_POST['password'] !== $this->repass) {
+        // if empty, leave info unchanged
+        if (empty($this->password) && empty($this->repass)) {
+            echo 'No changes have been made to your user info!';
+        } else if (empty($this->password) && !empty($this->repass)  || !empty($this->password) && empty($this->repass) || $_POST['password'] !== $this->repass) {
             array_push($_SESSION['errors'], 'The passwords do not match!');
         } else {
             try {
                 $stmt = $this->db->prepare('UPDATE users SET password = ? WHERE username = ?');
-                $stmt->execute(array($this->password, $this->username));
+                $stmt->execute(array(password_hash($this->password, PASSWORD_DEFAULT), $this->username));
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }

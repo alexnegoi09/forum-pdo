@@ -53,7 +53,7 @@ if (!isset($_SESSION['username'])) {
 
     <?php 
         if (isset($_POST['update'])) {
-            $user = new User($_SESSION['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], null, null, null, $db);
+            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, null, null, $db);
             $user->updatePassword();
 
             if (!empty($_SESSION['errors'])) {
@@ -61,7 +61,7 @@ if (!isset($_SESSION['username'])) {
                     echo '<p>' . $err . '</p>';
                 }
             } else {
-                echo '<p>Your user information has been updated!</p>';
+                echo '<p>Your user info has been updated!</p>';
             }
         }
     ?>
@@ -97,6 +97,6 @@ if (!isset($_SESSION['username'])) {
         </form>
 
 
-    
+    <?php require('../includes/footer.php'); ?>
 </body>
 </html>
