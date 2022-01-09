@@ -89,7 +89,6 @@ class User {
 
             // check image size
             $image_info = getimagesize($_FILES['profilepic']['tmp_name']);
-            print_r($image_info);
 
             if ($image_info[0] > 200 && $image_info[1] > 200) {
                 array_push($_SESSION['errors'], 'The maximum picture resolution must be 200x200!');
