@@ -10,7 +10,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['groups'])) { ?>
         <h1><a href="/forum-pdo/index.php">My Forum</a></h1>
         <?php echo '<div>Logged in as: <a href="/forum-pdo/pages/profile.php?user_id=' . $_SESSION['user_id'] . '">' . $_SESSION['username'] . '</a> (' . $_SESSION['groups'] . ')</div>'; ?>
         <div>
-            <a href="/forum-pdo/pages/cpanel.php">Control Panel</a>
+            <?php if ($_SESSION['groups'] === 'Administrator') { ?>
+                <a href="/forum-pdo/pages/cpanel.php">Administrator Control Panel</a>
+            <?php } else if ($_SESSION['groups'] === 'Moderator') { ?>
+                <a href="/forum-pdo/pages/cpanel.php">Moderator Control Panel</a>
+            <?php } else { ?>
+                <a href="/forum-pdo/pages/cpanel.php">User Control Panel</a>
+            <?php } ?>
             <a href="/forum-pdo/index.php?action=logout">Log out</a>
         </div>
     </header>

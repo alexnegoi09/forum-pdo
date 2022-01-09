@@ -24,7 +24,18 @@ if (!isset($_SESSION['username'])) {
         $user->getPageTitle();
     ?>
 
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <p>
+            <?php if (empty($_SESSION['profilepic'])) { ?>
+                <label for="profilepic">Change profile picture:</label>
+                <input type="file" name="profilepic">
+                <pre>The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
+            <?php } else { ?>
+                <p>Profile Picture:</p>
+                <img src="<?php echo '../img/' . $_SESSION['profilepic']; ?>" alt="profile picture">
+                <input type="submit" name="remove" value="Remove">
+            <?php } ?>
+        </p>
         <p>
             <label for="username">Username: </label>
             <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" disabled>
@@ -38,11 +49,6 @@ if (!isset($_SESSION['username'])) {
             <input type="password" name="repass">
         </p>
         <p>
-            <label for="profilepic">Change profile picture:</label>
-            <input type="file" name="profilepic">
-            <pre>The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
-        </p>
-        <p>
             <label for="location">Location: </label>
             <input type="text" name="location">
         </p>
@@ -51,20 +57,7 @@ if (!isset($_SESSION['username'])) {
         </p>
     </form>
 
-    <?php 
-        if (isset($_POST['update'])) {
-            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, null, null, $db);
-            $user->updatePassword();
-
-            if (!empty($_SESSION['errors'])) {
-                foreach($_SESSION['errors'] as $err) {
-                    echo '<p>' . $err . '</p>';
-                }
-            } else {
-                echo '<p>Your user info has been updated!</p>';
-            }
-        }
-    ?>
+    
 
     <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
 
@@ -95,6 +88,27 @@ if (!isset($_SESSION['username'])) {
                 <?php } ?>
     <?php } ?>
         </form>
+
+    <?php 
+        if (isset($_POST['update'])) {
+            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_FILES['profilepic']['name'], null, $db);
+            $user->updatePassword();
+            $user->updateProfilePic();
+
+            if (!empty($_SESSION['errors'])) {
+                foreach($_SESSION['errors'] as $err) {
+                    echo '<p>' . $err . '</p>';
+                }
+            } else {
+                echo '<p>Your user info has been updated!</p>';
+            }
+        }
+
+        if (isset($_POST['remove'])) {
+            $user_remove = new User($_SESSION['username'], null, null, null, null, null, $db);
+            $user_remove->deleteProfilePic();
+        }
+    ?>
 
 
     <?php require('../includes/footer.php'); ?>

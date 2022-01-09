@@ -34,7 +34,7 @@ class User {
                     
                 <div>
                     <p>Statistics</p>
-                    <p>Profile picture: <?php echo $result['profilepic']; ?></p>
+                    <p>Profile picture: <img src="<?php echo '/forum-pdo/img/' . $result['profilepic'] ?>" alt="profile picture"></p>
                     <p>E-mail: <?php echo $result['email']; ?></p>
                     <p>Join date: <?php echo $result['joined']; ?></p>
                     <p>Rank: <?php echo $result['groups']; ?></p>
@@ -81,7 +81,46 @@ class User {
             }
         }
     }
-    
-}
 
+
+    public function updateProfilePic() {
+
+        if ($_FILES['profilepic']['type'] === "image/jpeg" && $_FILES['profilepic']['type'] = 'image/png' && $_FILES['profilepic']['size'] < 2097152) {
+
+            // check image size
+            $image_info = getimagesize($_FILES['profilepic']['tmp_name']);
+            print_r($image_info);
+
+            if ($image_info[0] > 200 && $image_info[1] > 200) {
+                array_push($_SESSION['errors'], 'The maximum picture resolution must be 200x200!');
+             
+                // if resolution is ok, upload image path to db
+            } else if (move_uploaded_file($_FILES['profilepic']['tmp_name'], '../img/' . $_FILES['profilepic']['name'])) {
+
+                try {
+                    $stmt = $this->db->prepare('UPDATE users SET profilepic = ? WHERE username = ?');
+                    $stmt->execute(array($this->profilepic, $this->username));
+                    $_SESSION['profilepic'] = $this->profilepic;
+                } catch(PDOException $e) {
+                    echo $e->getMessage();
+                }
+            }
+        } else {
+            array_push($_SESSION['errors'], "The maximum filesize must be 2 MB! The supported file extensions are '.jpg', '.jpeg' or '.png'!");
+        }
+    }
+    
+    
+    public function deleteProfilePic() {
+        try {
+            $stmt = $this->db->prepare('UPDATE users SET profilepic = ? WHERE username = ?');
+            $stmt->execute(array('', $this->username));
+            header('Location: /forum-pdo/pages/cpanel.php');
+        } catch(PDOException $e) {
+           echo $e->getMessage();
+        }
+
+        $_SESSION['profilepic'] = null;
+    }
+}
 ?>

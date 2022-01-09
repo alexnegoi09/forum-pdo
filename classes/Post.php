@@ -56,9 +56,9 @@ class Post {
 
         // retrieve posts from db
         try {
-            $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups 
-                                   FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
-                                   WHERE threads.id = ? ORDER BY posts.created_at ASC LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
+            $stmt = $this->db->prepare('SELECT posts.id, posts.thread_id, posts.body, posts.author, posts.created_at, users.userid, users.groups, users.profilepic 
+                                        FROM posts INNER JOIN threads ON posts.thread_id = threads.id INNER JOIN users ON posts.author = users.username 
+                                        WHERE threads.id = ? ORDER BY posts.created_at ASC LIMIT ' . ($_GET['page'] * 10) - 10 . ', 10');
             $stmt->execute(array($this->thread_id));
             $result = $stmt->fetchAll();
             
@@ -73,12 +73,15 @@ class Post {
 
                 foreach($result as $res) {
                     echo '<tr>
-                            <td>
-                                <p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
-                                <p>Posted on ' . $res['created_at'] . '</p>
-                            </td>
-                            <td>' .  $res['body'] .  '</td>
-                          </tr>';
+                            <td>';
+                            if (!empty($res['profilepic'])) {
+                                echo '<img src="../img/' . $res['profilepic'] . '">';
+                            }
+                                echo '<p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
+                                        <p>Posted on ' . $res['created_at'] . '</p>
+                                </td>
+                                <td>' .  $res['body'] .  '</td>
+                            </tr>';
 
                           // if the user is an admin or a moderator, the edit and delete buttons remain on permanently, else, they disappear one hour after the message was posted
 
