@@ -80,7 +80,7 @@ class Post {
                                 echo '<p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                         <p>Posted on ' . $res['created_at'] . '</p>
                                 </td>
-                                <td>' .  $res['body'] .  '</td>
+                                <td>' . htmlspecialchars($res['body']) .  '</td>
                             </tr>';
 
                           // if the user is an admin or a moderator, the edit and delete buttons remain on permanently, else, they disappear one hour after the message was posted

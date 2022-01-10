@@ -35,9 +35,9 @@ class Category {
             foreach($result as $res) { 
                 echo '<tr>
                         <td>
-                            <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . $res['name'] . 
+                            <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . htmlspecialchars($res['name']) . 
                             '</a>
-                             <p>' . $res['description'] . '</p>
+                             <p>' . htmlspecialchars($res['description']) . '</p>
                         </td>';
 
                         // get last post in category
