@@ -214,5 +214,31 @@ class User {
             }
         }
     }
+
+
+    public function unlockThread() {
+        if ($_POST['lock'] !== 'Select a thread') {
+            try {
+                $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
+                $stmt->execute(array(0, $_POST['lock']));
+                echo '<p>The selected thread has been unlocked!</p>';
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+
+    public function banUser() {
+        if ($_POST['ban'] !== 'Select a user') {
+            try {
+                $stmt = $this->db->prepare('DELETE FROM users WHERE username = ?');
+                $stmt->execute(array($_POST['ban']));
+                echo '<p>The selected user has been banned!</p>';
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
 }
 ?>

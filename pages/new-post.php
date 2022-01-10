@@ -13,6 +13,11 @@ $post_id = new Post($_GET['id'], null, null, $db);
 // check for valid id
 $post_id->threadPostCheck();
 
+// check if thread is locked
+if ($post_id->isThreadLocked() === '1') {
+    header('Location: /forum-pdo/index.php');
+}
+
 ?>
 
 <!DOCTYPE html>

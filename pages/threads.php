@@ -36,8 +36,12 @@ require('../classes/Navigation.php');
 
     $db = null;
 
-    // check if signed in 
-    require('../includes/post-link.php');
+
+    if ($post->isThreadLocked() === '0') {
+        require('../includes/post-link.php');
+    } else {
+        echo '<p>Locked</p>';
+    }
 
     require('../includes/footer.php');
     ?>

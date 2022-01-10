@@ -4,9 +4,10 @@ require('../includes/header.php');
 require('../includes/logout.php'); 
 require('../classes/Post.php');
 
-$post_id = new Post($_GET['id'], null, null, $db);
+$post_id = new Post($_GET['thread_id'], null, null, $db);
 
 $post_id->messageCheck();
+
 
 if (isset($_SESSION['username'])) {
     if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator' || $_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {

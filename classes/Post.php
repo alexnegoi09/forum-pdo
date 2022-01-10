@@ -268,6 +268,19 @@ class Post {
             echo $e->getMessage();
         }
     }
+
+
+    public function isThreadLocked() {
+        try {
+            $stmt = $this->db->prepare('SELECT locked FROM threads WHERE id = ?');
+            $stmt->execute(array($this->thread_id));
+            $result = $stmt->fetch();
+            return $result['locked'];
+            
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 
 ?>

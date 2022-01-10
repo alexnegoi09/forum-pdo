@@ -19,6 +19,8 @@ if (!isset($_SESSION['username'])) {
     <title><?php echo $_SESSION['username'] . ' -  Control Panel - My Forum' ?></title>
 </head>
 <body>
+    <button class="back">Go back</button>
+
     <?php
         $user = new User(null, null, null, null, null, null, $db);
         $user->getPageTitle();
@@ -92,7 +94,7 @@ if (!isset($_SESSION['username'])) {
                     <option>Select a user</option>
                     <?php $admin->getUsers(); ?>
                 </select>
-                <input type="submit" name="set-warnings-btn" value="Warn user">
+                <input type="submit" name="set-warnings-btn" value="Warn">
             </p>
 
             <?php 
@@ -115,16 +117,30 @@ if (!isset($_SESSION['username'])) {
                 if (isset($_POST['lock-thread-btn'])) {
                     $admin->lockThread();
                 }
+
+                if (isset($_POST['unlock-thread-btn'])) {
+                    $admin->unlockThread();
+                }
             ?>
             
 
-            <?php if($_SESSION['groups'] === 'Administrator') { ?>
+            <?php if ($_SESSION['groups'] === 'Administrator') { ?>
 
             <p>
-                <label for="ban">Ban users: </label>
-                <select name="ban"></select>
-                <input type="submit" value="Ban user">
+                <label for="ban">Ban user: </label>
+                <select name="ban">
+                    <option>Select a user</option>
+                    <?php $admin->getUsers(); ?>
+                </select>
+                <input type="submit" name="ban-btn" value="Ban">
             </p>
+
+            <?php 
+                if (isset($_POST['ban-btn'])) {
+                    $admin->banUser();
+                }
+                
+            ?>
                 <?php } ?>
     <?php } ?>
         </form>
@@ -165,5 +181,7 @@ if (!isset($_SESSION['username'])) {
 
 
     <?php require('../includes/footer.php'); ?>
+
+    <script src="../js/nav.js"></script>
 </body>
 </html>

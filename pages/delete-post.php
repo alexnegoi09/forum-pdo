@@ -6,6 +6,8 @@ require('../classes/Post.php');
 
 if (isset($_SESSION['username'])) {
     $post = new Post($_GET['id'], null, null, $db);
+
+
     $post->messageCheck();
 
     if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
