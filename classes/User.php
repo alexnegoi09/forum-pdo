@@ -35,7 +35,10 @@ class User {
                     
                 <div>
                     <p>Statistics</p>
-                    <p>Profile picture: <img src="<?php echo '/forum-pdo/img/' . $result['profilepic'] ?>" alt="profile picture"></p>
+                    
+                    <?php if ($result['profilepic']) { ?>
+                        <p>Profile picture: <img src="<?php echo '/forum-pdo/img/' . $result['profilepic'] ?>" alt="profile picture"></p>
+                    <?php } ?>    
                     <p>E-mail: <?php echo $result['email']; ?></p>
                     <p>Join date: <?php echo $result['joined']; ?></p>
                     <p>Rank: <?php echo $result['groups']; ?></p>

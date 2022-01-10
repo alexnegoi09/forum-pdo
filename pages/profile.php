@@ -22,6 +22,7 @@ if (isset($_SESSION['username'])) {
     <title>My Forum - User Profile: <?php echo $_SESSION['username']; ?></title>
 </head>
 <body>
+    <button class="back">Go back</button>
     
     <?php
     $user = new User(null, null, null, null, null, null, $db);
@@ -29,6 +30,7 @@ if (isset($_SESSION['username'])) {
     $db = null; 
      ?>
 
-<?php require('../includes/footer.php'); ?>
+    <?php require('../includes/footer.php'); ?>
+    <script src="../js/nav.js"></script>
 </body>
 </html>
