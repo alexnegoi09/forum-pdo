@@ -68,10 +68,8 @@ class User {
     public function updatePassword() {
         $_SESSION['errors'] = [];
 
-        // if empty, leave info unchanged
-        if (empty($this->password) && empty($this->repass)) {
-            echo 'No changes have been made to your user info!';
-        } else if (empty($this->password) && !empty($this->repass)  || !empty($this->password) && empty($this->repass) || $_POST['password'] !== $this->repass) {
+        if (!empty($this->password) && !empty($this->repass)) {
+            if (empty($this->password) && !empty($this->repass)  || !empty($this->password) && empty($this->repass) || $_POST['password'] !== $this->repass) {
             array_push($_SESSION['errors'], 'The passwords do not match!');
         } else {
             try {
@@ -82,21 +80,21 @@ class User {
             }
         }
     }
+}
 
 
     public function updateProfilePic() {
-
         if ($_FILES['profilepic']['type'] === "image/jpeg" && $_FILES['profilepic']['type'] = 'image/png' && $_FILES['profilepic']['size'] < 2097152) {
 
-            // check image size
+                // check image size
             $image_info = getimagesize($_FILES['profilepic']['tmp_name']);
-
+    
             if ($image_info[0] > 200 && $image_info[1] > 200) {
                 array_push($_SESSION['errors'], 'The maximum picture resolution must be 200x200!');
-             
+                 
                 // if resolution is ok, upload image path to db
             } else if (move_uploaded_file($_FILES['profilepic']['tmp_name'], '../img/' . $_FILES['profilepic']['name'])) {
-
+    
                 try {
                     $stmt = $this->db->prepare('UPDATE users SET profilepic = ? WHERE username = ?');
                     $stmt->execute(array($this->profilepic, $this->username));
@@ -124,13 +122,96 @@ class User {
     }
 
 
-    public function setLocation() {
+    public function updateEmail() {
+       
+        try {
+            $stmt = $this->db->prepare('UPDATE users SET email = ? WHERE username = ?');
+            $stmt->execute(array($this->email, $this->username));
+            $_SESSION['email'] = $this->email;
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function updateLocation() {
         try {
             $stmt = $this->db->prepare('UPDATE users SET location = ? WHERE username = ?');
             $stmt->execute(array($this->location, $this->username));
             $_SESSION['location'] = $this->location;
         } catch(PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+
+    public function getUsers() {
+        try {
+            $stmt = $this->db->prepare('SELECT username FROM users WHERE groups = ?');
+            $stmt->execute(array('Registered User'));
+            $result = $stmt->fetchAll();
+            
+            foreach($result as $res) {
+                echo '<option>' . $res['username'] . '</option>';
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getWarnings() {
+        if ($_POST['users'] !== 'Select a user') {
+            try {
+                $stmt = $this->db->prepare('SELECT warnings FROM users WHERE username = ?');
+                $stmt->execute(array($_POST['users']));
+                $result = $stmt->fetch();
+
+                echo '<p>Number of warnings: ' . $result['warnings'] . '</p>';
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+
+    public function setWarnings() {
+        if ($_POST['warn'] !== 'Select a user') {
+            try {
+                $stmt = $this->db->prepare('UPDATE users SET warnings = warnings + 1 WHERE username = ?');
+                $stmt->execute(array($_POST['warn']));
+
+                echo '<p>The warning has been set!</p>';
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+
+    public function getThreads() {
+        try {
+            $stmt = $this->db->query('SELECT title FROM threads');
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            
+            foreach($result as $res) {
+                echo '<option>' . $res['title'] . '</option>';
+            }
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    public function lockThread() {
+        if ($_POST['lock'] !== 'Select a thread') {
+            try {
+                $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
+                $stmt->execute(array(1, $_POST['lock']));
+                echo '<p>The selected thread has been locked!</p>';
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
         }
     }
 }

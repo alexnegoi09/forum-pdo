@@ -223,5 +223,19 @@ class Thread {
             echo $e->getMessage();
         }
     }
+
+
+    public function isLocked() {
+        try {
+            $stmt = $this->db->prepare('SELECT locked FROM threads WHERE id = ?');
+            $stmt->execute(array($_GET['id']));
+            $result = $stmt->fetch();
+
+            return $result;
+            
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 ?>

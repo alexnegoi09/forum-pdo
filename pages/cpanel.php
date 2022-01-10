@@ -49,6 +49,10 @@ if (!isset($_SESSION['username'])) {
             <input type="password" name="repass">
         </p>
         <p>
+            <label for="location">E-mail: </label>
+            <input type="text" name="email" value="<?php echo $_SESSION['email']; ?>">
+        </p>
+        <p>
             <label for="location">Location: </label>
             <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>">
         </p>
@@ -64,19 +68,55 @@ if (!isset($_SESSION['username'])) {
         <h4>Forum Controls</h4>
 
         <form action="" method="POST">
-            <p>Number of warnings received: </p>
-    
+            <p>
+                <label for="users">Get user warnings: </label>
+                <select name="users" id="users">
+                    <option>Select a user</option>
+                    <?php 
+                        $admin = new User(null, null, null, null, null, null, $db);
+                        $admin->getUsers();
+                    ?>
+                </select>
+                <input type="submit" name="get-warnings-btn" value="Get warnings">
+            </p>
+
+            <?php 
+                if (isset($_POST['get-warnings-btn'])) {
+                    $admin->getWarnings();
+                } 
+            ?>
+
+            <p>
+                <label for="warn">Warn user: </label>
+                <select name="warn">
+                    <option>Select a user</option>
+                    <?php $admin->getUsers(); ?>
+                </select>
+                <input type="submit" name="set-warnings-btn" value="Warn user">
+            </p>
+
+            <?php 
+                if (isset($_POST['set-warnings-btn'])) {
+                    $admin->setWarnings();
+                }                                                   
+            ?>
+
             <p>
                 <label for="lock">Lock or unlock a thread: </label>
-                <select name="lock"></select>
-                <input type="submit" value="Lock">
-                <input type="submit" value="Unlock">
+                <select name="lock">
+                    <option>Select a thread</option>
+                    <?php $admin->getThreads(); ?>
+                </select>
+                <input type="submit" name="lock-thread-btn" value="Lock">
+                <input type="submit" name="unlock-thread-btn" value="Unlock">
             </p>
-            <p>
-                <label for="warn">Warn users: </label>
-                <select name="warn"></select>
-                <input type="submit" value="Warn user">
-            </p>
+
+            <?php
+                if (isset($_POST['lock-thread-btn'])) {
+                    $admin->lockThread();
+                }
+            ?>
+            
 
             <?php if($_SESSION['groups'] === 'Administrator') { ?>
 
@@ -92,15 +132,20 @@ if (!isset($_SESSION['username'])) {
     <?php 
         if (isset($_POST['update'])) {
             if (isset($_FILES['profilepic']['name'])) {
-            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_FILES['profilepic']['name'], $_POST['location'], $db);
+                $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], $_POST['email'], $_FILES['profilepic']['name'], $_POST['location'], $db);
             } else {
-                $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_SESSION['profilepic'], $_POST['location'], $db);
+                $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], $_POST['email'], null, $_POST['location'], $db);
             }
+            
             $user->updatePassword();
-            if (isset($_FILES['profilepic']['name'])) {
+
+            if (empty($_FILES['profilepic']['name'])) {
+                $_FILES['profilepic'] = null;
+            } else {
                 $user->updateProfilePic();
             }
-            $user->setLocation();
+            $user->updateEmail();
+            $user->updateLocation();
 
             if (!empty($_SESSION['errors'])) {
                 foreach($_SESSION['errors'] as $err) {
@@ -115,6 +160,7 @@ if (!isset($_SESSION['username'])) {
             $user_remove = new User($_SESSION['username'], null, null, null, null, null, $db);
             $user_remove->deleteProfilePic();
         }
+
     ?>
 
 
