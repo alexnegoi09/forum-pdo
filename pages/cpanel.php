@@ -50,7 +50,7 @@ if (!isset($_SESSION['username'])) {
         </p>
         <p>
             <label for="location">Location: </label>
-            <input type="text" name="location">
+            <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>">
         </p>
         <p>
             <input type="submit" name="update" value="Update info">
@@ -91,9 +91,16 @@ if (!isset($_SESSION['username'])) {
 
     <?php 
         if (isset($_POST['update'])) {
-            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_FILES['profilepic']['name'], null, $db);
+            if (isset($_FILES['profilepic']['name'])) {
+            $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_FILES['profilepic']['name'], $_POST['location'], $db);
+            } else {
+                $user = new User($_SESSION['username'], $_POST['password'], $_POST['repass'], null, $_SESSION['profilepic'], $_POST['location'], $db);
+            }
             $user->updatePassword();
-            $user->updateProfilePic();
+            if (isset($_FILES['profilepic']['name'])) {
+                $user->updateProfilePic();
+            }
+            $user->setLocation();
 
             if (!empty($_SESSION['errors'])) {
                 foreach($_SESSION['errors'] as $err) {

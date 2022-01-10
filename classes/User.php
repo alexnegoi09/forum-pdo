@@ -16,6 +16,7 @@ class User {
         $this->repass = $repass;
         $this->email = $email;
         $this->profilepic = $pic;
+        $this->location = $location;
         $this->db = $db;
     }
 
@@ -120,6 +121,17 @@ class User {
         }
 
         $_SESSION['profilepic'] = null;
+    }
+
+
+    public function setLocation() {
+        try {
+            $stmt = $this->db->prepare('UPDATE users SET location = ? WHERE username = ?');
+            $stmt->execute(array($this->location, $this->username));
+            $_SESSION['location'] = $this->location;
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }
 ?>
