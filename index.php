@@ -23,19 +23,19 @@ if (isset($_COOKIE['remember'])) {
 </head>
 <body>
 
-    
-    <?php
-
+    <div class="main-container">
+        <?php
         require('classes/Category.php');
         $category = new Category(null, null, $db);
         $category->read();
-        
+
         // close connection
         $db = null;
 
-    require('includes/category-link.php');
-    require('includes/footer.php'); 
-    ?>
+        require('includes/category-link.php');
+        ?>
+    </div>
+   <?php require('includes/footer.php'); ?> 
     
 </body>
 </html>

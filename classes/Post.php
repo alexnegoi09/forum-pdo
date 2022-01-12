@@ -22,9 +22,9 @@ class Post {
             $stmt->bindParam(':body', $body);
             $stmt->bindParam(':author', $author);
 
-            $thread_id = $this->thread_id; //$_GET['id'];
-            $body = $this->body; //$_POST['post-body'];
-            $author = $this->author; //$_SESSION['username'];
+            $thread_id = $this->thread_id; 
+            $body = $this->body; 
+            $author = $this->author;
 
             $stmt->execute();
             
@@ -72,6 +72,9 @@ class Post {
                         </tr>';
 
                 foreach($result as $res) {
+                    $toBeReplaced = ['[quote]', '[/quote]', '[strong]', '[/strong]', '[text]', '[/text]'];
+                    $replaceWith = ['<div style="background-color: #eee; padding: 5px;">', '</div><br>', '<strong>', '</strong><br>', '<blockquote>', '</blockquote><br>'];
+
                     echo '<tr>
                             <td>';
                             if (!empty($res['profilepic'])) {
@@ -80,7 +83,7 @@ class Post {
                                 echo '<p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                         <p>Posted on ' . $res['created_at'] . '</p>
                                 </td>
-                                <td>' . htmlspecialchars($res['body']) .  '</td>
+                                <td>' . strip_tags(str_replace($toBeReplaced, $replaceWith, $res['body']), '<div><strong><i><blockquote><a><img><br>') .  '</td>
                             </tr>';
 
                           // if the user is an admin or a moderator, the edit and delete buttons remain on permanently, else, they disappear one hour after the message was posted
@@ -90,6 +93,7 @@ class Post {
                             if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
                                     echo '<tr>
                                             <td>
+                                                <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
                                                 <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Edit</a>
                                                 <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
                                                 <a href="/forum-pdo/pages/move-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Move</a>
@@ -98,9 +102,16 @@ class Post {
                             } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
                                 echo '<tr>
                                           <td>
+                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
                                             <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page='. $_GET['page'] . '">Edit</a>
                                             <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
                                           </td>
+                                      </tr>';
+                            } else {
+                                echo '<tr>
+                                        <td>
+                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
+                                        </td>
                                       </tr>';
                             }
                         }
