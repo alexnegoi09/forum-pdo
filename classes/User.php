@@ -30,20 +30,18 @@ class User {
             if (count($result) === 0) {
                 header('Location: ../index.php');
             } else { ?>
-
-                <h3>User Profile - <?php echo $result['username']; ?></h3>
                     
-                <div>
-                    <p>Statistics</p>
+                <div class="user-info">
+                    <h3 class="profile-title">User Profile - <span><?php echo $result['username']; ?></span></h3>
                     
                     <?php if ($result['profilepic']) { ?>
-                        <p>Profile picture: <img src="<?php echo '/forum-pdo/img/' . $result['profilepic'] ?>" alt="profile picture"></p>
+                        <p><span class="key">Profile picture:</span> <span class="value"><img src="<?php echo '/forum-pdo/img/' . $result['profilepic'] ?>" alt="profile picture"></span></p>
                     <?php } ?>    
-                    <p>E-mail: <?php echo $result['email']; ?></p>
-                    <p>Join date: <?php echo $result['joined']; ?></p>
-                    <p>Rank: <?php echo $result['groups']; ?></p>
-                    <p>Number of posts: <?php echo $result['postcount']; ?></p>
-                    <p>Location: <?php echo $result['location']; ?></p>
+                    <p><span class="key">E-mail:</span> <span class="value"><?php echo $result['email']; ?></span></p>
+                    <p><span class="key">Join date:</span> <span class="value"><?php echo $result['joined']; ?></span></p>
+                    <p><span class="key">Rank:</span> <span class="value"><?php echo $result['groups']; ?></span></p>
+                    <p><span class="key">Number of posts:</span> <span class="value"><?php echo $result['postcount']; ?></span></p>
+                    <p><span class="key">Location:</span> <span class="value"><?php echo $result['location']; ?></span></p>
                 </div>
             <?php } ?>
        <?php } catch(PDOException $e) {

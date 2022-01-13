@@ -21,9 +21,13 @@ if (isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Forum - User Profile: <?php echo $_SESSION['username']; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
-    <button class="back">Go back</button>
+    <button class="back btn btn-outline-dark">Go back</button>
     
     <?php
     $user = new User(null, null, null, null, null, null, $db);
@@ -33,5 +37,6 @@ if (isset($_SESSION['username'])) {
 
     <?php require('../includes/footer.php'); ?>
     <script src="../js/nav.js"></script>
+    <script src="../js/user-color.js"></script> 
 </body>
 </html>

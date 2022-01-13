@@ -1,0 +1,44 @@
+.back {
+    display: inline-block;
+    margin: 1rem 0 3rem 2rem;
+}
+
+.profile-title {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+}
+
+.user-info {
+    background-color: white;
+    padding: 2rem;
+    margin: 0 auto;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.user-info .key {
+    display: inline-block;
+    width: 500px;
+    font-weight: bold;
+}
+
+
+/* responsive */
+
+@media (max-width: 1200px) {
+    .user-info {
+        width: 90%;
+        text-align: center; 
+    }
+
+    .user-info .key {
+        text-align: center; 
+        max-width: 200px;
+    }
+
+    .user-info .value {
+       display: block;
+    }
+
+
+}
