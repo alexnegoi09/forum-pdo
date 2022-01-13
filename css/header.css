@@ -1,0 +1,69 @@
+.main-header-user,
+.main-header-guest {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-title {
+    font-family: urbanist, sans-serif;
+}
+
+.main-header-user a,
+.main-header-guest a {
+    text-decoration: none;
+    color: black;
+}
+
+.logged-in {
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+
+.logged-in {
+    text-align: right;
+}
+
+.main-header-user > *,
+.main-header-guest > * {
+    padding: 15px 30px;
+    justify-content: center;
+}
+
+.main-title {
+    justify-self: center;
+}
+
+.main-header-user .header-link:first-child {
+    padding-right: 12px;
+}
+
+.header-link:hover {
+    color: darkgreen;
+    font-weight: 600;
+}
+
+/* added with JS */
+
+.main-header-user .user-red {
+    color: crimson;
+}
+
+.main-header-user .user-green {
+    color: green;
+}
+
+/**/
+
+.main-header-user .user-red:hover {
+    color: darkred;
+}
+
+.main-header-user .user-green:hover {
+    color: darkgreen;
+}
