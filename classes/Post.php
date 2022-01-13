@@ -158,11 +158,9 @@ class Post {
 
             }
 
-            if ($_SESSION['groups'] !== 'Administrator' || $_SESSION['groups'] !== 'Moderator') {
-                $_SESSION['post_author'] = $result['author'];
-                $_SESSION['created_at'] = $result['created_at'];
-                $_SESSION['post_body'] = $result['body'];
-            } 
+            $_SESSION['post_author'] = $result['author'];
+            $_SESSION['created_at'] = $result['created_at'];
+            $_SESSION['post_body'] = $result['body'];
         } catch(PDOException $e) {
             echo $e->getMessage();
         }

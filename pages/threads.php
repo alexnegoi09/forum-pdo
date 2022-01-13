@@ -38,7 +38,7 @@ require('../classes/Navigation.php');
     $db = null;
 
 
-    if ($post->isThreadLocked() === '0') {
+    if ($post->isThreadLocked() === 0) {
         require('../includes/post-link.php');
     } else {
         echo '<p>Locked</p>';

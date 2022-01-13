@@ -52,6 +52,10 @@ if (isset($_POST['btn'])) {
     // edit and save
     if (empty($_SESSION['errors'])) { 
     $post->create();
+
+    // update postcount
+    $post->getPostCount();
+    $post->setPostCount();
     } else {
 
         // display errors
