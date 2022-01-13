@@ -3,6 +3,9 @@
 
 body, html {
     width: 100%;
+}
+
+body {
     background-color: lightgoldenrodyellow;
     font-family: Inter, Arial, Helvetica, sans-serif;
 }

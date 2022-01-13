@@ -1,16 +1,15 @@
-.main-header-user,
-.main-header-guest {
-    background-color: whitesmoke;
+.main-header {
+    background-color: white;
     display: flex;
     justify-content: space-between;
 }
 
 .main-title {
     font-family: urbanist, sans-serif;
+    min-width: 200px; 
 }
 
-.main-header-user a,
-.main-header-guest a {
+.main-header a {
     text-decoration: none;
     color: black;
 }
@@ -29,9 +28,8 @@
     text-align: right;
 }
 
-.main-header-user > *,
-.main-header-guest > * {
-    padding: 15px 30px;
+.main-header > * {
+    padding: 1rem 2rem;
     justify-content: center;
 }
 
@@ -66,4 +64,42 @@
 
 .main-header-user .user-green:hover {
     color: darkgreen;
+}
+
+
+/* responsive */
+
+@media (max-width: 600px) {
+    
+    .main-header {
+        flex-direction: column;
+    }
+
+    .link-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .links {
+        padding: 1.5rem 0;
+        line-height: 1.75;
+        font-size: 1rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .main-title {
+        background-color: lightgoldenrodyellow;
+        font-size: 2rem;
+        text-align: center;
+    }
+}
+
+
+@media (min-width: 601px) and (max-width: 1200px) {
+    
+    .links {
+        align-items: flex-end;
+    }
 }
