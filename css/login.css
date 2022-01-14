@@ -1,0 +1,85 @@
+.main-header {
+    background-color: white;
+    font-family: urbanist, sans-serif;
+    padding: 1rem 2rem;
+    min-width: 200px;
+}
+
+.main-header a,
+.account-link {
+    text-decoration: none;
+    color: black;
+}
+
+.profile-title {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+}
+
+.login-form {
+    background-color: white;
+    padding: 2rem;
+    margin: 4.75rem auto 0 auto;
+    width: 40%;
+    min-width: 200px;
+    border-radius: 10px;
+}
+
+.main-title {
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.account-link {
+    font-weight: bold;
+    display: block;
+}
+
+.account-link:hover {
+    color: green;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.form-control, 
+.btn {
+    max-width: 600px;
+}
+
+.username-label,
+.password-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.checkbox-label {
+    display: inline-block;
+}
+
+.error {
+    color: crimson;
+    font-weight: bolder;
+    width: 40%;
+    margin: 0 auto;
+    padding: 0.8rem;
+}
+
+
+/* responsive */
+
+@media (max-width: 1200px) {
+    .login-form {
+        width: 90%;
+    }
+
+    .form-control, .btn {
+        max-width: 100%;
+    }
+
+    .main-header {
+        text-align: center;
+    }
+}
