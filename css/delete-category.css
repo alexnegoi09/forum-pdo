@@ -1,0 +1,25 @@
+.text-success {
+    background-color: white;
+    margin: 2rem;
+    padding: 2rem;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    display: inline-block;
+    min-width: 450px;
+}
+
+.text-success a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* responsive */
+
+@media (max-width: 1200px) {
+    .text-success {
+        min-width: 200px;
+        max-width: 90%;
+        text-align: center;
+    }
+}

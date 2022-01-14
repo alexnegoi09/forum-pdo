@@ -1,3 +1,12 @@
 footer {
     margin: 1rem 0 0 2rem;
 }
+
+
+/* responsive */
+
+@media (max-width: 1200px) {
+    footer {
+        margin: 0 0 1rem 2rem;
+    }
+}
