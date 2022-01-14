@@ -6,7 +6,7 @@
 }
 
 .main-header a,
-.account-link {
+.login-link {
     text-decoration: none;
     color: black;
 }
@@ -20,24 +20,33 @@
     border-radius: 10px;
 }
 
+.signup-form {
+    background-color: white;
+    padding: 2rem;
+    margin: 4.75rem 0 0 2rem;
+    width: 25%;
+    min-width: 450px;
+    border-radius: 10px;
+}
+
 .main-title {
     display: block;
     margin-bottom: 2rem;
 }
 
-.account-link {
+.login-link {
     font-weight: bold;
     display: block;
 }
 
-.account-link:hover {
+.login-link:hover {
     color: green;
 }
 
 .btn {
     display: block;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
 }
 
 .form-control {
@@ -50,7 +59,9 @@
 }
 
 .username-label,
-.password-label {
+.password-label,
+.repass-label,
+.email-label {
     display: block;
     margin-bottom: 5px;
 }
@@ -59,7 +70,8 @@
     display: inline-block;
 }
 
-.error {
+.error,
+.success {
     font-weight: bolder;
     width: 25%;
     min-width: 450px;
@@ -72,7 +84,7 @@
 /* responsive */
 
 @media (max-width: 1200px) {
-    .login-form {
+    .signup-form {
         min-width: 90%;
         margin: 2rem auto 0 auto;
     }

@@ -28,11 +28,11 @@ if (isset($_COOKIE['remember'])) {
         <h2 class="main-title">Log in</h2>
         <p>
             <label for="username" class="username-label">Username:</label>
-            <input type="text" name="username" class="form-control">
+            <input type="text" name="username" class="form-control" maxlength="25">
         </p>
         <p>
             <label for="password" class="password-label">Password:</label>
-            <input type="password" name="password" class="form-control">
+            <input type="password" name="password" class="form-control" maxlength="255">
         </p>
         <p>
             <button type="submit" name="submit" class="btn btn-success">Log in</button>
@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
         $login = new Login($_POST['username'], $_POST['password'], $db);
         $login->validate();
     } else {
-        echo '<p class="error">Please enter a username and password!</p>';
+        echo '<p class="text-danger error">Please enter a username and password!</p>';
     }
    
     $db = null;

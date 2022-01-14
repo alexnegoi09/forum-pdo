@@ -12,33 +12,35 @@ require('../classes/Signup.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New account - My Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
-    <h1><a href="/forum-pdo/index.php">My Forum</a></h1>
-
-    <h2>Create a new account</h2>
+    <h1 class="main-header"><a href="/forum-pdo/index.php">My Forum</a></h1>
 
     <form action="signup.php" class="signup-form" method="POST">
+    <h2 class="main-title">Create a new account</h2>
         <p>
-            <label for="username">Username:*</label>
-            <input type="text" name="username" maxlength="25">
+            <label for="username" class="username-label">Username:*</label>
+            <input type="text" name="username" class="form-control" maxlength="25">
         </p>
         <p>
-            <label for="password">Password:*</label>
-            <input type="password" name="password">
+            <label for="password" class="password-label">Password:*</label>
+            <input type="password" name="password" class="form-control" maxlength="255">
         </p>
         <p>
-            <label for="repass">Re-type Password:*</label>
-            <input type="password" name="repass">
+            <label for="repass" class="repass-label">Re-type Password:*</label>
+            <input type="password" name="repass" class="form-control" maxlength="255">
         </p>
         <p>
-            <label for="username">E-mail:*</label>
-            <input type="email" name="email" maxlength="50">
+            <label for="username" class="email-label">E-mail:*</label>
+            <input type="email" name="email" class="form-control" maxlength="50">
         </p>
         <p>* - required</p>
         <p>
-            <button type="submit" name="submit">Create Account</button>
-            or <a href="login.php">log in.</a>
+            <button type="submit" name="submit" class="btn btn-success">Create Account</button>
+            <a href="login.php" class="login-link">Log in</a>
         </p>
     </form>
 </body>
@@ -55,7 +57,7 @@ if (isset($_POST['submit'])) {
 
     } else {
             foreach($_SESSION['errors'] as $err) {
-            echo '<p>' . $err . '</p>';
+            echo '<p class="text-danger error">' . $err . '</p>';
             }
 
         $_SESSION['errors'] = null;

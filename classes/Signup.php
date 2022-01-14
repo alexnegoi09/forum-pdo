@@ -68,7 +68,7 @@ class Signup {
         $stmt->execute();
 
 
-        echo '<p>Your account has been created successfully! You can now <a href="../pages/login.php">log in.</a></p>';
+        echo '<p class="text-success">Your account has been created successfully! You can now <a href="../pages/login.php">log in.</a></p>';
 
     }
     
