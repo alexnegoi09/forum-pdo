@@ -11,20 +11,11 @@
     color: black;
 }
 
-.login-form {
-    background-color: white;
-    padding: 2rem;
-    margin: 4.75rem 0 0 2rem;
-    width: 25%;
-    min-width: 450px;
-    border-radius: 10px;
-}
-
 .signup-form {
     background-color: white;
     padding: 2rem;
-    margin: 4.75rem 0 0 2rem;
-    width: 25%;
+    margin: 4.75rem 0 1rem 2rem;
+    display: inline-block;
     min-width: 450px;
     border-radius: 10px;
 }
@@ -76,7 +67,6 @@
     width: 25%;
     min-width: 450px;
     margin-left: 2rem;
-    padding-top: 0.8rem;
     font-size: 1.1rem;
 }
 
@@ -85,8 +75,10 @@
 
 @media (max-width: 1200px) {
     .signup-form {
-        min-width: 90%;
-        margin: 2rem auto 0 auto;
+        display: block;
+        min-width: 200px;
+        width: 90%;
+        margin: 4.75rem auto 1rem auto;
     }
 
     .form-control, .btn {
@@ -94,6 +86,14 @@
     }
 
     .main-header {
+        text-align: center;
+    }
+
+    .error,
+    .success {
+        margin: 0 0 1rem 0;
+        min-width: 200px;
+        width: 100%;
         text-align: center;
     }
 }
