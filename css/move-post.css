@@ -1,0 +1,58 @@
+.nav {
+    margin: 1rem 0 0 2rem;
+}
+
+.post-form {
+    background-color: white;
+    padding: 2rem;
+    margin: 4.75rem 0 1rem 2rem;
+    display: inline-block;
+    min-width: 450px;
+    border-radius: 10px;
+}
+
+.main-title-form {
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.btn-success,
+.select-thread {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.select-thread {
+    border: 1px solid darkgray;
+}
+
+.select-thread, 
+.btn {
+    max-width: 500px;
+}
+
+.select-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    resize: none;
+}
+
+
+@media (max-width: 1200px) {
+    .post-form {
+        display: block;
+        min-width: 200px;
+        width: 90%;
+        margin: 2.75rem auto 1rem auto;
+    }
+
+    .select-thread,
+    .btn {
+        max-width: 100%;
+    }
+
+}

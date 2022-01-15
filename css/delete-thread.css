@@ -6,6 +6,7 @@
     font-weight: bolder;
     display: inline-block;
     min-width: 450px;
+    border-radius: 10px;
 }
 
 .text-success a {
