@@ -23,21 +23,29 @@ $thread_id->categoryCheck();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New thread - My Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/new-thread.css">
 </head>
 <body>
-    <button class="back">Go back</button>
+    <nav class="nav">
+        <button class="back btn btn-outline-dark">Go back</button>
+    </nav>
 
-    <h2>Start a new thread</h2>
 
-    <form action="" method="POST">
+    <form action="" method="POST" class="thread-form">
+        <h2 class="main-title-form">Start a new thread</h2>
         <p>
-        <input type="text" name="thread-title" maxlength="255">
+            <label for="thread-title" class="thread-label">Title:</label>        
+            <input type="text" name="thread-title" class="form-control" maxlength="255">
         </p>
         <p>
-        <input type="submit" name="btn" value="Create Thread">
+            <input type="submit" name="btn" value="Create thread" class="btn btn-success">
         </p>
     </form>
 
+    <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
 </body>
 </html>
@@ -60,7 +68,7 @@ if (isset($_POST['btn'])) {
     if(empty($_SESSION['errors'])) {  
         $thread->create();
     } else {
-        echo '<p>' . $_SESSION['errors'][0] . '</p>';
+        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
         $_SESSION['errors'] = null;
     }
     

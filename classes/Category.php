@@ -121,7 +121,7 @@ class Category {
 
             $stmt->execute();
 
-            echo '<p>Category created! Click <a href=/forum-pdo/index.php>here</a> to go to the homepage.</p>';
+            echo '<p class="text-success success">Category created! Click <a href="/forum-pdo/index.php" class="text-dark">here</a> to go to the homepage.</p>';
 
         } catch(PDOException $e) {
             echo $e->getMessage();

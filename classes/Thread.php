@@ -28,7 +28,7 @@ class Thread {
             $thread_author = $this->author;
 
             $stmt->execute();
-            echo '<p>Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '">here</a> to go back.</p>';
+            echo '<p class="text-success success">Thread has been successfully created! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['id'] . '" class="text-dark">here</a> to go back.</p>';
 
         } catch(PDOException $e) {
             echo $e->getMessage();

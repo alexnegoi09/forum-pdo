@@ -1,17 +1,8 @@
-.main-header {
-    background-color: white;
-    font-family: urbanist, sans-serif;
-    padding: 1rem 2rem;
-    min-width: 200px;
+.nav {
+    margin: 1rem 0 0 2rem;
 }
 
-.main-header a,
-.login-link {
-    text-decoration: none;
-    color: black;
-}
-
-.signup-form {
+.category-form {
     background-color: white;
     padding: 2rem;
     margin: 4.75rem 0 1rem 2rem;
@@ -20,24 +11,15 @@
     border-radius: 10px;
 }
 
-.main-title {
+.main-title-form {
     display: block;
     margin-bottom: 2rem;
 }
 
-.login-link {
-    font-weight: bold;
-    display: block;
-}
-
-.login-link:hover {
-    color: green;
-}
-
-.btn {
+.btn-success {
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 5px;
 }
 
 .form-control {
@@ -49,20 +31,7 @@
     max-width: 500px;
 }
 
-.username-label,
-.password-label,
-.repass-label,
-.email-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.checkbox-label {
-    display: inline-block;
-}
-
-.error,
-.success {
+.error {
     font-weight: bolder;
     width: 25%;
     min-width: 450px;
@@ -74,11 +43,13 @@
     text-decoration: none;
 }
 
+textarea {
+    resize: none;
+}
 
-/* responsive */
 
 @media (max-width: 1200px) {
-    .signup-form {
+    .category-form {
         display: block;
         min-width: 200px;
         width: 90%;
@@ -89,12 +60,7 @@
         max-width: 100%;
     }
 
-    .main-header {
-        text-align: center;
-    }
-
-    .error,
-    .success {
+    .error {
         margin: 0 0 1rem 0;
         min-width: 200px;
         width: 100%;

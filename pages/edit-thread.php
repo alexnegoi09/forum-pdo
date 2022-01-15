@@ -22,21 +22,29 @@ if (isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit thread - My Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/edit-thread.css">
 </head>
 <body>
-    <button class="back">Go back</button>
+    <nav class="nav">
+        <button class="back btn btn-outline-dark">Go back</button>
+    </nav>
 
-    <h2>Edit thread</h2>
 
-    <form action="" method="POST">
+    <form action="" method="POST" class="thread-form">
+        <h2 class="main-title-form">Edit thread</h2>
         <p>
-            <input type="text" name="thread-title" maxlength="255" value="<?php echo $_SESSION['title']; ?>">
+            <label for="thread-title" class="thread-label">Title:</label>
+            <input type="text" name="thread-title" class="form-control" maxlength="255" value="<?php echo $_SESSION['title']; ?>">
         </p>
         <p>
-            <input type="submit" name="btn" value="Edit Thread">
+            <input type="submit" name="btn" class="btn btn-success" value="Edit thread">
         </p>
     </form>
 
+    <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
  </body>
  </html>
@@ -67,7 +75,7 @@ if (isset($_POST['btn'])) {
     } else {
 
         // display errors
-        echo '<p>' . $_SESSION['errors'][0] . '</p>';
+        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
         $_SESSION['errors'] = null;
     }
 }
