@@ -1,13 +1,12 @@
 footer {
-    margin-left: 2rem;
+    width: 80%;
+    margin: 0 auto;
 }
 
 
-/* responsive */
-
 @media (max-width: 600px) {
     footer {
-        margin: 0;
+        width: 100%;
         text-align: center;
     }
 }

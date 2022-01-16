@@ -28,12 +28,12 @@ class Category {
         if (count($result) != 0) {
 
             //display categories
-            echo '<table>
-                    <tr>
-                        <td>Categories</td>
+            echo '<table class="table table-borderless">
+                    <tr class="title-row">
+                        <td class="title" colspan="2">Categories</td>
                     </tr>';
             foreach($result as $res) { 
-                echo '<tr>
+                echo '<tr class="table-row">
                         <td>
                             <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . htmlspecialchars($res['name']) . 
                             '</a>
@@ -51,7 +51,7 @@ class Category {
                             if (!$result2) {
                                 echo '<td>No posts</td>';
                             } else {
-                                echo '<td>Last post by <span>' . $result2['author'] . '</span> on <span>' . $result2['created_at'] . '</span></td>';
+                                echo '<td>Last post by <span><strong>' . $result2['author'] . '</strong></span>, <span><strong>' . $result2['created_at'] . '</strong></span></td>';
                             }
                         } catch(PDOException $e) {
                             echo $e->getMessage();
@@ -61,10 +61,10 @@ class Category {
                         // if the user is an admin, display category buttons
                         if (isset($_SESSION['username'])) {
                             if ($_SESSION['groups'] === 'Administrator') {
-                                echo '<tr>
+                                echo '<tr class="button-row">
                                         <td>
-                                            <a href="/forum-pdo/pages/edit-category.php?id=' . $res['id'] . '">Edit</a>
-                                            <a href="/forum-pdo/pages/delete-category.php?id=' . $res['id'] . '">Delete</a>
+                                            <a href="/forum-pdo/pages/edit-category.php?id=' . $res['id'] . '" class="btn btn-primary button"><span class="bi bi-pencil"></span>Edit</a>
+                                            <a href="/forum-pdo/pages/delete-category.php?id=' . $res['id'] . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
                                         </td>
                                     </tr>';
                         }
