@@ -53,15 +53,15 @@ class User {
     public function getPageTitle() {
         switch($_SESSION['groups']) {
             case 'Administrator':
-                echo '<h3>Administrator Control Panel</h3>';
+                echo '<h3 class="main-title-form">Administrator Control Panel</h3>';
                 break;
             
             case 'Moderator':
-                echo '<h3>Moderator Control Panel</h3>';
+                echo '<h3 class="main-title-form">Moderator Control Panel</h3>';
                 break;
 
             default:
-                echo '<h3>User Control Panel</h3>';
+                echo '<h3 class="main-title-form">User Control Panel</h3>';
         }
     }
     
@@ -167,7 +167,7 @@ class User {
                 $stmt->execute(array($_POST['users']));
                 $result = $stmt->fetch();
 
-                echo '<p>Number of warnings: ' . $result['warnings'] . '</p>';
+                echo '<p class="text-dark">Number of warnings: <strong>' . $result['warnings'] . '</strong></p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -181,7 +181,7 @@ class User {
                 $stmt = $this->db->prepare('UPDATE users SET warnings = warnings + 1 WHERE username = ?');
                 $stmt->execute(array($_POST['warn']));
 
-                echo '<p>The warning has been set!</p>';
+                echo '<p class="text-success success">The warning has been set!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -209,7 +209,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
                 $stmt->execute(array(1, $_POST['lock']));
-                echo '<p>The selected thread has been locked!</p>';
+                echo '<p class="text-success success">The selected thread has been locked!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -222,7 +222,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
                 $stmt->execute(array(0, $_POST['lock']));
-                echo '<p>The selected thread has been unlocked!</p>';
+                echo '<p class="text-success success">The selected thread has been unlocked!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -235,7 +235,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('DELETE FROM users WHERE username = ?');
                 $stmt->execute(array($_POST['ban']));
-                echo '<p>The selected user has been banned!</p>';
+                echo '<p class="text-success success">The selected user has been banned!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }

@@ -18,49 +18,57 @@ if (!isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $_SESSION['username'] . ' -  Control Panel - My Forum' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/cpanel.css">
 </head>
 <body>
-    <button class="back">Go back</button>
+    <nav class="nav">
+        <button class="back btn btn-outline-dark">Go back</button>
+    </nav>
 
-    <?php
-        $user = new User(null, null, null, null, null, null, $db);
-        $user->getPageTitle();
-    ?>
 
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data" class="cpanel-form">
+        <!-- <?php
+            $user = new User(null, null, null, null, null, null, $db);
+            $user->getPageTitle();
+        ?> -->
+        <h3 class="main-title-form">User Controls</h3>
+
         <p>
             <?php if (empty($_SESSION['profilepic'])) { ?>
-                <label for="profilepic">Change profile picture:</label>
-                <input type="file" name="profilepic">
-                <pre>The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
+                <label for="profilepic" class="cpanel-label">Change profile picture:</label>
+                <input type="file" name="profilepic" class="form-control">
+                <pre class="text-danger error">The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
             <?php } else { ?>
                 <p>Profile Picture:</p>
                 <img src="<?php echo '../img/' . $_SESSION['profilepic']; ?>" alt="profile picture">
-                <input type="submit" name="remove" value="Remove">
+                <input type="submit" name="remove" value="Remove" class="btn btn-dark">
             <?php } ?>
         </p>
         <p>
-            <label for="username">Username: </label>
-            <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" disabled>
+            <label for="username" class="cpanel-label">Username: </label>
+            <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" class="form-control" disabled>
         </p>
         <p>
-            <label for="password">New password: </label>
-            <input type="password" name="password">
+            <label for="password" class="cpanel-label">New password: </label>
+            <input type="password" name="password" class="form-control">
         </p>
         <p>
-            <label for="repass">Re-type password: </label>
-            <input type="password" name="repass">
+            <label for="repass" class="cpanel-label">Re-type password: </label>
+            <input type="password" name="repass" class="form-control">
         </p>
         <p>
-            <label for="location">E-mail: </label>
-            <input type="text" name="email" value="<?php echo $_SESSION['email']; ?>">
+            <label for="location" class="cpanel-label">E-mail: </label>
+            <input type="text" name="email" value="<?php echo $_SESSION['email']; ?>" class="form-control">
         </p>
         <p>
-            <label for="location">Location: </label>
-            <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>">
+            <label for="location" class="cpanel-label">Location: </label>
+            <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>" class="form-control">
         </p>
         <p>
-            <input type="submit" name="update" value="Update info">
+            <input type="submit" name="update" value="Update info" class="btn btn-success">
         </p>
     </form>
 
@@ -68,19 +76,21 @@ if (!isset($_SESSION['username'])) {
 
     <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
 
-        <h4>Forum Controls</h4>
 
-        <form action="" method="POST">
+        <form action="" method="POST" class="cpanel-form">
+            <h3 class="main-title-form">Forum Controls</h3>
             <p>
-                <label for="users">Get user warnings: </label>
-                <select name="users" id="users">
+                <label for="users" class="cpanel-label">Get user warnings: </label>
+                <select name="users" class="form-select">
                     <option>Select a user</option>
                     <?php 
                         $admin = new User(null, null, null, null, null, null, $db);
                         $admin->getUsers();
                     ?>
                 </select>
-                <input type="submit" name="get-warnings-btn" value="Get warnings">
+            </p>
+            <p>
+                <input type="submit" name="get-warnings-btn" value="Get warnings" class="btn btn-primary">
             </p>
 
             <?php 
@@ -90,12 +100,14 @@ if (!isset($_SESSION['username'])) {
             ?>
 
             <p>
-                <label for="warn">Warn user: </label>
-                <select name="warn">
+                <label for="warn" class="cpanel-label">Warn user: </label>
+                <select name="warn" class="form-select">
                     <option>Select a user</option>
                     <?php $admin->getUsers(); ?>
                 </select>
-                <input type="submit" name="set-warnings-btn" value="Warn">
+            </p>
+            <p>
+                <input type="submit" name="set-warnings-btn" value="Warn" class="btn btn-primary">
             </p>
 
             <?php 
@@ -105,13 +117,15 @@ if (!isset($_SESSION['username'])) {
             ?>
 
             <p>
-                <label for="lock">Lock or unlock a thread: </label>
-                <select name="lock">
+                <label for="lock" class="cpanel-label">Lock or unlock a thread: </label>
+                <select name="lock" class="form-select">
                     <option>Select a thread</option>
                     <?php $admin->getThreads(); ?>
                 </select>
-                <input type="submit" name="lock-thread-btn" value="Lock">
-                <input type="submit" name="unlock-thread-btn" value="Unlock">
+            </p>
+            <p>
+                <input type="submit" name="lock-thread-btn" value="Lock" class="btn btn-primary">
+                <input type="submit" name="unlock-thread-btn" value="Unlock" class="btn btn-primary">
             </p>
 
             <?php
@@ -128,12 +142,14 @@ if (!isset($_SESSION['username'])) {
             <?php if ($_SESSION['groups'] === 'Administrator') { ?>
 
             <p>
-                <label for="ban">Ban user: </label>
-                <select name="ban">
+                <label for="ban" class="cpanel-label">Ban user: </label>
+                <select name="ban" class="form-select">
                     <option>Select a user</option>
                     <?php $admin->getUsers(); ?>
                 </select>
-                <input type="submit" name="ban-btn" value="Ban">
+            </p>
+            <p>
+                <input type="submit" name="ban-btn" value="Ban" class="btn btn-danger">
             </p>
 
             <?php 
@@ -166,10 +182,10 @@ if (!isset($_SESSION['username'])) {
 
             if (!empty($_SESSION['errors'])) {
                 foreach($_SESSION['errors'] as $err) {
-                    echo '<p>' . $err . '</p>';
+                    echo '<p class="text-danger error">' . $err . '</p>';
                 }
             } else {
-                echo '<p>Your user info has been updated!</p>';
+                echo '<p class="text-success success">Your user info has been updated!</p>';
             }
         }
 
@@ -183,6 +199,7 @@ if (!isset($_SESSION['username'])) {
 
     <?php require('../includes/footer.php'); ?>
 
+    <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
 </body>
 </html>
