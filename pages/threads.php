@@ -41,10 +41,6 @@ require('../classes/Navigation.php');
 
         // display posts
         $post->read();
-        $post->pagination();
-
-        $db = null;
-
 
         if ($post->isThreadLocked() === 0) {
             require('../includes/post-link.php');
@@ -52,12 +48,18 @@ require('../classes/Navigation.php');
             echo '<p class="btn btn-outline-danger"><span class="bi bi-lock"></span>Locked</p>';
         }
 
+        $post->pagination();
+
+        $db = null;
+
+
         ?>
     </div>
 
     <?php require('../includes/footer.php'); ?>
     
     <script src="../js/user-color.js"></script>
+    <script src="../js/user-color-post.js"></script>
 </body>
 </html>
 

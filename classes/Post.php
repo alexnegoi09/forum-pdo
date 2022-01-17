@@ -80,8 +80,8 @@ class Post {
                             if (!empty($res['profilepic'])) {
                                 echo '<img src="../img/' . $res['profilepic'] . '">';
                             }
-                                echo '<p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
-                                        <p>Posted on ' . $res['created_at'] . '</p>
+                                echo '<p class="written-by">Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '"><strong>' . $res['author'] . '</strong></a> (' . $res['groups'] . ')</p>
+                                        <p>Posted on: ' . $res['created_at'] . '</p>
                                 </td>
                                 <td class="post-body">' . strip_tags(str_replace($toBeReplaced, $replaceWith, $res['body']), '<div><strong><i><blockquote><a><img><br>') .  '</td>
                             </tr>';
@@ -240,10 +240,10 @@ class Post {
         if (!isset($_GET['page'])) {
             header('Location: /forum-pdo/index.php');
         } else if ($pages) {
-                echo '<p>Pages:</p>';
+                echo '<p class="pagination">Page: </p>';
                 
                 for ($i = 1; $i <= $pages; $i++) {
-                   echo '<a href="/forum-pdo/pages/threads.php?id=' . $this->thread_id . '&page=' . $i . '">' . $i . " " . '</a>';
+                   echo '<a href="/forum-pdo/pages/threads.php?id=' . $this->thread_id . '&page=' . $i . '" class="page-number">' . $i . " " . '</a>';
                 }
         }
     
