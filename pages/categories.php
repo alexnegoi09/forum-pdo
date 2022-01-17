@@ -18,7 +18,8 @@ require('../includes/logout.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/nav-main.css">
+    <link rel="stylesheet" href="../css/footer-main.css">
     <link rel="stylesheet" href="../css/categories.css">
 </head>
 <body>
@@ -27,25 +28,33 @@ require('../includes/logout.php');
     // check for valid id
     $thread = new Thread($_GET['id'], null, null, $db);
     $thread->categoryCheck();
+    ?>
 
-    // display forum navigation
-    $nav = new Navigation($db);
-    $nav->display();
+    <div class="main-container">
+    
+        <?php
+        // display forum navigation
+        $nav = new Navigation($db);
+        $nav->display();
 
-    // display category title
-    echo '<h3>Category: ' . $category->getTitle() . '</h3>';
+        // display category title
+        echo '<h3 class="category-title"><p>Category: <strong>' . $category->getTitle() . '</strong></p></h3>';
 
 
-    // retrieve and display threads from db
-    $thread->read();
+        // retrieve and display threads from db
+        $thread->read();
 
-    $db = null;
+        $db = null;
 
-    // check if signed in
-    require('../includes/thread-link.php');
+        // check if signed in
+        require('../includes/thread-link.php');
 
-    require('../includes/footer.php');
-    ?>    
+        ?>
+    </div>
+
+    <?php require('../includes/footer.php'); ?>
+    
+    <script src="../js/user-color.js"></script>
 </body>
 </html>
 

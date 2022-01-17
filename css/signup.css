@@ -77,7 +77,7 @@
 
 /* responsive */
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .signup-form {
         display: block;
         min-width: 200px;

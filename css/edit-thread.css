@@ -45,7 +45,7 @@
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .thread-form {
         display: block;
         min-width: 200px;

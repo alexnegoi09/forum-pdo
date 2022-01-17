@@ -47,7 +47,7 @@ textarea {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .cpanel-form {
         display: block;
         min-width: 200px;

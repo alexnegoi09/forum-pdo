@@ -14,7 +14,7 @@ class Navigation {
                 $stmt->execute(array($_GET['id']));
                 $result = $stmt->fetch();
 
-                echo '<nav>You are here: <a href="/forum-pdo/index.php">My Forum</a> > <span>' . $result['name'] . '<span></nav>';
+                echo '<nav class="main-nav">You are here: <a href="/forum-pdo/index.php">My Forum</a> > <span><strong>' . $result['name'] . '</strong></span></nav>';
             
             } catch(PDOException $e) {
                 echo $e->getMessage();
@@ -27,7 +27,7 @@ class Navigation {
                 $stmt->execute(array($_GET['id']));
                 $result = $stmt->fetch();
     
-                echo '<nav>You are here: <a href="/forum-pdo/index.php">My Forum</a> > <a href="/forum-pdo/pages/categories.php?id=' . $result['category_id'] . '">' . $result['name'] . '</a> > <span>' . $result['title'] . '</span></nav>';
+                echo '<nav class="main-nav">You are here: <a href="/forum-pdo/index.php">My Forum</a> > <a href="/forum-pdo/pages/categories.php?id=' . $result['category_id'] . '">' . $result['name'] . '</a> > <span><strong>' . $result['title'] . '</strong></span></nav>';
                 
             } catch(PDOException $e) {
                 echo $e->getMessage();

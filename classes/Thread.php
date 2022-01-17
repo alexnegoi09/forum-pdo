@@ -92,26 +92,18 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                echo '<p>No threads to show!</p>';
+                echo '<p><i>No threads to show!<i></p>';
             } else {
 
                 // display threads
-                echo '<table>
-                    <tr>
-                        <td>Threads</td>
-                    </tr>
-                    <tr>
-                        <td>Title</td>
-                        <td>Created on</td>
-                        <td>Created by</td>
-                        <td>Last post by<td>
+                echo '<table class="table table-borderless">
+                    <tr class="title-row">
+                        <td class="title" colspan="2">Threads</td>
                     </tr>';
 
                 foreach ($result as $res) {
-                    echo '<tr>
-                            <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1>' . htmlspecialchars($res['title']) . '</td>
-                            <td>' . $res['created_at'] . '</td>
-                            <td>' . $res['author'] . '</td>';
+                    echo '<tr class="table-row">
+                            <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1>' . htmlspecialchars($res['title']) . '</td>';
 
                             // get last post
                             $stmt2 = $this->db->prepare('SELECT * FROM posts WHERE thread_id = ? ORDER BY created_at DESC LIMIT 1');
@@ -121,19 +113,19 @@ class Thread {
                             if (!$result2) {
                                 echo '<td>No posts</td>';
                             } else {
-                                echo '<td>' . $result2['author'] . ' on ' . $result2['created_at'] . '</td>';
+                                echo '<td>Last post by <span><strong>' . $result2['author'] . '</strong></span>, <span><strong>' . $result2['created_at'] . '</strong></span></td>';
                             }
 
-                          '</tr>';
+                    echo '</tr>';
 
                         
                         // if the user is an admin or a moderator, display thread buttons
                         if (isset($_SESSION['username'])) {
                           if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
-                            echo '<tr>
+                            echo '<tr class="button-row">
                                         <td>
-                                            <a href="/forum-pdo/pages/edit-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '">Edit</a>
-                                            <a href="/forum-pdo/pages/delete-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '">Delete</a>
+                                            <a href="/forum-pdo/pages/edit-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '" class="btn btn-primary button"><span class="bi bi-pencil"></span>Edit</a>
+                                            <a href="/forum-pdo/pages/delete-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
                                         </td>
                                  </tr>';
                            }

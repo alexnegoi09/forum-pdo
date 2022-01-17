@@ -5,7 +5,7 @@ footer {
 
 /* responsive */
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     footer {
         margin: 0;
         text-align: center;
