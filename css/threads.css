@@ -1,0 +1,125 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
+
+.main-container {
+    width: 80%;
+    margin: 4.75rem auto 1rem auto;
+}
+
+.table {
+    font-size: 1.1rem;
+}
+
+.title {
+    background-color: green !important;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.main-nav {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: black;
+}
+
+.main-nav a:hover {
+    color: green;
+    font-weight: bold;
+}
+
+.thread-title p {
+    margin-bottom: 2rem;
+    background-color: white;
+    padding: 8px 8px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.thread-title a {
+    text-decoration: none;
+    color: black;
+}
+
+.thread-title a:hover {
+    color: green;
+    font-weight: bold;
+}
+
+.post-row {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.post-header {
+    flex-grow: 0.25;
+    border-right: 1px solid lightgray;
+}
+
+.post-body {
+    flex-grow: 10;
+    padding: 2rem 0 0.5rem 1.5rem !important;
+}
+
+.bi {
+    padding-right: 5px;
+}
+
+.button-row td {
+    padding-left: 0;
+}
+
+.button {
+    margin-right: 5px;
+}
+
+.thread-link {
+    margin-top: 4rem;
+}
+
+
+/* responsive */
+
+@media (max-width: 800px) {
+
+    .main-container {
+        width: 100%;
+    }
+
+    .main-nav {
+        text-align: center;
+    }
+
+    .category-title {
+        text-align: center;
+    }
+
+    .category-title p {
+        display: block;
+    }
+
+    .table {
+        text-align: center;
+    }
+
+    .table-row {
+        flex-direction: column;
+    }
+
+    .thread-link {
+        text-align: center;
+    }
+
+    .title,
+    .table-row {
+        border-radius: 0;
+    }
+}
+
+

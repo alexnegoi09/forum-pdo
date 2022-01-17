@@ -63,27 +63,27 @@ class Post {
             $result = $stmt->fetchAll();
             
             if (count($result) === 0) {
-                echo '<p>There are no posts to show!</p>';
+                echo '<p><i>There are no posts to show!</i></p>';
             } else {
                 // show posts
-                echo '<table>
-                        <tr>
-                            <td>Posts</td>
+                echo '<table class="table table-borderless">
+                        <tr class="title-row">
+                            <td class="title" colspan="2">Posts</td>
                         </tr>';
 
                 foreach($result as $res) {
                     $toBeReplaced = ['[quote]', '[/quote]', '[strong]', '[/strong]', '[text]', '[/text]'];
                     $replaceWith = ['<div style="background-color: #eee; padding: 5px;">', '</div><br>', '<strong>', '</strong><br>', '<blockquote>', '</blockquote><br>'];
 
-                    echo '<tr>
-                            <td>';
+                    echo '<tr class="post-row">
+                            <td class="post-header">';
                             if (!empty($res['profilepic'])) {
                                 echo '<img src="../img/' . $res['profilepic'] . '">';
                             }
                                 echo '<p>Written by: <a href="/forum-pdo/pages/profile.php?user_id=' . $res['userid'] . '">' . $res['author'] . '</a> (' . $res['groups'] . ')</p>
                                         <p>Posted on ' . $res['created_at'] . '</p>
                                 </td>
-                                <td>' . strip_tags(str_replace($toBeReplaced, $replaceWith, $res['body']), '<div><strong><i><blockquote><a><img><br>') .  '</td>
+                                <td class="post-body">' . strip_tags(str_replace($toBeReplaced, $replaceWith, $res['body']), '<div><strong><i><blockquote><a><img><br>') .  '</td>
                             </tr>';
 
                           // if the user is an admin or a moderator, the edit and delete buttons remain on permanently, else, they disappear one hour after the message was posted
@@ -91,26 +91,26 @@ class Post {
                           date_default_timezone_set('Europe/Bucharest');
                           if (isset($_SESSION['username'])) {
                             if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
-                                    echo '<tr>
+                                    echo '<tr class="button-row">
                                             <td>
-                                                <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
-                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Edit</a>
-                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
-                                                <a href="/forum-pdo/pages/move-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Move</a>
+                                                <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-success"><span class="bi bi-chat-quote"></span>Quote</a>
+                                                <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-success"><span class="bi bi-pencil"></span>Edit</a>
+                                                <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-success"><span class="bi bi-trash"></span>Delete</a>
+                                                <a href="/forum-pdo/pages/move-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-primary"><span class="bi bi-file-earmark-minus"></span>Move</a>
                                             </td>
                                         </tr>'; 
                             } else if ($res['author'] === $_SESSION['username'] && time() < strtotime($res['created_at']) + 3600) {
-                                echo '<tr>
+                                echo '<tr class="button-row">
                                           <td>
-                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
-                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page='. $_GET['page'] . '">Edit</a>
-                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Delete</a>
+                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-success"><span class="bi bi-chat-quote"></span>Quote</a>
+                                            <a href="/forum-pdo/pages/edit-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page='. $_GET['page'] . '" class="btn btn-success"><span class="bi bi-pencil"></span>Edit</a>
+                                            <a href="/forum-pdo/pages/delete-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '"class="btn btn-success"><span class="bi bi-trash"></span>Delete</a>
                                           </td>
                                       </tr>';
                             } else {
-                                echo '<tr>
+                                echo '<tr class="button-row">
                                         <td>
-                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '">Quote</a>
+                                            <a href="/forum-pdo/pages/quote-post.php?id=' . $res['id'] . '&thread_id=' . $res['thread_id'] . '&page=' . $_GET['page'] . '" class="btn btn-success"><span class="bi bi-chat-quote"></span>Quote</a>
                                         </td>
                                       </tr>';
                             }
