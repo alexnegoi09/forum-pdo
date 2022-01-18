@@ -28,53 +28,51 @@ if (!isset($_SESSION['username'])) {
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
 
+    <div class="main-container">
+        <form action="" method="POST" enctype="multipart/form-data" class="cpanel-form">
+            <?php $user = new User(null, null, null, null, null, null, $db); ?>
 
-    <form action="" method="POST" enctype="multipart/form-data" class="cpanel-form">
-        <!-- <?php
-            $user = new User(null, null, null, null, null, null, $db);
-            $user->getPageTitle();
-        ?> -->
-        <h3 class="main-title-form">User Controls</h3>
+            <h3 class="main-title-form">User Controls</h3>
 
-        <p>
-            <?php if (empty($_SESSION['profilepic'])) { ?>
-                <label for="profilepic" class="cpanel-label">Change profile picture:</label>
-                <input type="file" name="profilepic" class="form-control">
-                <pre class="text-danger error">The maximum resolution of the picture must be 200x200px, and the maximum size must be 2 MB!</pre>
-            <?php } else { ?>
-                <p>Profile Picture:</p>
-                <img src="<?php echo '../img/' . $_SESSION['profilepic']; ?>" alt="profile picture">
-                <input type="submit" name="remove" value="Remove" class="btn btn-dark">
-            <?php } ?>
-        </p>
-        <p>
-            <label for="username" class="cpanel-label">Username: </label>
-            <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" class="form-control" disabled>
-        </p>
-        <p>
-            <label for="password" class="cpanel-label">New password: </label>
-            <input type="password" name="password" class="form-control">
-        </p>
-        <p>
-            <label for="repass" class="cpanel-label">Re-type password: </label>
-            <input type="password" name="repass" class="form-control">
-        </p>
-        <p>
-            <label for="location" class="cpanel-label">E-mail: </label>
-            <input type="text" name="email" value="<?php echo $_SESSION['email']; ?>" class="form-control">
-        </p>
-        <p>
-            <label for="location" class="cpanel-label">Location: </label>
-            <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>" class="form-control">
-        </p>
-        <p>
-            <input type="submit" name="update" value="Update info" class="btn btn-success">
-        </p>
-    </form>
+            <p>
+                <?php if (empty($_SESSION['profilepic'])) { ?>
+                    <label for="profilepic" class="cpanel-label">Change profile picture:</label>
+                    <input type="file" name="profilepic" class="form-control">
+                    <small>The picture must have a maximum resolution of 200x200, and be 2 MB in size!</small>
+                <?php } else { ?>
+                    <p>Profile Picture:</p>
+                    <img src="<?php echo '../img/' . $_SESSION['profilepic']; ?>" alt="profile picture">
+                    <input type="submit" name="remove" value="Remove" class="btn btn-dark">
+                <?php } ?>
+            </p>
+            <p>
+                <label for="username" class="cpanel-label">Username: </label>
+                <input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" class="form-control" disabled>
+            </p>
+            <p>
+                <label for="password" class="cpanel-label">New password: </label>
+                <input type="password" name="password" class="form-control">
+            </p>
+            <p>
+                <label for="repass" class="cpanel-label">Re-type password: </label>
+                <input type="password" name="repass" class="form-control">
+            </p>
+            <p>
+                <label for="location" class="cpanel-label">E-mail: </label>
+                <input type="text" name="email" value="<?php echo $_SESSION['email']; ?>" class="form-control">
+            </p>
+            <p>
+                <label for="location" class="cpanel-label">Location: </label>
+                <input type="text" name="location" value="<?php echo $_SESSION['location']; ?>" class="form-control">
+            </p>
+            <p>
+                <input type="submit" name="update" value="Update info" class="btn btn-success">
+            </p>
+        </form>
 
     
 
-    <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
+        <?php if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') { ?>
 
 
         <form action="" method="POST" class="cpanel-form">
@@ -159,8 +157,9 @@ if (!isset($_SESSION['username'])) {
                 
             ?>
                 <?php } ?>
-    <?php } ?>
+            <?php } ?>
         </form>
+    </div>
 
     <?php 
         if (isset($_POST['update'])) {

@@ -209,7 +209,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
                 $stmt->execute(array(1, $_POST['lock']));
-                echo '<p class="text-success success">The selected thread has been locked!</p>';
+                echo '<p class="text-success success form-success">The selected thread has been locked!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -222,7 +222,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('UPDATE threads SET locked = ? WHERE title = ?');
                 $stmt->execute(array(0, $_POST['lock']));
-                echo '<p class="text-success success">The selected thread has been unlocked!</p>';
+                echo '<p class="text-success success form-success">The selected thread has been unlocked!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -235,7 +235,7 @@ class User {
             try {
                 $stmt = $this->db->prepare('DELETE FROM users WHERE username = ?');
                 $stmt->execute(array($_POST['ban']));
-                echo '<p class="text-success success">The selected user has been banned!</p>';
+                echo '<p class="text-success success form-success">The selected user has been banned!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }

@@ -18,6 +18,16 @@
     font-weight: bold;
 }
 
+.logged-out a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.logged-out a:hover {
+    color: green;
+}
+
 .links {
     display: flex;
     flex-direction: column;
@@ -64,6 +74,10 @@
 
 .main-header-user .user-green:hover {
     color: darkgreen;
+}
+
+.main-header-user .user-black:hover {
+    color: darkslategray;
 }
 
 

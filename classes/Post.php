@@ -73,7 +73,7 @@ class Post {
 
                 foreach($result as $res) {
                     $toBeReplaced = ['[quote]', '[/quote]', '[strong]', '[/strong]', '[text]', '[/text]'];
-                    $replaceWith = ['<div style="background-color: #eee; padding: 5px;">', '</div><br>', '<strong>', '</strong><br>', '<blockquote>', '</blockquote><br>'];
+                    $replaceWith = ['<div class="quote">', '</div><br>', '<strong>', '</strong><br>', '<blockquote>', '</blockquote><br>'];
 
                     echo '<tr class="post-row">
                             <td class="post-header">';
@@ -242,9 +242,11 @@ class Post {
         } else if ($pages) {
                 echo '<p class="pagination">Page: </p>';
                 
+                echo '<p class="page-container">';
                 for ($i = 1; $i <= $pages; $i++) {
                    echo '<a href="/forum-pdo/pages/threads.php?id=' . $this->thread_id . '&page=' . $i . '" class="page-number">' . $i . " " . '</a>';
                 }
+                echo '</p>';
         }
     
     }

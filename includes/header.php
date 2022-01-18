@@ -28,8 +28,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['groups'])) { ?>
     <header class="main-header-guest main-header">
         <h1 class="main-title"><a href="/forum-pdo/index.php">My Forum</a></h1>
         <div class="links">
-            <div class="logged-in">You are currently browsing the forum as a guest!</div>
-            <div class="logged-in">You can <a href="/forum-pdo/pages/login.php">log in</a> or <a href="/forum-pdo/pages/signup.php">create a new account.</a></div>
+            <div class="logged-out">Welcome, <strong>Guest!</strong></div>
+            <div class="logged-out">You can <a href="/forum-pdo/pages/signup.php">create a new account</a> or <a href="/forum-pdo/pages/login.php">log in.</a></div>
         </div>
     </header>
 

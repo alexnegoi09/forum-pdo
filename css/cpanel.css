@@ -2,6 +2,10 @@
     margin: 1rem 0 0 2rem;
 }
 
+.main-container {
+    display: flex;
+}
+
 .cpanel-form {
     background-color: white;
     padding: 2rem;
@@ -42,12 +46,20 @@
     font-size: 1.1rem;
 }
 
+.form-success {
+    margin-left: 0;
+}
+
 textarea {
     resize: none;
 }
 
 
 @media (max-width: 800px) {
+    .main-container {
+        flex-direction: column;
+    }
+
     .cpanel-form {
         display: block;
         min-width: 200px;

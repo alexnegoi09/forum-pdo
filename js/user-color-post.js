@@ -8,7 +8,7 @@ if (document.querySelector('.written-by') !== 'null') {
         } else if (user.innerText.includes('Moderator')) {
             user.childNodes[1].classList.add('user-green');
         } else {
-            user.childNodes[2].classList.add('user-black');
+            user.childNodes[1].classList.add('user-black');
         }   
     });
 }

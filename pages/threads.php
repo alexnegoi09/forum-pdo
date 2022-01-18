@@ -17,7 +17,6 @@ require('../classes/Navigation.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/nav-main.css">
     <link rel="stylesheet" href="../css/footer-main.css">
     <link rel="stylesheet" href="../css/threads.css">
 </head>
@@ -45,7 +44,7 @@ require('../classes/Navigation.php');
         if ($post->isThreadLocked() === 0) {
             require('../includes/post-link.php');
         } else {
-            echo '<p class="btn btn-outline-danger"><span class="bi bi-lock"></span>Locked</p>';
+            echo '<p class="text-danger"><span class="bi bi-lock"></span>Locked</p>';
         }
 
         $post->pagination();
