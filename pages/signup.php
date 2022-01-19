@@ -1,9 +1,3 @@
-<?php 
-require('../classes/Database.php');
-require('../classes/Signup.php'); 
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +11,11 @@ require('../classes/Signup.php');
     <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
+    <?php 
+    require('../classes/Database.php');
+    require('../classes/Signup.php'); 
+    ?>
+
     <h1 class="main-header"><a href="/forum-pdo/index.php">My Forum</a></h1>
 
     <form action="signup.php" class="signup-form" method="POST">
@@ -43,28 +42,28 @@ require('../classes/Signup.php');
             <a href="login.php" class="login-link">Log in</a>
         </p>
     </form>
-</body>
-</html>
 
+    <?php
 
-<?php
-
-if (isset($_POST['submit'])) {
-    $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email'], $db);
+    if (isset($_POST['submit'])) {
+        $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email'], $db);
 
     if (empty($_SESSION['errors'])) {
-    $signup->store();
+        $signup->store();
 
     } else {
-            foreach($_SESSION['errors'] as $err) {
+        foreach($_SESSION['errors'] as $err) {
             echo '<p class="text-danger error">' . $err . '</p>';
             }
 
         $_SESSION['errors'] = null;
-    }
+        }
 
     $db = null;
-}
+    }
 
-require('../includes/footer.php');
-?>
+    require('../includes/footer.php');
+    ?>
+    
+</body>
+</html>

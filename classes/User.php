@@ -1,13 +1,13 @@
 <?php
 
 class User {
-    public $username;
-    public $password;
-    public $repassword;
-    public $email;
-    public $profilepic;
-    public $location;
-    public $db;
+    private $username;
+    private $password;
+    private $repassword;
+    private $email;
+    private $profilepic;
+    private $location;
+    private $db;
 
 
     public function __construct($user, $pass, $repass, $email, $pic, $location, $db) {
@@ -233,8 +233,8 @@ class User {
     public function banUser() {
         if ($_POST['ban'] !== 'Select a user') {
             try {
-                $stmt = $this->db->prepare('DELETE FROM users WHERE username = ?');
-                $stmt->execute(array($_POST['ban']));
+                $stmt = $this->db->prepare('UPDATE users SET groups = ? WHERE username = ?');
+                $stmt->execute(array('Banned', $_POST['ban']));
                 echo '<p class="text-success success form-success">The selected user has been banned!</p>';
             } catch(PDOException $e) {
                 echo $e->getMessage();

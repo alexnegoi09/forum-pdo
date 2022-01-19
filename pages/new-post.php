@@ -1,25 +1,3 @@
-<?php 
-require('../classes/Database.php');
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Post.php');
-
-if (!isset($_SESSION['username'])) {
-    header('Location: /forum-pdo/index.php');
-}
-
-$post_id = new Post($_GET['id'], null, null, $db);
-
-// check for valid id
-$post_id->threadPostCheck();
-
-// check if thread is locked
-if ($post_id->isThreadLocked() === '1') {
-    header('Location: /forum-pdo/index.php');
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +12,30 @@ if ($post_id->isThreadLocked() === '1') {
     <link rel="stylesheet" href="../css/new-post.css">
 </head>
 <body>
+    <?php 
+    require('../classes/Database.php');
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Post.php');
+
+    if (!isset($_SESSION['username'])) {
+        header('Location: /forum-pdo/index.php');
+        exit();
+    }
+
+    $post_id = new Post($_GET['id'], null, null, $db);
+
+    // check for valid id
+    $post_id->threadPostCheck();
+
+    // check if thread is locked
+    if ($post_id->isThreadLocked() === '1') {
+        header('Location: /forum-pdo/index.php');
+        exit();
+    }
+
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
@@ -48,36 +50,35 @@ if ($post_id->isThreadLocked() === '1') {
         <input type="submit" name="btn" value="Post" class="btn btn-success">
         </p>
     </form>
+
+    <?php
+
+    if (isset($_POST['btn'])) {
+
+        $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
+
+        //check for empty message field
+        $post->emptyMessageCheck();
+
+        // create post
+        if (empty($_SESSION['errors'])) {
+        $post->create();
+
+        // update postcount
+        $post->getPostCount();
+        $post->setPostCount();
+        } else {
+
+            // display errors
+            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+            $_SESSION['errors'] = null;
+        }
+    }
+
+    require('../includes/footer.php');
+    ?>
+
     <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
 </body>
 </html>
-
-
-<?php
-
-
-if (isset($_POST['btn'])) {
-
-    $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
-
-    //check for empty message field
-    $post->emptyMessageCheck();
-
-    // create post
-    if (empty($_SESSION['errors'])) {
-    $post->create();
-
-    // update postcount
-    $post->getPostCount();
-    $post->setPostCount();
-    } else {
-
-        // display errors
-        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-        $_SESSION['errors'] = null;
-    }
-}
-
-require('../includes/footer.php');
-?>

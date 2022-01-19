@@ -1,16 +1,3 @@
-<?php
-require('../classes/Database.php');
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Post.php');
-
-$post_id = new Post($_GET['thread_id'], null, null, $db);
-
-$post_id->messageCheck();
-
-        
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +12,17 @@ $post_id->messageCheck();
     <link rel="stylesheet" href="../css/quote-post.css">
 </head>
 <body>
+    <?php
+    require('../classes/Database.php');
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Post.php');
+
+    $post_id = new Post($_GET['thread_id'], null, null, $db);
+
+    $post_id->messageCheck();
+    ?>
+    
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>

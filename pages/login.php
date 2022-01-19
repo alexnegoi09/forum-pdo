@@ -1,14 +1,3 @@
-<?php
-require('../classes/Database.php');
-require('../classes/Login.php');
-
-if (isset($_COOKIE['remember'])) {
-    header('Location: /forum-pdo/index.php');
-}
-
- ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +11,16 @@ if (isset($_COOKIE['remember'])) {
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
+    <?php   
+    require('../classes/Database.php');
+    require('../classes/Login.php');
+
+    if (isset($_COOKIE['remember'])) {
+        header('Location: /forum-pdo/index.php');
+        exit();
+    }
+    ?>
+
     <h1 class="main-header"><a href="/forum-pdo/index.php">My Forum</a></h1>
 
     <form action="login.php" class="login-form" method="POST">
@@ -45,23 +44,22 @@ if (isset($_COOKIE['remember'])) {
             <a href="signup.php" class="account-link">Create a new account</a>
         </p>
     </form>
+
+    <?php
+
+    if (isset($_POST['submit'])) {
+        if (!empty($_POST['username'] && !empty($_POST['password']))) {
+            $login = new Login($_POST['username'], $_POST['password'], $db);
+            $login->validate();
+        } else {
+            echo '<p class="text-danger error">Please enter a username and password!</p>';
+        }
+   
+        $db = null;
+
+    }
+
+    require('../includes/footer.php');
+    ?>
 </body>
 </html>
-
-
-<?php
-
-if (isset($_POST['submit'])) {
-    if (!empty($_POST['username'] && !empty($_POST['password']))) {
-        $login = new Login($_POST['username'], $_POST['password'], $db);
-        $login->validate();
-    } else {
-        echo '<p class="text-danger error">Please enter a username and password!</p>';
-    }
-   
-    $db = null;
-
-}
-
-require('../includes/footer.php');
-?>

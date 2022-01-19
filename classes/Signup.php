@@ -3,11 +3,11 @@
 session_start();
 
 class Signup {
-    public $username;
-    public $password;
-    public $repass;
-    public $email;
-    public $db;
+    private $username;
+    private $password;
+    private $repass;
+    private $email;
+    private $db;
 
 
     public function __construct($user, $pass, $repass, $email, $db) {
@@ -68,7 +68,7 @@ class Signup {
         $stmt->execute();
 
 
-        echo '<p class="text-success">Your account has been created successfully! You can now <a href="../pages/login.php">log in.</a></p>';
+        echo '<p class="text-success success">Your account has been created successfully! You can now <a href="../pages/login.php" class="text-dark">log in.</a></p>';
 
     }
     

@@ -1,22 +1,10 @@
-<?php
-require('../includes/header.php');
-require('../includes/logout.php');
-require('../classes/Database.php');
-require('../classes/User.php'); 
-
-if (!isset($_SESSION['username'])) {
-    header('Location: /forum-pdo/index.php');
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $_SESSION['username'] . ' -  Control Panel - My Forum' ?></title>
+    <title>Forum Control Panel - My Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/header.css">
@@ -24,6 +12,18 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="../css/cpanel.css">
 </head>
 <body>
+    <?php
+    require('../includes/header.php');
+    require('../includes/logout.php');
+    require('../classes/Database.php');
+    require('../classes/User.php'); 
+
+    if (!isset($_SESSION['username'])) {
+        header('Location: /forum-pdo/index.php');
+    }
+
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>

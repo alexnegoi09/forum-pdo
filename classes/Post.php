@@ -1,10 +1,10 @@
 <?php
 
 class Post {
-    public $thread_id;
-    public $body;
-    public $author;
-    public $db;
+    private $thread_id;
+    private $body;
+    private $author;
+    private $db;
 
 
     public function __construct($thread_id, $body, $author, $db) {

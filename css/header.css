@@ -53,7 +53,7 @@
 
 .header-link:hover {
     color: darkgreen;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 /* added with JS */

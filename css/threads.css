@@ -146,6 +146,15 @@
 }
 
 
+/* added with JS */
+
+.written-by .banned {
+    text-decoration: line-through;
+}
+
+/**/
+
+
 /* responsive */
 
 @media (max-width: 800px) {

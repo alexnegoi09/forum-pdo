@@ -1,19 +1,3 @@
-<?php
-require('../classes/Database.php');
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Category.php');
-
-$category_id = new Category(null, null, $db);
-
-$category_id->categoryCheck();
-
-if (isset($_SESSION['username'])) {
-    if ($_SESSION['groups'] === 'Administrator') {
-
-        
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +12,20 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="../css/new-category.css">
 </head>
 <body>
+    <?php   
+    require('../classes/Database.php');
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Category.php');
+
+    $category_id = new Category(null, null, $db);
+
+    $category_id->categoryCheck();
+
+    if (isset($_SESSION['username'])) {
+        if ($_SESSION['groups'] === 'Administrator') {        
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
@@ -48,22 +46,19 @@ if (isset($_SESSION['username'])) {
         </p>
     </form>
 
-    <script src="../js/user-color.js"></script> 
-    <script src="../js/nav.js"></script>
- </body>
- </html>
-
     <?php } else {  ?>
 
-        <?php header('Location: /forum-pdo/index.php');  ?>
+    <?php header('Location: /forum-pdo/index.php');
+    exit();  
+    ?>
 
-        <?php } ?>
+    <?php } ?>
 
 <?php } ?>
 
-<?php 
+    <?php 
 
-if (isset($_POST['btn'])) {
+    if (isset($_POST['btn'])) {
 
     $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
 
@@ -72,7 +67,7 @@ if (isset($_POST['btn'])) {
 
     // edit and save
     if (empty($_SESSION['errors'])) { 
-    $category->update();
+        $category->update();
 
     header('Location: /forum-pdo/index.php');
 
@@ -81,9 +76,16 @@ if (isset($_POST['btn'])) {
         // display errors
         echo '<p class="error text-danger">' . $_SESSION['errors'][0] . '</p>';
         $_SESSION['errors'] = null;
+        }
     }
-}
 
-require('../includes/footer.php');
+    require('../includes/footer.php');
 
-?>
+    ?>
+
+    <script src="../js/user-color.js"></script> 
+    <script src="../js/nav.js"></script>
+ </body>
+ </html>
+
+    

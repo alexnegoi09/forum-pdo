@@ -1,9 +1,9 @@
 <?php
 
 class Login {
-    public $username;
-    public $password;
-    public $db;
+    private $username;
+    private $password;
+    private $db;
 
     public function __construct($user, $pass, $db) {
         $this->username = $user;
@@ -22,16 +22,22 @@ class Login {
         $query = $this->db->prepare('SELECT userid, username, password, groups, email, joined, postcount, profilepic, location FROM users WHERE username = ?');
         $query->execute(array($this->username));
         $result = $query->fetch();
+
         
         // compare user input data to db data
-        if(!$result || !password_verify($this->password, $result['password'])) {
+        if (!$result || !password_verify($this->password, $result['password'])) {
             $_SESSION['errors'][] = 'The credentials you have entered are incorrect!';
 
             foreach ($_SESSION['errors'] as $err) {
-                echo '<p>' . $err . '</p>'; 
+                echo '<p class="error">' . $err . '</p>'; 
             }
 
             $_SESSION['errors'] = null;
+
+        // check if account is banned    
+        } else if ($result['groups'] === 'Banned') {
+
+            echo '<p class="text-danger error">This account has been banned!</p>';
 
         } else {
             //save data and redirect
@@ -49,7 +55,7 @@ class Login {
                 $this->remember();
             }
 
-            header('Location: ../index.php');
+            header('Location: /forum-pdo/index.php');
 
         }
     }

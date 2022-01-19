@@ -1,17 +1,3 @@
-<?php
-require('../classes/Database.php'); 
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Category.php');
-
-if (isset($_SESSION['username'])) {
-    if ($_SESSION['groups'] !== 'Administrator') {
-    header('Location: /forum-pdo/index.php');
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +13,21 @@ if (isset($_SESSION['username'])) {
 
 </head>
 <body>
+    <?php
+    require('../classes/Database.php'); 
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Category.php');
+
+    if (isset($_SESSION['username'])) {
+        if ($_SESSION['groups'] !== 'Administrator') {
+        header('Location: /forum-pdo/index.php');
+        exit();
+        }
+    }
+
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
@@ -47,34 +48,34 @@ if (isset($_SESSION['username'])) {
         </p>
     </form>
 
+    <?php
+
+    if (isset($_POST['btn'])) {
+
+        $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
+
+        // check for empty form
+        $category->emptyFieldsCheck();
+
+        // check for duplicate thread
+        $category->duplicateCheck();
+
+        //create new category
+        if(empty($_SESSION['errors'])) {  
+            $category->create();
+        } else {
+            foreach ($_SESSION['errors'] as $err) {
+            echo '<p class="text-danger error">' . $err . '</p>';
+            $_SESSION['errors'] = null;
+            }
+        }
+    
+    } 
+
+    require('../includes/footer.php');
+    ?>
+
     <script src="../js/user-color.js"></script> 
     <script src="../js/nav.js"></script>
 </body>
 </html>
-
-<?php
-
-if (isset($_POST['btn'])) {
-
-    $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
-
-    // check for empty form
-    $category->emptyFieldsCheck();
-
-    // check for duplicate thread
-    $category->duplicateCheck();
-
-    //create new category
-    if(empty($_SESSION['errors'])) {  
-        $category->create();
-    } else {
-        foreach ($_SESSION['errors'] as $err) {
-        echo '<p class="text-danger error">' . $err . '</p>';
-        $_SESSION['errors'] = null;
-        }
-    }
-    
-} 
-
-require('../includes/footer.php');
-?>

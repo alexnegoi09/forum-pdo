@@ -1,20 +1,3 @@
-<?php
-require('../classes/Database.php'); 
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Thread.php');
-
-if (!isset($_SESSION['username'])) {
-    header('Location: /forum-pdo/index.php');
-}
-
-$thread_id = new Thread($_GET['id'], null, null, $db);
-
-// check for valid id
-$thread_id->categoryCheck();
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +12,23 @@ $thread_id->categoryCheck();
     <link rel="stylesheet" href="../css/new-thread.css">
 </head>
 <body>
+    <?php
+    require('../classes/Database.php'); 
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Thread.php');
+
+    if (!isset($_SESSION['username'])) {
+        header('Location: /forum-pdo/index.php');
+        exit();
+    }
+
+    $thread_id = new Thread($_GET['id'], null, null, $db);
+
+    // check for valid id
+    $thread_id->categoryCheck();
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
@@ -45,36 +45,32 @@ $thread_id->categoryCheck();
         </p>
     </form>
 
+    <?php
+
+    if (isset($_POST['btn'])) {
+
+        $thread = new Thread($_GET['id'], $_POST['thread-title'], $_SESSION['username'], $db);
+
+        // check for empty form
+        $thread->emptyTitleCheck();
+
+        // check for duplicate thread
+        $thread->duplicateCheck();
+
+        //create new thread
+        if(empty($_SESSION['errors'])) {  
+            $thread->create();
+        } else {
+            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+            $_SESSION['errors'] = null;
+        }
+    
+    } 
+
+    require('../includes/footer.php');
+    ?>
+
     <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
 </body>
 </html>
-
-
-<?php
-
-
-if (isset($_POST['btn'])) {
-
-    $thread = new Thread($_GET['id'], $_POST['thread-title'], $_SESSION['username'], $db);
-
-    // check for empty form
-    $thread->emptyTitleCheck();
-
-    // check for duplicate thread
-    $thread->duplicateCheck();
-
-    //create new thread
-    if(empty($_SESSION['errors'])) {  
-        $thread->create();
-    } else {
-        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-        $_SESSION['errors'] = null;
-    }
-    
-} 
-
-require('../includes/footer.php');
-?>
-
-

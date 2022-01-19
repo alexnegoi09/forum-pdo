@@ -1,18 +1,3 @@
-<?php
-require('../classes/Database.php');
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Post.php');
-
-$post = new Post($_GET['id'], null, null, $db);
-
-
-if (isset($_SESSION['username'])) {
-    if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
-
-        
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,11 +12,25 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="../css/move-post.css">
 </head>
 <body>
+    <?php
+    require('../classes/Database.php');
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Post.php');
+
+    $post = new Post($_GET['id'], null, null, $db);
+
+
+    if (isset($_SESSION['username'])) {
+        if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+    
+    ?>
+
     <nav class="nav">
         <button class="back btn btn-outline-dark">Go back</button>
     </nav>
 
-
+    
     <form action="" method="POST" class="post-form">
         <h2 class="main-title-form">Move post</h2>
         <p>
@@ -49,9 +48,14 @@ if (isset($_SESSION['username'])) {
 
         <?php if (isset($_POST['btn'])) {
             $post->move();
-        } ?>
+        } 
+        ?>
 
-    <?php } ?>
+    <?php } else {
+        header('Location: /forum-pdo/index.php');
+        exit();
+    } 
+    ?>
 
 <?php } ?>
 

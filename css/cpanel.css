@@ -9,10 +9,15 @@
 .cpanel-form {
     background-color: white;
     padding: 2rem;
-    margin: 4.75rem 0 1rem 2rem;
+    margin: 4.75rem 2rem 1rem 2rem;
     display: inline-block;
-    min-width: 450px;
+    flex-shrink: 1;
+    width: 570px;
     border-radius: 10px;
+}
+
+.cpanel-form small {
+    font-size: 0.85rem;
 }
 
 .main-title-form {
@@ -68,6 +73,10 @@ textarea {
         border-radius: 0;
     }
 
+    .main-title-form {
+        text-align: center;
+    }
+
     .form-control, .btn {
         max-width: 100%;
     }
@@ -79,4 +88,5 @@ textarea {
         width: 100%;
         text-align: center;
     }
+
 }

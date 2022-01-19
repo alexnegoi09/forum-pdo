@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 require('includes/header.php');
 require('includes/logout.php');
@@ -11,7 +13,7 @@ if (isset($_COOKIE['remember'])) {
 
 ?>
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,6 +42,6 @@ if (isset($_COOKIE['remember'])) {
     </div>
    <?php require('includes/footer.php'); ?>
    
-   <script src="js/user-color.js"></script> 
+   <script src="js/user-color.js"></script>
 </body>
 </html>

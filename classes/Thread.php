@@ -1,10 +1,10 @@
 <?php
 
 class Thread {
-    public $category_id;
-    public $title;
-    public $author;
-    public $db;
+    private $category_id;
+    private $title;
+    private $author;
+    private $db;
 
 
     public function __construct($category_id, $title, $author, $db) {
@@ -103,7 +103,7 @@ class Thread {
 
                 foreach ($result as $res) {
                     echo '<tr class="table-row">
-                            <td><a href=/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1>' . htmlspecialchars($res['title']) . '</td>';
+                            <td><a href="/forum-pdo/pages/threads.php?id=' . $res['id'] . '&page=1">' . htmlspecialchars($res['title']) . '</a></td>';
 
                             // get last post
                             $stmt2 = $this->db->prepare('SELECT * FROM posts WHERE thread_id = ? ORDER BY created_at DESC LIMIT 1');

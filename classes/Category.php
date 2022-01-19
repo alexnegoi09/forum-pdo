@@ -2,9 +2,9 @@
 
 
 class Category {
-    public $name;
-    public $description;
-    public $db;
+    private $name;
+    private $description;
+    private $db;
 
 
     public function __construct($name, $description, $db) {
@@ -35,7 +35,7 @@ class Category {
             foreach($result as $res) { 
                 echo '<tr class="table-row">
                         <td>
-                            <a href=/forum-pdo/pages/categories.php?id=' . $res['id'] .  '>' . htmlspecialchars($res['name']) . 
+                            <a href="/forum-pdo/pages/categories.php?id=' . $res['id'] .  '">' . htmlspecialchars($res['name']) . 
                             '</a>
                              <p>' . htmlspecialchars($res['description']) . '</p>
                         </td>';

@@ -11,9 +11,8 @@
 .user-info {
     background-color: white;
     padding: 2rem;
-    margin-left: 2rem;
-    width: 25%;
-    min-width: 650px;
+    margin: 0 0 1rem 2rem;
+    width: max-content;
     border-radius: 10px;
 }
 

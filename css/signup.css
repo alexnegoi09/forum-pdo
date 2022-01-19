@@ -64,7 +64,7 @@
 .error,
 .success {
     font-weight: bolder;
-    width: 25%;
+    width: max-content;
     min-width: 450px;
     margin-left: 2rem;
     font-size: 1.1rem;
