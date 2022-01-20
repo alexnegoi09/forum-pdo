@@ -13,17 +13,17 @@
 </head>
 <body>
     <?php
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Thread.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Thread.php');
 
-    $thread_id = new Thread(null, null, null, $db);
+        $thread_id = new Thread(null, null, null, $db);
 
-    $thread_id->threadCheck();
+        $thread_id->threadCheck();
 
-    if (isset($_SESSION['username'])) {
-        if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {    
+        if (isset($_SESSION['username'])) {
+            if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {    
     ?>
 
     <nav class="nav">
@@ -52,28 +52,28 @@
 
     <?php 
 
-    if (isset($_POST['btn'])) {
+        if (isset($_POST['btn'])) {
 
-    $thread = new Thread($_GET['id'], $_POST['thread-title'], null, $db);
+        $thread = new Thread($_GET['id'], $_POST['thread-title'], null, $db);
 
-    //check for empty title field
-    $thread->emptyTitleCheck();
+        //check for empty title field
+        $thread->emptyTitleCheck();
 
-    // edit and save
-    if (empty($_SESSION['errors'])) { 
-    $thread->update();
+        // edit and save
+        if (empty($_SESSION['errors'])) { 
+        $thread->update();
 
-    header('Location: /forum-pdo/pages/categories.php?id=' . $_GET['category_id']);
+        header('Location: /forum-pdo/pages/categories.php?id=' . $_GET['category_id']);
 
-    } else {
+        } else {
 
-    // display errors
-    echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-    $_SESSION['errors'] = null;
+        // display errors
+        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+        $_SESSION['errors'] = null;
+        }
     }
-}
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
     ?>
 
     <script src="../js/user-color.js"></script>

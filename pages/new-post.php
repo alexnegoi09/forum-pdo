@@ -13,26 +13,26 @@
 </head>
 <body>
     <?php 
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Post.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Post.php');
 
-    if (!isset($_SESSION['username'])) {
-        header('Location: /forum-pdo/index.php');
-        exit();
-    }
+        if (!isset($_SESSION['username'])) {
+            header('Location: /forum-pdo/index.php');
+            exit();
+        }
 
-    $post_id = new Post($_GET['id'], null, null, $db);
+        $post_id = new Post($_GET['id'], null, null, $db);
 
-    // check for valid id
-    $post_id->threadPostCheck();
+        // check for valid id
+        $post_id->threadPostCheck();
 
-    // check if thread is locked
-    if ($post_id->isThreadLocked() === '1') {
-        header('Location: /forum-pdo/index.php');
-        exit();
-    }
+        // check if thread is locked
+        if ($post_id->isThreadLocked() === '1') {
+            header('Location: /forum-pdo/index.php');
+            exit();
+        }
 
     ?>
 
@@ -53,29 +53,29 @@
 
     <?php
 
-    if (isset($_POST['btn'])) {
+        if (isset($_POST['btn'])) {
 
-        $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
+            $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
 
-        //check for empty message field
-        $post->emptyMessageCheck();
+            //check for empty message field
+            $post->emptyMessageCheck();
 
-        // create post
-        if (empty($_SESSION['errors'])) {
-        $post->create();
+            // create post
+            if (empty($_SESSION['errors'])) {
+            $post->create();
 
-        // update postcount
-        $post->getPostCount();
-        $post->setPostCount();
-        } else {
+            // update postcount
+            $post->getPostCount();
+            $post->setPostCount();
+            } else {
 
-            // display errors
-            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-            $_SESSION['errors'] = null;
+                // display errors
+                echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+                $_SESSION['errors'] = null;
+            }
         }
-    }
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
     ?>
 
     <script src="../js/user-color.js"></script>

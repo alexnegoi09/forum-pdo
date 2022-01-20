@@ -12,13 +12,13 @@
 </head>
 <body>
     <?php   
-    require('../classes/Database.php');
-    require('../classes/Login.php');
+        require('../classes/Database.php');
+        require('../classes/Login.php');
 
-    if (isset($_COOKIE['remember'])) {
-        header('Location: /forum-pdo/index.php');
-        exit();
-    }
+        if (isset($_COOKIE['remember'])) {
+            header('Location: /forum-pdo/index.php');
+            exit();
+        }
     ?>
 
     <h1 class="main-header"><a href="/forum-pdo/index.php">My Forum</a></h1>
@@ -47,19 +47,19 @@
 
     <?php
 
-    if (isset($_POST['submit'])) {
-        if (!empty($_POST['username'] && !empty($_POST['password']))) {
-            $login = new Login($_POST['username'], $_POST['password'], $db);
-            $login->validate();
-        } else {
-            echo '<p class="text-danger error">Please enter a username and password!</p>';
-        }
+        if (isset($_POST['submit'])) {
+            if (!empty($_POST['username'] && !empty($_POST['password']))) {
+                $login = new Login($_POST['username'], $_POST['password'], $db);
+                $login->validate();
+            } else {
+                echo '<p class="text-danger error">Please enter a username and password!</p>';
+            }
    
-        $db = null;
+            $db = null;
 
-    }
+        }
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
     ?>
 </body>
 </html>

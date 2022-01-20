@@ -12,8 +12,8 @@
 </head>
 <body>
     <?php 
-    require('../classes/Database.php');
-    require('../classes/Signup.php'); 
+        require('../classes/Database.php');
+        require('../classes/Signup.php'); 
     ?>
 
     <h1 class="main-header"><a href="/forum-pdo/index.php">My Forum</a></h1>
@@ -45,22 +45,22 @@
 
     <?php
 
-    if (isset($_POST['submit'])) {
-        $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email'], $db);
+        if (isset($_POST['submit'])) {
+            $signup = new Signup($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT), $_POST['repass'], $_POST['email'], $db);
 
-    if (empty($_SESSION['errors'])) {
-        $signup->store();
+        if (empty($_SESSION['errors'])) {
+            $signup->store();
 
-    } else {
-        foreach($_SESSION['errors'] as $err) {
-            echo '<p class="text-danger error">' . $err . '</p>';
+        } else {
+            foreach($_SESSION['errors'] as $err) {
+                echo '<p class="text-danger error">' . $err . '</p>';
+                }
+
+            $_SESSION['errors'] = null;
             }
 
-        $_SESSION['errors'] = null;
+        $db = null;
         }
-
-    $db = null;
-    }
 
     require('../includes/footer.php');
     ?>

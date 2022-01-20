@@ -14,31 +14,31 @@
 <body>
 
 <?php
-require('../classes/Database.php');
-require('../includes/header.php');
-require('../includes/logout.php'); 
-require('../classes/Post.php');
+    require('../classes/Database.php');
+    require('../includes/header.php');
+    require('../includes/logout.php'); 
+    require('../classes/Post.php');
 
-if (isset($_SESSION['username'])) {
-    $post = new Post($_GET['id'], null, null, $db);
+    if (isset($_SESSION['username'])) {
+        $post = new Post($_GET['id'], null, null, $db);
 
 
-    $post->messageCheck();
+        $post->messageCheck();
 
-    if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
-        $post->delete();
-        $post->getPostCount();
-        $post->setPostCount();
-        echo '<p class="text-success">Your message has been deleted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
-    } else if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
-        $post->delete();
-        $post->getPostCount();
-        $post->setPostCount();
-        echo '<p class="text-success">Message deleted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+        if ($_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
+            $post->delete();
+            $post->getPostCount();
+            $post->setPostCount();
+            echo '<p class="text-success">Your message has been deleted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+        } else if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+            $post->delete();
+            $post->getPostCount();
+            $post->setPostCount();
+            echo '<p class="text-success">Message deleted! Click <a href="/forum-pdo/pages/threads.php?id=' . $_GET['thread_id'] . '&page=' . $_GET['page'] . '">here</a> to go back to the thread.</p>';
+            }
+        } else {
+            header('Location: /forum-pdo/index.php');
         }
-    } else {
-        header('Location: index.php');
-    }
 
 ?>
 

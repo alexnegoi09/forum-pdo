@@ -13,16 +13,16 @@
 </head>
 <body>
     <?php
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Post.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Post.php');
 
-    $post = new Post($_GET['id'], null, null, $db);
+        $post = new Post($_GET['id'], null, null, $db);
 
 
-    if (isset($_SESSION['username'])) {
-        if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
+        if (isset($_SESSION['username'])) {
+            if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator') {
     
     ?>
 
@@ -44,7 +44,7 @@
         <p>
             <input type="submit" name="btn" value="Move post" class="btn btn-success">
         </p>
-</form>
+    </form>
 
         <?php if (isset($_POST['btn'])) {
             $post->move();
@@ -54,8 +54,9 @@
     <?php } else {
         header('Location: /forum-pdo/index.php');
         exit();
-    } 
     ?>
+    
+   <?php } ?>
 
 <?php } ?>
 

@@ -13,17 +13,17 @@
 </head>
 <body>
     <?php   
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Category.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Category.php');
 
-    $category_id = new Category(null, null, $db);
+        $category_id = new Category(null, null, $db);
 
-    $category_id->categoryCheck();
+        $category_id->categoryCheck();
 
-    if (isset($_SESSION['username'])) {
-        if ($_SESSION['groups'] === 'Administrator') {        
+        if (isset($_SESSION['username'])) {
+            if ($_SESSION['groups'] === 'Administrator') {        
     ?>
 
     <nav class="nav">
@@ -48,8 +48,9 @@
 
     <?php } else {  ?>
 
-    <?php header('Location: /forum-pdo/index.php');
-    exit();  
+    <?php 
+        header('Location: /forum-pdo/index.php');
+        exit();  
     ?>
 
     <?php } ?>
@@ -58,28 +59,28 @@
 
     <?php 
 
-    if (isset($_POST['btn'])) {
+        if (isset($_POST['btn'])) {
 
-    $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
+        $category = new Category($_POST['category-title'], $_POST['category-description'], $db);
 
-    //check for empty message field
-    $category->emptyFieldsCheck();
+        //check for empty message field
+        $category->emptyFieldsCheck();
 
-    // edit and save
-    if (empty($_SESSION['errors'])) { 
-        $category->update();
+        // edit and save
+        if (empty($_SESSION['errors'])) { 
+            $category->update();
 
-    header('Location: /forum-pdo/index.php');
+        header('Location: /forum-pdo/index.php');
 
-    } else {
+        } else {
 
-        // display errors
-        echo '<p class="error text-danger">' . $_SESSION['errors'][0] . '</p>';
-        $_SESSION['errors'] = null;
+            // display errors
+            echo '<p class="error text-danger">' . $_SESSION['errors'][0] . '</p>';
+            $_SESSION['errors'] = null;
+            }
         }
-    }
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
 
     ?>
 

@@ -13,30 +13,30 @@
 </head>
 <body>
 <?php 
-require('../includes/header.php');
-require('../includes/logout.php');
-require('../classes/Database.php'); 
-require('../classes/User.php');
+    require('../includes/header.php');
+    require('../includes/logout.php');
+    require('../classes/Database.php'); 
+    require('../classes/User.php');
 
 
-if (isset($_SESSION['username'])) {
-    if (!isset($_GET['user_id'])) {
-        header('Location: /forum-pdo/index.php');
+    if (isset($_SESSION['username'])) {
+        if (!isset($_GET['user_id'])) {
+            header('Location: /forum-pdo/index.php');
+            exit();
+        }
+    } else {
+        header('Location: /forum-pdo/pages/login.php');
         exit();
     }
-} else {
-    header('Location: /forum-pdo/pages/login.php');
-    exit();
-}
 
 ?>
 
     <button class="back btn btn-outline-dark">Go back</button>
     
     <?php
-    $user = new User(null, null, null, null, null, null, $db);
-    $user->getProfileInfo();
-    $db = null; 
+        $user = new User(null, null, null, null, null, null, $db);
+        $user->getProfileInfo();
+        $db = null; 
     ?>
 
     <?php require('../includes/footer.php'); ?>

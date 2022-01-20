@@ -274,7 +274,7 @@ class Post {
         try {
             $stmt = $this->db->prepare('UPDATE posts SET thread_id = ? WHERE id = ?');
             $stmt->execute(array(filter_var($id, FILTER_SANITIZE_NUMBER_INT), $_GET['id']));
-            echo '<p class="mesage-success success">The post has been successfully moved to the selected thread.</p>';
+            echo '<p class="text-success success">The post has been successfully moved to the selected thread.</p>';
         } catch(PDOException $e) {
             echo $e->getMessage();
         }

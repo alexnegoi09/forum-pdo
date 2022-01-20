@@ -13,18 +13,18 @@
 </head>
 <body>
     <?php
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Post.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Post.php');
 
-    $post_id = new Post($_GET['thread_id'], null, null, $db);
+        $post_id = new Post($_GET['thread_id'], null, null, $db);
 
-    $post_id->messageCheck();
+        $post_id->messageCheck();
 
 
-    if (isset($_SESSION['username'])) {
-        if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator' || $_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
+        if (isset($_SESSION['username'])) {
+            if ($_SESSION['groups'] === 'Administrator' || $_SESSION['groups'] === 'Moderator' || $_SESSION['post_author'] === $_SESSION['username'] && time() < strtotime($_SESSION['created_at']) + 3600) {
        
     ?>
 
@@ -50,25 +50,25 @@
 
     <?php 
 
-    if (isset($_POST['btn'])) {
+        if (isset($_POST['btn'])) {
 
-        $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
+            $post = new Post($_GET['id'], $_POST['post-body'], $_SESSION['username'], $db);
 
-        //check for empty message field
-        $post->emptyMessageCheck();
+            //check for empty message field
+            $post->emptyMessageCheck();
 
-        // edit and save
-        if (empty($_SESSION['errors'])) { 
-        $post->update();
-        } else {
+            // edit and save
+            if (empty($_SESSION['errors'])) { 
+            $post->update();
+            } else {
 
-            // display errors
-            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-            $_SESSION['errors'] = null;
+                // display errors
+                echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+                $_SESSION['errors'] = null;
+            }
         }
-    }
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
 
     ?>
 

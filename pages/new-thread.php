@@ -13,20 +13,20 @@
 </head>
 <body>
     <?php
-    require('../classes/Database.php'); 
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Thread.php');
+        require('../classes/Database.php'); 
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Thread.php');
 
-    if (!isset($_SESSION['username'])) {
-        header('Location: /forum-pdo/index.php');
-        exit();
-    }
+        if (!isset($_SESSION['username'])) {
+            header('Location: /forum-pdo/index.php');
+            exit();
+        }
 
-    $thread_id = new Thread($_GET['id'], null, null, $db);
+        $thread_id = new Thread($_GET['id'], null, null, $db);
 
-    // check for valid id
-    $thread_id->categoryCheck();
+        // check for valid id
+        $thread_id->categoryCheck();
     ?>
 
     <nav class="nav">
@@ -47,27 +47,27 @@
 
     <?php
 
-    if (isset($_POST['btn'])) {
+        if (isset($_POST['btn'])) {
 
-        $thread = new Thread($_GET['id'], $_POST['thread-title'], $_SESSION['username'], $db);
+            $thread = new Thread($_GET['id'], $_POST['thread-title'], $_SESSION['username'], $db);
 
-        // check for empty form
-        $thread->emptyTitleCheck();
+            // check for empty form
+            $thread->emptyTitleCheck();
 
-        // check for duplicate thread
-        $thread->duplicateCheck();
+            // check for duplicate thread
+            $thread->duplicateCheck();
 
-        //create new thread
-        if(empty($_SESSION['errors'])) {  
-            $thread->create();
-        } else {
-            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-            $_SESSION['errors'] = null;
-        }
+            //create new thread
+            if(empty($_SESSION['errors'])) {  
+                $thread->create();
+            } else {
+                echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+                $_SESSION['errors'] = null;
+            }
     
-    } 
+        } 
 
-    require('../includes/footer.php');
+        require('../includes/footer.php');
     ?>
 
     <script src="../js/user-color.js"></script>

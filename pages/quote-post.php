@@ -13,14 +13,14 @@
 </head>
 <body>
     <?php
-    require('../classes/Database.php');
-    require('../includes/header.php');
-    require('../includes/logout.php'); 
-    require('../classes/Post.php');
+        require('../classes/Database.php');
+        require('../includes/header.php');
+        require('../includes/logout.php'); 
+        require('../classes/Post.php');
 
-    $post_id = new Post($_GET['thread_id'], null, null, $db);
+        $post_id = new Post($_GET['thread_id'], null, null, $db);
 
-    $post_id->messageCheck();
+        $post_id->messageCheck();
     ?>
     
     <nav class="nav">
@@ -39,36 +39,37 @@
         </p>
     </form>
 
+    <?php 
+
+        if (isset($_POST['btn'])) {
+
+        $post = new Post($_GET['thread_id'], $_POST['post-body'], $_SESSION['username'], $db);
+
+        //check for empty message field
+        $post->emptyMessageCheck();
+
+        // edit and save
+        if (empty($_SESSION['errors'])) { 
+        $post->create();
+
+        // update postcount
+        $post->getPostCount();
+        $post->setPostCount();
+        } else {
+
+            // display errors
+            echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
+            $_SESSION['errors'] = null;
+        }
+    }
+
+        require('../includes/footer.php');
+
+    ?>
+
     <script src="../js/user-color.js"></script>
     <script src="../js/nav.js"></script>
 </body>
 </html>
 
 
-<?php 
-
-if (isset($_POST['btn'])) {
-
-    $post = new Post($_GET['thread_id'], $_POST['post-body'], $_SESSION['username'], $db);
-
-    //check for empty message field
-    $post->emptyMessageCheck();
-
-    // edit and save
-    if (empty($_SESSION['errors'])) { 
-    $post->create();
-
-    // update postcount
-    $post->getPostCount();
-    $post->setPostCount();
-    } else {
-
-        // display errors
-        echo '<p class="text-danger error">' . $_SESSION['errors'][0] . '</p>';
-        $_SESSION['errors'] = null;
-    }
-}
-
-require('../includes/footer.php');
-
-?>
