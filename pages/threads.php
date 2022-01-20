@@ -45,7 +45,7 @@
             if ($post->isThreadLocked() === 0) {
                 require('../includes/post-link.php');
             } else {
-                echo '<p class="text-danger"><span class="bi bi-lock"></span>Locked</p>';
+                echo '<p class="text-danger locked"><span class="bi bi-lock"></span>Locked</p>';
             }
 
             $post->pagination();

@@ -1,5 +1,8 @@
-if (document.querySelector('.logged-in') !== 'null') {
+const links = document.querySelector('.links');
+
+if (!links.innerText.includes('Guest')) {
     let user = document.querySelector('.logged-in');
+
     let userLink = document.querySelector('.user-link');
 
     if (user.innerText.includes('Administrator')) {

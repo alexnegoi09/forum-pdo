@@ -97,6 +97,14 @@
     margin-top: 4rem;
 }
 
+.empty {
+    background-color: white;
+    padding: 0.5rem;
+    font-weight: bolder;
+    width: max-content;
+    border-radius: 10px;
+}
+
 
 /* responsive */
 
@@ -133,5 +141,10 @@
     .title,
     .table-row {
         border-radius: 0;
+    }
+
+    .empty {
+        width: 100%;
+        text-align: center;
     }
 }

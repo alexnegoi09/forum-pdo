@@ -145,6 +145,19 @@
     color: darkslategray;
 }
 
+.empty, 
+.locked {
+    background-color: white;
+    padding: 0.5rem;
+    font-weight: bolder;
+    width: max-content;
+    border-radius: 10px;
+}
+
+.locked {
+    margin: 2rem 0;
+}
+
 
 /* added with JS */
 
@@ -209,4 +222,18 @@
     .page-container {
         justify-content: center;
     }
+
+    .empty,
+    .locked {
+        text-align: center;
+    }
+
+    .empty {
+        width: 100%;
+    }
+
+    .locked {
+        margin: 2rem auto;
+    }
+
 }

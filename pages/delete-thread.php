@@ -31,7 +31,7 @@
         $thread->categoryCheck();
         $thread->threadCheck();
         $thread->delete();
-        echo '<p class="text-success">Thread deleted! Click <a href="/forum-pdo/pages/categories.php">here</a> to go back.</p>';
+        echo '<p class="text-success">Thread deleted! Click <a href="/forum-pdo/pages/categories.php?id=' . $_GET['category_id'] . '">here</a> to go back.</p>';
         }
     }
 

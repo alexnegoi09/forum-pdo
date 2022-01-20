@@ -92,7 +92,7 @@ class Thread {
             $result = $stmt->fetchAll();
 
             if (count($result) === 0) {
-                echo '<p><i>No threads to show!<i></p>';
+                echo '<p class="empty">No threads to show!</p>';
             } else {
 
                 // display threads
@@ -125,7 +125,7 @@ class Thread {
                             echo '<tr class="button-row">
                                         <td>
                                             <a href="/forum-pdo/pages/edit-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '" class="btn btn-primary button"><span class="bi bi-pencil"></span>Edit</a>
-                                            <a href="/forum-pdo/pages/delete-thread.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
+                                            <a href="/forum-pdo/pages/delete-thread-confirm.php?id=' . $res['id'] . '&category_id=' . $this->category_id . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
                                         </td>
                                  </tr>';
                            }

@@ -64,7 +64,7 @@ class Category {
                                 echo '<tr class="button-row">
                                         <td>
                                             <a href="/forum-pdo/pages/edit-category.php?id=' . $res['id'] . '" class="btn btn-primary button"><span class="bi bi-pencil"></span>Edit</a>
-                                            <a href="/forum-pdo/pages/delete-category.php?id=' . $res['id'] . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
+                                            <a href="/forum-pdo/pages/delete-category-confirm.php?id=' . $res['id'] . '" class="btn btn-primary button"><span class="bi bi-trash"></span>Delete</a>
                                         </td>
                                     </tr>';
                         }
@@ -72,11 +72,8 @@ class Category {
                 }
 
                 echo '</table>';
-            } else {
-            echo '<p>No categories to show!</p>';
+            }
         }
-
-    }
 
 
     public function emptyFieldsCheck() {

@@ -1,0 +1,37 @@
+.message-container {
+    margin: 2rem 2rem 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    display: inline-block;
+    min-width: 450px;
+}
+
+.message-box {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.message-box p {
+    margin: 0;
+}
+
+.buttons {
+    background-color: transparent;
+    margin-top: 0.5rem;
+}
+
+.buttons a {
+    margin-right: 5px;
+}
+
+
+/* responsive */
+
+@media (max-width: 800px) {
+    .message-container {
+        display: block;
+        text-align: center;
+        margin: 2rem 0 1rem 0;
+    }
+}

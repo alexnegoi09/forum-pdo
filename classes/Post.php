@@ -63,7 +63,7 @@ class Post {
             $result = $stmt->fetchAll();
             
             if (count($result) === 0) {
-                echo '<p><i>There are no posts to show!</i></p>';
+                echo '<p class="empty">No posts to show!</p>';
             } else {
                 // show posts
                 echo '<table class="table table-borderless">
