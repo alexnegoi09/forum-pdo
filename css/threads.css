@@ -186,6 +186,7 @@
 
     .thread-title p {
         display: block;
+        border-radius: 0;
     }
 
     .table {
@@ -230,6 +231,7 @@
 
     .empty {
         width: 100%;
+        border-radius: 0;
     }
 
     .locked {

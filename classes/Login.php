@@ -29,7 +29,7 @@ class Login {
             $_SESSION['errors'][] = 'The credentials you have entered are incorrect!';
 
             foreach ($_SESSION['errors'] as $err) {
-                echo '<p class="error">' . $err . '</p>'; 
+                echo '<p class=" text-danger error">' . $err . '</p>'; 
             }
 
             $_SESSION['errors'] = null;

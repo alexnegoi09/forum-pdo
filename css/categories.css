@@ -124,6 +124,7 @@
 
     .category-title p {
         display: block;
+        border-radius: 0;
     }
 
     .table {
@@ -146,5 +147,6 @@
     .empty {
         width: 100%;
         text-align: center;
+        border-radius: 0;
     }
 }
